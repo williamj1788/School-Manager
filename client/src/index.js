@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch,BrowserRouter as Router } from 'react-router-dom';
 
+import './styles/Normalize.css';
+
 import Login from './components/login';
 
 class App extends Component {
