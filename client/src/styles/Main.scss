@@ -1,4 +1,29 @@
 @import url('https://fonts.googleapis.com/css?family=Passion+One');
+
+@mixin button ($width,$height, $font){
+    width: $width;
+    height: $height;
+    display: block;
+    margin: 0 auto;
+    transition: 0.3s;
+    font-family: $font;
+    font-size: 25px;
+    border: 0;
+    border-radius: 5px;
+    background-color: $dark-blue;
+    color: white;
+    &:hover{
+        background-color: #00c2e9;
+        cursor: pointer;
+    }
+}
+
+$light-blue: #06CAF2;
+$dark-blue: #00A1C2;
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
 .Main{
     background-image: linear-gradient(to bottom right, #009FF2, #028ED6, #0480BF);
     width: 100%;
@@ -21,7 +46,37 @@
             font-family: 'Passion One', cursive;
             letter-spacing: 2px;
             padding-top: 20px;
-
+            color: $light-blue;
         }
+        .input-field{
+            width: 300px;
+            height: 46px;
+            display: block;
+            margin: 50px auto;
+            text-align: center;
+            font-size: 25px;
+            border: 0;
+            border-bottom: 2px solid gray;
+            color: gray;
+        }
+        .input-field:focus{
+            outline: none;
+        }
+        .submit-button{
+           @include button(193px, 42px, inherit);
+        }
+        .account{
+            display: flex;
+            width: 90%;
+            justify-content: space-between;
+            margin: 0 auto;
+            margin-top: 75px;
+            p{
+                font-size: 21px;
+                margin: 0;
+                color: gray;
+            }
+        }
+
     }
 }
