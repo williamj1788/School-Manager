@@ -13,9 +13,23 @@ class Signup extends React.Component{
     
     handleSubmit(event){
         event.preventDefault();
-        this.setState({
-            signIN: true,
-        });
+        
+        let form = document.getElementsByClassName('main-form')[0];
+        let formData = new FormData(form);
+        
+        fetch('http://localhost:8080/api/user',{
+            method: 'POST',
+            body: formData,
+            mode: "cors",
+        })
+        .then(res => console.log(res))
+        // .then(res => res.json())
+        // .then(res => console.log(res))
+        // .then(() => {
+        //     this.setState({
+        //         signIN: true,
+        //     }); 
+        // })
     }
     
     render(){
@@ -25,8 +39,8 @@ class Signup extends React.Component{
             <div className="Main">
                 <form className="main-form" onSubmit={this.handleSubmit}>
                     <p className="form-title">School Manager</p>
-                    <input type="text" className="input-field" name="username" placeholder="Username" autoComplete="off" />
-                    <input type="password" className="input-field" name="password" placeholder="Password"/>
+                    <input type="text" className="input-field" name="username" placeholder="Username" autoComplete="off" minLength='3' required/>
+                    <input type="password" className="input-field" name="password" placeholder="Password" minLength='3' required/>
                     <button className="submit-button" type="submit">Sign Up</button>
                     <div className="account">
                         <p>Already have an account?</p>
