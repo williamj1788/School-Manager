@@ -19,7 +19,7 @@ class Signup extends React.Component{
     }
     
     render(){
-        if(this.state.signIN) return <Redirect to="/" />;
+        if(this.state.signIN) return <Redirect to="/dashboard" />;
         
         return(
             <div className="Main">
@@ -30,7 +30,7 @@ class Signup extends React.Component{
                     <button className="submit-button" type="submit">Sign Up</button>
                     <div className="account">
                         <p>Already have an account?</p>
-                        <p>Login</p>
+                        <Link to="/" id="account-link">Login</Link>
                     </div>
                 </form>
             </div>

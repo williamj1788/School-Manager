@@ -18,7 +18,7 @@ class Login extends React.Component{
     }
     
     render(){
-        if(this.state.login) return <Redirect to="/signup" />;
+        if(this.state.login) return <Redirect to="/dashboard" />;
         return(
             <div className="Main">
                 <form className="main-form" onSubmit={this.handleSubmit}>
@@ -28,7 +28,7 @@ class Login extends React.Component{
                     <button className="submit-button" type="submit">Login</button>
                     <div className="account">
                         <p>Don't have an account?</p>
-                        <p>Sign up</p>
+                        <Link to="/signup" id="account-link">Sign up</Link>
                     </div>
                 </form>
             </div>

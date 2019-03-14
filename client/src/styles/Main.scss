@@ -72,9 +72,16 @@ body{
             margin: 0 auto;
             margin-top: 75px;
             p{
+                margin: 0;
+                font-size: 21px;
+                color: #535353;
+            }
+            #account-link{
+                text-decoration: none;
+                color: $light-blue;
                 font-size: 21px;
                 margin: 0;
-                color: gray;
+                height: fit-content;
             }
         }
 
