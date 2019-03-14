@@ -5,6 +5,7 @@ import { Route, Switch,BrowserRouter as Router } from 'react-router-dom';
 import './styles/Normalize.css';
 
 import Login from './components/login';
+import Signup from './components/signup';
 
 class App extends Component {
     render() {
@@ -13,6 +14,7 @@ class App extends Component {
                 <div>
                     <Switch>
                         <Route exact path="/" component={Login} />
+                        <Route path="/signup" component={Signup} />
                     </Switch>
                 </div>
             </Router>
