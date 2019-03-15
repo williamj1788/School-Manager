@@ -6,7 +6,8 @@ class Signup extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-           signIN: false, 
+           signIN: false,
+           error: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -20,16 +21,25 @@ class Signup extends React.Component{
         fetch('http://localhost:8080/api/user',{
             method: 'POST',
             body: formData,
-            mode: "cors",
         })
-        .then(res => console.log(res))
-        // .then(res => res.json())
-        // .then(res => console.log(res))
-        // .then(() => {
-        //     this.setState({
-        //         signIN: true,
-        //     }); 
-        // })
+        .then(res => {
+            if(res.status !== 400){
+                this.setState({
+                    signIN: true,
+                });
+            }else{
+                return res.json();
+            }
+        })
+        .then(res => {
+            if(res.error){
+                this.setState({
+                    error: res.error,
+                });
+                console.log(res.error);
+            }
+            form.reset();
+        })
     }
     
     render(){
@@ -42,6 +52,7 @@ class Signup extends React.Component{
                     <input type="text" className="input-field" name="username" placeholder="Username" autoComplete="off" minLength='3' required/>
                     <input type="password" className="input-field" name="password" placeholder="Password" minLength='3' required/>
                     <button className="submit-button" type="submit">Sign Up</button>
+                    {this.state.error && <p className="error">{this.state.error}</p>}
                     <div className="account">
                         <p>Already have an account?</p>
                         <Link to="/" id="account-link">Login</Link>

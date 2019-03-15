@@ -65,6 +65,16 @@ body{
         .submit-button{
            @include button(193px, 42px, inherit);
         }
+        .error{
+            color: red;
+            font-size: 21px;
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0;
+            height: fit-content;
+            text-align: center;
+            position: absolute;
+        }
         .account{
             display: flex;
             width: 90%;
