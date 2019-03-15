@@ -34,13 +34,12 @@ class Dashboard extends React.Component{
                 });
             }
         })
-        .catch(err => {
-            console.error(err);
-        });;
     }
 
     Signout(){
-        fetch('http://localhost:8080/api/user/signout')
+        fetch('http://localhost:8080/api/user/signout',{
+            credentials: 'include'
+        })
         .then(() => {
             this.setState({
                 redirect: true,
@@ -62,6 +61,11 @@ class Dashboard extends React.Component{
                         </div>
                     </div>
                 </nav>
+                <div id="class-container">
+                    <div className="class"><span className="class-name">Class Name</span></div>
+                    <div className="class"><span className="class-name">Class Name</span></div>
+                    <div className="class"><span className="class-name">Class Name</span></div>
+                </div>
             </div>
         )
     }

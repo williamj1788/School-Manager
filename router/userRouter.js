@@ -23,13 +23,14 @@ function SetHeaders(req,res,next){
     next();
 }
 
-
-router.post('/login', SetHeaders,(req,res,next) => {
+router.use(SetHeaders);
+router.post('/login',(req,res,next) => {
     User.findOne({username: req.body.username, password: req.body.password}, (err, user) => {
         if(err) throw err;
         if(user){
             req.session.user = user._id;
             req.session.save();
+            console.log(req.session.user);
             res.json(user);
         }else{
             res.status(404).json({error: "Username or Password is wrong"});
@@ -50,15 +51,16 @@ router.post('/signup', CheckUsernames,(req,res,next) => {
     console.log('User Created');
 });
 
-router.get('/signout', SetHeaders,(req,res,next) => {
+router.get('/signout',(req,res,next) => {
     req.session.user = null;
     req.session.save();
+    console.log(req.sessionID);
     console.log('User sign out');
-    res.send();
+    res.send('asdf');
 });
 
-router.get('/', SetHeaders,(req,res,next) => {
-    console.log(req.session.user);
+router.get('/',(req,res,next) => {
+    console.log(req.sessionID);
     if(req.session.user){
         User.findById(req.session.user, (err,user) => {
             if(err) throw err;
