@@ -8,6 +8,7 @@ function CheckUsernames(req,res,next){
     res.setHeader('Access-Control-Allow-Origin','*');
     User.findOne({username: req.body.username}, (err,user) => {
         if(err) throw err;
+        console.error()
         if(!user){
             next();
         }else{
@@ -16,12 +17,15 @@ function CheckUsernames(req,res,next){
     })
 }
 
+
 router.post('/login', (req,res,next) => {
     res.setHeader('Access-Control-Allow-Origin','*');
     User.findOne({username: req.body.username, password: req.body.password}, (err, user) => {
         if(err) throw err;
         if(user){
-            req.session.user_id = user._id;
+            console.log(req.session.user_id);
+            console.log(user._id);
+            req.session.user_id = 1;
             res.json(user);
         }else{
             res.status(404).json({error: "Username or Password is wrong"});
@@ -40,6 +44,29 @@ router.post('/signup', CheckUsernames,(req,res,next) => {
         res.json(user);
     });
     console.log('User Created');
+});
+
+router.get('/signout', (req,res,next) => {
+    res.setHeader('Access-Control-Allow-Origin','*');
+    req.session.user_id = null;
+    res.send();
+});
+
+router.get('/', (req,res,next) => {
+    res.setHeader('Access-Control-Allow-Origin','*');
+    console.log(req.session.user_id);
+    if(req.session.user_id){
+        User.findById(req.session.user_id, (err,user) => {
+            if(err) throw err;
+            if(user){
+                res.json(user);
+            }else{
+                res.status(404).send();
+            }
+        })
+    }else{
+        res.status(404).send();
+    }
 });
 
 module.exports = router;

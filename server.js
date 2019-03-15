@@ -14,7 +14,6 @@ mongoose.connect(url, {useNewUrlParser: true})
 
 app.use(upload.none());
 app.use(session({secret: 'key board cat'}));
-
 app.use('/api/user', userRouter);
 
 
