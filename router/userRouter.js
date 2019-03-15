@@ -5,10 +5,10 @@ const router = express.Router();
 const User = require('../model/User');
 
 function CheckUsernames(req,res,next){
-    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader('Access-Control-Allow-Origin','http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
     User.findOne({username: req.body.username}, (err,user) => {
         if(err) throw err;
-        console.error()
         if(!user){
             next();
         }else{
@@ -17,15 +17,19 @@ function CheckUsernames(req,res,next){
     })
 }
 
+function SetHeaders(req,res,next){
+    res.setHeader('Access-Control-Allow-Origin','http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+}
 
-router.post('/login', (req,res,next) => {
-    res.setHeader('Access-Control-Allow-Origin','*');
+
+router.post('/login', SetHeaders,(req,res,next) => {
     User.findOne({username: req.body.username, password: req.body.password}, (err, user) => {
         if(err) throw err;
         if(user){
-            console.log(req.session.user_id);
-            console.log(user._id);
-            req.session.user_id = 1;
+            req.session.user = user._id;
+            req.session.save();
             res.json(user);
         }else{
             res.status(404).json({error: "Username or Password is wrong"});
@@ -40,23 +44,23 @@ router.post('/signup', CheckUsernames,(req,res,next) => {
         password: req.body.password,
     });
     newUser.save().then(user => {
-        req.session.user_id = user._id;
+        req.session.user = user._id;
         res.json(user);
     });
     console.log('User Created');
 });
 
-router.get('/signout', (req,res,next) => {
-    res.setHeader('Access-Control-Allow-Origin','*');
-    req.session.user_id = null;
+router.get('/signout', SetHeaders,(req,res,next) => {
+    req.session.user = null;
+    req.session.save();
+    console.log('User sign out');
     res.send();
 });
 
-router.get('/', (req,res,next) => {
-    res.setHeader('Access-Control-Allow-Origin','*');
-    console.log(req.session.user_id);
-    if(req.session.user_id){
-        User.findById(req.session.user_id, (err,user) => {
+router.get('/', SetHeaders,(req,res,next) => {
+    console.log(req.session.user);
+    if(req.session.user){
+        User.findById(req.session.user, (err,user) => {
             if(err) throw err;
             if(user){
                 res.json(user);
@@ -65,7 +69,7 @@ router.get('/', (req,res,next) => {
             }
         })
     }else{
-        res.status(404).send();
+        res.status(404).json({error: 'Could not find user'});
     }
 });
 

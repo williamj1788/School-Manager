@@ -14,7 +14,9 @@ class Dashboard extends React.Component{
     }
 
     componentDidMount(){
-        fetch('http://localhost:8080/api/user')
+        fetch('http://localhost:8080/api/user',{
+            credentials: 'include'
+        })
         .then(res => {
             if(res.status === 404){
                 this.setState({

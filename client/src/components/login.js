@@ -21,6 +21,7 @@ class Login extends React.Component{
         fetch('http://localhost:8080/api/user/login',{
             method: 'POST',
             body: formData,
+            credentials: 'include',
         })
         .then(res => {
             if(res.status !== 404){
@@ -36,6 +37,7 @@ class Login extends React.Component{
                     error: res.error,
                 });
             }
+            console.log(res);
             form.reset();
         })
     }
