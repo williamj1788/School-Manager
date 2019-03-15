@@ -6,15 +6,38 @@ class Login extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-           login: false, 
+           login: false,
+           error: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    
     handleSubmit(event){
         event.preventDefault();
-        this.setState({
-            login: true,
-        });
+        
+        let form = document.getElementsByClassName('main-form')[0];
+        let formData = new FormData(form);
+        
+        fetch('http://localhost:8080/api/user/login',{
+            method: 'POST',
+            body: formData,
+        })
+        .then(res => {
+            if(res.status !== 404){
+                this.setState({
+                    login: true,
+                });
+            }
+            return res.json();
+        })
+        .then(res => {
+            if(res.error){
+                this.setState({
+                    error: res.error,
+                });
+            }
+            form.reset();
+        })
     }
     
     render(){
@@ -26,6 +49,7 @@ class Login extends React.Component{
                     <input type="text" className="input-field" name="username" placeholder="Username" autoComplete="off" />
                     <input type="password" className="input-field" name="password" placeholder="Password"/>
                     <button className="submit-button" type="submit">Login</button>
+                    {this.state.error && <p className="error">{this.state.error}</p>}
                     <div className="account">
                         <p>Don't have an account?</p>
                         <Link to="/signup" id="account-link">Sign up</Link>

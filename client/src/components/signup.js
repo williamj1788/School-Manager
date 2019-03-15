@@ -18,7 +18,7 @@ class Signup extends React.Component{
         let form = document.getElementsByClassName('main-form')[0];
         let formData = new FormData(form);
         
-        fetch('http://localhost:8080/api/user',{
+        fetch('http://localhost:8080/api/user/signup',{
             method: 'POST',
             body: formData,
         })
@@ -27,16 +27,14 @@ class Signup extends React.Component{
                 this.setState({
                     signIN: true,
                 });
-            }else{
-                return res.json();
             }
+            return res.json();
         })
         .then(res => {
             if(res.error){
                 this.setState({
                     error: res.error,
                 });
-                console.log(res.error);
             }
             form.reset();
         })
