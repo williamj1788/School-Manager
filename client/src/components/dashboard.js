@@ -2,12 +2,15 @@ import React from 'react';
 import {Redirect} from 'react-router-dom';
 import '../styles/dashboard.scss';
 
+import AddClass from './addClass';
+
 class Dashboard extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             redirect: false,
             username: '',
+            ShowAddClass: false,
         }
 
         this.Signout = this.Signout.bind(this);
@@ -50,22 +53,25 @@ class Dashboard extends React.Component{
     render(){
         if(this.state.redirect) return <Redirect to="/" />;
         return(
-            <div id="dashboard">
-                <nav>
-                    <div id="nav-container">
-                        <span id="nav-logo">School Handle</span>
-                        <div id="links">
-                            <p className="nav-link">Add Class</p>
-                            <p className="nav-link" onClick={this.Signout}>Sign Out</p>
-                            <p className="nav-user">{this.state.username}</p>
+            <div>
+                <div id="dashboard">
+                    <nav>
+                        <div id="nav-container">
+                            <span id="nav-logo">School Handle</span>
+                            <div id="links">
+                                <p className="nav-link">Add Class</p>
+                                <p className="nav-link" onClick={this.Signout}>Sign Out</p>
+                                <p className="nav-user">{this.state.username}</p>
+                            </div>
                         </div>
+                    </nav>
+                    <div id="class-container">
+                        <div className="class"><span className="class-name">Class Name</span></div>
+                        <div className="class"><span className="class-name">Class Name</span></div>
+                        <div className="class"><span className="class-name">Class Name</span></div>
                     </div>
-                </nav>
-                <div id="class-container">
-                    <div className="class"><span className="class-name">Class Name</span></div>
-                    <div className="class"><span className="class-name">Class Name</span></div>
-                    <div className="class"><span className="class-name">Class Name</span></div>
                 </div>
+                {this.state.ShowAddClass && <AddClass />}
             </div>
         )
     }

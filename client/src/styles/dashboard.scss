@@ -60,7 +60,7 @@
             margin: 10px 0;
             background-color: darkblue;
             position: relative;
-            transition: 0.2s;
+            animation: return 0.4s;
             .class-name{
                 color: white;
                 font-size: 37px;
@@ -73,8 +73,26 @@
         }
         .class:hover{
             cursor: pointer;
-            width: 110%;
-            height: 110px;
+            animation: expand 0.4s;
+            animation-fill-mode: forwards;
         }
+    }
+}
+
+@keyframes expand{
+    from{
+        transform: scale(1);
+    }
+    to{
+        transform: scale(1.1);
+    }
+}
+
+@keyframes return{
+    from{
+        transform: scale(1.1);
+    }
+    to{
+        transform: scale(1);
     }
 }
