@@ -4,7 +4,14 @@ import '../styles/dashboard.scss';
 import Navbar from './navbar';
 import AddClass from './addClass';
 
+import { connect } from "react-redux";
+
+const mapStateToProps = state => {
+    return { classes: state.classes };
+}; 
+
 class Dashboard extends React.Component{
+    
     constructor(props){
         super(props);
         this.state = {
@@ -47,14 +54,16 @@ class Dashboard extends React.Component{
     }
     
     render(){
+        let classes = this.props.classes;
+        classes = classes.map((Class,index) => {
+            return <div className="class" key={index}><span className="class-name">{Class}</span></div>;
+        });
         return(
             <div>
                 <div id="dashboard">
                     <Navbar username={this.state.username} loading={this.state.loading} toggle={this.toggleShowAddClass}/>
                     <div id="class-container">
-                        <div className="class"><span className="class-name">Class Name</span></div>
-                        <div className="class"><span className="class-name">Class Name</span></div>
-                        <div className="class"><span className="class-name">Class Name</span></div>
+                        {classes}
                     </div>
                 </div>
                 {this.state.ShowAddClass && <AddClass toggle={this.toggleShowAddClass}/>}
@@ -62,5 +71,5 @@ class Dashboard extends React.Component{
         )
     }
 }
-
+Dashboard = connect(mapStateToProps)(Dashboard);
 export default Dashboard;

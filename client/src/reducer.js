@@ -1,5 +1,6 @@
 const initialState = {
-    user: null,
+    username: null,
+    classes: ['class1','class2','class3','class4'],
 };
 
 function reducer(state = initialState,action){

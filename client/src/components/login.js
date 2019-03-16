@@ -2,6 +2,9 @@ import React from 'react';
 import '../styles/Main.scss';
 import {Redirect, Link} from 'react-router-dom';
 
+import { connect } from "react-redux";
+
+
 class Login extends React.Component{
     constructor(props){
         super(props);
@@ -57,5 +60,5 @@ class Login extends React.Component{
         )
     }
 }
-
+Login = connect()(Login);
 export default Login;
