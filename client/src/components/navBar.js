@@ -8,6 +8,7 @@ class Navbar extends React.Component{
             redirect: false
         }
         this.Signout = this.Signout.bind(this);
+        this.toggle = this.toggle.bind(this);
     }
     
     Signout(){
@@ -20,6 +21,9 @@ class Navbar extends React.Component{
             });
         })
     }
+    toggle(){
+        this.props.toggle();
+    }
     
     render(){
         if(!this.props.loading && (this.state.redirect || !this.props.username)){
@@ -30,7 +34,7 @@ class Navbar extends React.Component{
                 <div id="nav-container">
                     <span id="nav-logo">School Handle</span>
                     <div id="links">
-                        <p className="nav-link">Add Class</p>
+                        <p className="nav-link" onClick={this.toggle}>Add Class</p>
                         <p className="nav-link" onClick={this.Signout}>Sign Out</p>
                         <p className="nav-user">{this.props.username}</p>
                     </div>

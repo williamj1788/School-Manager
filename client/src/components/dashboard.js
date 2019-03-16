@@ -12,6 +12,7 @@ class Dashboard extends React.Component{
             ShowAddClass: false,
             loading: true,
         }
+        this.toggleShowAddClass = this.toggleShowAddClass.bind(this);   
     }
 
     componentDidMount(){
@@ -38,19 +39,25 @@ class Dashboard extends React.Component{
             }
         })
     }
+
+    toggleShowAddClass(){
+        this.setState({
+            ShowAddClass: !this.state.ShowAddClass,
+        });
+    }
     
     render(){
         return(
             <div>
                 <div id="dashboard">
-                    <Navbar username={this.state.username} loading={this.state.loading}/>
+                    <Navbar username={this.state.username} loading={this.state.loading} toggle={this.toggleShowAddClass}/>
                     <div id="class-container">
                         <div className="class"><span className="class-name">Class Name</span></div>
                         <div className="class"><span className="class-name">Class Name</span></div>
                         <div className="class"><span className="class-name">Class Name</span></div>
                     </div>
                 </div>
-                {this.state.ShowAddClass && <AddClass />}
+                {this.state.ShowAddClass && <AddClass toggle={this.toggleShowAddClass}/>}
             </div>
         )
     }

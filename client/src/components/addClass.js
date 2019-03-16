@@ -3,13 +3,20 @@ import React from 'react';
 import '../styles/addClass.scss';
 
 class AddClass extends React.Component{
+    constructor(props){
+        super(props);
+        this.toggle = this.toggle.bind(this);
+    }
+    toggle(){
+        this.props.toggle();
+    }
     render(){
         return(
             <div className="add-class">
                 <div className="add-class-container">
                     <div className="header">
                         <span className="header-text">Add Class</span>
-                        <button id="close-button" type="button"></button>
+                        <button id="close-button" type="button" onClick={this.toggle}></button>
                     </div>
                     <form>
                         <div className="form-container">
