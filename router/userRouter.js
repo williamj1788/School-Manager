@@ -17,13 +17,6 @@ function CheckUsernames(req,res,next){
     })
 }
 
-function SetHeaders(req,res,next){
-    res.setHeader('Access-Control-Allow-Origin','http://localhost:3000');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    next();
-}
-
-router.use(SetHeaders);
 router.post('/login',(req,res,next) => {
     User.findOne({username: req.body.username, password: req.body.password}, (err, user) => {
         if(err) throw err;
