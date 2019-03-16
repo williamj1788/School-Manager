@@ -1,19 +1,17 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
 import '../styles/dashboard.scss';
 
+import Navbar from './navbar';
 import AddClass from './addClass';
 
 class Dashboard extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            redirect: false,
             username: '',
             ShowAddClass: false,
+            loading: true,
         }
-
-        this.Signout = this.Signout.bind(this);
     }
 
     componentDidMount(){
@@ -24,6 +22,7 @@ class Dashboard extends React.Component{
             if(res.status === 404){
                 this.setState({
                     redirect: true,
+                    loading: false,
                 });
                 return res;
             }else{
@@ -34,37 +33,17 @@ class Dashboard extends React.Component{
             if(res.username){
                 this.setState({
                     username: res.username,
+                    loading: false,
                 });
             }
         })
     }
-
-    Signout(){
-        fetch('http://localhost:8080/api/user/signout',{
-            credentials: 'include'
-        })
-        .then(() => {
-            this.setState({
-                redirect: true,
-            });
-        })
-    }
     
     render(){
-        if(this.state.redirect) return <Redirect to="/" />;
         return(
             <div>
                 <div id="dashboard">
-                    <nav>
-                        <div id="nav-container">
-                            <span id="nav-logo">School Handle</span>
-                            <div id="links">
-                                <p className="nav-link">Add Class</p>
-                                <p className="nav-link" onClick={this.Signout}>Sign Out</p>
-                                <p className="nav-user">{this.state.username}</p>
-                            </div>
-                        </div>
-                    </nav>
+                    <Navbar username={this.state.username} loading={this.state.loading}/>
                     <div id="class-container">
                         <div className="class"><span className="class-name">Class Name</span></div>
                         <div className="class"><span className="class-name">Class Name</span></div>

@@ -33,7 +33,7 @@ router.post('/login',(req,res,next) => {
             console.log(req.session.user);
             res.json(user);
         }else{
-            res.status(404).json({error: "Username or Password is wrong"});
+            res.status(404).send();
         }
     })
 });

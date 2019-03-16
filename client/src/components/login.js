@@ -7,13 +7,14 @@ class Login extends React.Component{
         super(props);
         this.state = {
            login: false,
-           error: '',
+           error: false,
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     
     handleSubmit(event){
         event.preventDefault();
+        console.log('User Login');
         
         let form = document.getElementsByClassName('main-form')[0];
         let formData = new FormData(form);
@@ -28,16 +29,11 @@ class Login extends React.Component{
                 this.setState({
                     login: true,
                 });
-            }
-            return res.json();
-        })
-        .then(res => {
-            if(res.error){
+            }else{
                 this.setState({
-                    error: res.error,
+                    error: true,
                 });
             }
-            console.log(res);
             form.reset();
         })
     }
@@ -51,7 +47,7 @@ class Login extends React.Component{
                     <input type="text" className="input-field" name="username" placeholder="Username" autoComplete="off" />
                     <input type="password" className="input-field" name="password" placeholder="Password"/>
                     <button className="submit-button" type="submit">Login</button>
-                    {this.state.error && <p className="error">{this.state.error}</p>}
+                    {this.state.error && <p className="error">Username or Password is wrong</p>}
                     <div className="account">
                         <p>Don't have an account?</p>
                         <Link to="/signup" id="account-link">Sign up</Link>
