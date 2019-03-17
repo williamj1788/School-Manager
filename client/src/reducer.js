@@ -1,6 +1,8 @@
 const initialState = {
     username: null,
     classes: [],
+    tasks: [{name: 'finish homework', due: '7'},{name: 'do stuff', due: '2'},{name: 'do more stuff', due: '4'}],
+    tests: [],
 };
 
 function reducer(state = initialState,action){
