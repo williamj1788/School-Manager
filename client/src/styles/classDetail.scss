@@ -64,6 +64,8 @@ $dark-blue: #00A1C2;
                 width: 50%;
                 height: 100%;
                 position: relative;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16);
+                cursor: pointer;
                 .centered{
                     display: block;
                     position: absolute;
