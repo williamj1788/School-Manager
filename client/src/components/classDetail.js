@@ -20,7 +20,18 @@ class ClassDetail extends React.Component{
                         </div>
                     </div>
                     <div className="detail-container">
-                        <div className="offset"></div>
+                        <div className="offset">
+                            <button className="add-button">Add Task</button>
+                            <div className="detail">
+                                <div className="detail-item">
+                                    <p className="item-name">Finish Homework</p>
+                                    <div className="flex">
+                                        <p className="due">Due in 7 days</p>
+                                        <button className="item-close" type="button"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
