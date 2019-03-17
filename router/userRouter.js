@@ -23,7 +23,6 @@ router.post('/login',(req,res,next) => {
         if(user){
             req.session.user = user._id;
             req.session.save();
-            console.log(`User is login: Session id is ${req.sessionID}`);
             res.json(user);
         }else{
             res.status(404).send();
@@ -41,18 +40,15 @@ router.post('/signup', CheckUsernames,(req,res,next) => {
         req.session.user = user._id;
         res.json(user);
     });
-    console.log(`User is Created: Session id is ${req.sessionID}`);
 });
 
 router.get('/signout',(req,res,next) => {
     req.session.user = null;
     req.session.save();
-    console.log(`User has sign out: Session id is ${req.sessionID}`);
     res.send('asdf');
 });
 
 router.get('/',(req,res,next) => {
-    console.log(`User is acessing dashboard: Session id is ${req.sessionID}`);
     if(req.session.user){
         let id = mongoose.Types.ObjectId(req.session.user);
         User.aggregate([
@@ -86,15 +82,5 @@ router.get('/',(req,res,next) => {
         res.status(404).json({error: 'Could not find user'});
     }
 });
-
-// User.findById(req.session.user, (err,user) => {
-//     if(err) throw err;
-//     if(user){
-        
-//         res.json(user);
-//     }else{
-//         res.status(404).send();
-//     }
-// })
 
 module.exports = router;
