@@ -6,6 +6,8 @@ import AddClass from './addClass';
 
 import { connect } from "react-redux";
 
+import { setClass } from '../action';
+
 const mapStateToProps = state => {
     return { classes: state.classes };
 }; 
@@ -38,11 +40,13 @@ class Dashboard extends React.Component{
             }
         })
         .then(res => {
+            console.log(res);
             if(res.username){
                 this.setState({
                     username: res.username,
                     loading: false,
                 });
+                this.props.dispatch(setClass(res.classes));
             }
         })
     }
@@ -56,7 +60,7 @@ class Dashboard extends React.Component{
     render(){
         let classes = this.props.classes;
         classes = classes.map((Class,index) => {
-            return <div className="class" key={index}><span className="class-name">{Class}</span></div>;
+            return <div className="class" key={index} style={{backgroundColor: Class.color}}><span className="class-name">{Class.name}</span></div>;
         });
         return(
             <div>

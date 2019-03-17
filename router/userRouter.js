@@ -23,7 +23,7 @@ router.post('/login',(req,res,next) => {
         if(user){
             req.session.user = user._id;
             req.session.save();
-            console.log(req.session.user);
+            console.log(`User is login: Session id is ${req.sessionID}`);
             res.json(user);
         }else{
             res.status(404).send();
@@ -41,31 +41,60 @@ router.post('/signup', CheckUsernames,(req,res,next) => {
         req.session.user = user._id;
         res.json(user);
     });
-    console.log('User Created');
+    console.log(`User is Created: Session id is ${req.sessionID}`);
 });
 
 router.get('/signout',(req,res,next) => {
     req.session.user = null;
     req.session.save();
-    console.log(req.sessionID);
-    console.log('User sign out');
+    console.log(`User has sign out: Session id is ${req.sessionID}`);
     res.send('asdf');
 });
 
 router.get('/',(req,res,next) => {
-    console.log(req.sessionID);
+    console.log(`User is acessing dashboard: Session id is ${req.sessionID}`);
     if(req.session.user){
-        User.findById(req.session.user, (err,user) => {
-            if(err) throw err;
-            if(user){
-                res.json(user);
-            }else{
-                res.status(404).send();
+        let id = mongoose.Types.ObjectId(req.session.user);
+        User.aggregate([
+            {
+                $match:{
+                    _id: id
+                }
+            }, 
+            {
+                $lookup:{
+                    from: 'classes',
+                    localField: '_id',
+                    foreignField: "user_id",
+                    as: 'classes',
+
+                }
+            },
+            {
+                $project:{
+                    _id: 0,
+                    password: 0,
+                    __v: 0,
+                    'classes._id':0,
+                    'classes.user_id': 0,
+                    'classes.__v': 0,
+
+                }
             }
-        })
+        ],(err, content) => res.json(content[0]));
     }else{
         res.status(404).json({error: 'Could not find user'});
     }
 });
+
+// User.findById(req.session.user, (err,user) => {
+//     if(err) throw err;
+//     if(user){
+        
+//         res.json(user);
+//     }else{
+//         res.status(404).send();
+//     }
+// })
 
 module.exports = router;

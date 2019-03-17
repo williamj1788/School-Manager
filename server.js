@@ -3,6 +3,7 @@ const session = require('express-session');
 const multer = require('multer');
 const upload = multer();
 const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo')(session);
 
 const userRouter = require('./router/userRouter');
 const classRouter = require('./router/classRouter');
@@ -21,9 +22,15 @@ mongoose.connect(url, {useNewUrlParser: true})
     .catch(err => console.log(err));
 
 app.use(upload.none());
-app.use(session({secret: 'key board cat'}));
+app.use(session({
+    secret: 'key board cat',
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    cookie: {
+        maxAge: 600000000
+    }
+}));
 
-router.use(SetHeaders);
+app.use(SetHeaders);
 
 app.use('/api/user', userRouter);
 app.use('/api/customer', classRouter);

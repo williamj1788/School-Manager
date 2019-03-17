@@ -21,6 +21,7 @@ class Signup extends React.Component{
         fetch('http://localhost:8080/api/user/signup',{
             method: 'POST',
             body: formData,
+            credentials: 'include',
         })
         .then(res => {
             if(res.status !== 400){
