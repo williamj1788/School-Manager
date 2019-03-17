@@ -107,6 +107,7 @@ $dark-blue: #00A1C2;
                         box-shadow: 0 0 11px rgba(0, 0, 0, 0.16);
                         padding: 0 13px;
                         margin: 10px 0;
+                        box-sizing: border-box;
                         .item-name{
                             margin: 0;
                             font-size: 26px;

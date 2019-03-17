@@ -2,11 +2,8 @@ import React from 'react';
 
 import '../styles/classDetail.scss';
 
-import { connect } from "react-redux";
-
-const mapStateToProps = state => {
-    return { tasks: state.tasks, tests: state.tests };
-}; 
+import ShowTasks from './showTasks';
+import ShowTests from './showTests';
 
 class ClassDetail extends React.Component{
     constructor(props){
@@ -35,18 +32,8 @@ class ClassDetail extends React.Component{
 
 
     render(){
-        let tasks = this.props.tasks;
-        tasks = tasks.map((task,index) => {
-            return (
-                <div key={index} className="detail-item">
-                    <p className="item-name">{task.name}</p>
-                    <div className="flex">
-                        <p className="due">Due in {task.due} days</p>
-                        <button className="item-close" type="button"></button>
-                    </div>
-                </div>
-            )
-        });
+        console.log(this.state.showTask);
+        console.log(this.state.showTest);
         return(
             <div id="class-detail">
                 <div id="class-container">
@@ -61,19 +48,12 @@ class ClassDetail extends React.Component{
                             <span className="centered" style={this.state.showTest ? {color: 'white'} : null}>Test</span>
                         </div>
                     </div>
-                    <div className="detail-container">
-                        <div className="offset">
-                            <button className="add-button">Add Task</button>
-                            <div className="detail">
-                                {tasks}
-                            </div>
-                        </div>
-                    </div>
+                    {this.state.showTask && <ShowTasks />}
+                    {this.state.showTest && <ShowTests />}
                 </div>
             </div>
         )
     }
 }
 
-ClassDetail = connect(mapStateToProps)(ClassDetail);
 export default ClassDetail;
