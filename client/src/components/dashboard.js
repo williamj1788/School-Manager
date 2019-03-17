@@ -3,6 +3,7 @@ import '../styles/dashboard.scss';
 
 import Navbar from './navbar';
 import AddClass from './addClass';
+import ClassDetail from './classDetail'
 
 import { connect } from "react-redux";
 
@@ -71,6 +72,7 @@ class Dashboard extends React.Component{
                     </div>
                 </div>
                 {this.state.ShowAddClass && <AddClass toggle={this.toggleShowAddClass}/>}
+                <ClassDetail />
             </div>
         )
     }
