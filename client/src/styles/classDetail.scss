@@ -144,8 +144,25 @@ $dark-blue: #00A1C2;
         }
     }
 }
+.item-exit{
+    transform: scale(1);
+}
+.item-exit.item-exit-active{
+    transform: scale(0);
+    transition: transform 300ms;
+}
+
+
+
+@keyframes none{
+}
 
 @keyframes zoomOut{
     from {transform: scale(0)} 
     to {transform: scale(1)}
+}
+
+@keyframes zoomIn{
+    from {transform: scale(1)} 
+    to {transform: scale(0)}
 }
