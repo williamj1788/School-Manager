@@ -20,9 +20,11 @@ class Dashboard extends React.Component{
         this.state = {
             username: '',
             ShowAddClass: false,
+            ShowClassDetail: false,
             loading: true,
         }
-        this.toggleShowAddClass = this.toggleShowAddClass.bind(this);   
+        this.toggleShowAddClass = this.toggleShowAddClass.bind(this);
+        this.toggleShowClassDetail = this.toggleShowClassDetail.bind(this);    
     }
 
     componentDidMount(){
@@ -52,6 +54,12 @@ class Dashboard extends React.Component{
         })
     }
 
+    toggleShowClassDetail(){
+        this.setState({
+            ShowClassDetail: !this.state.ShowClassDetail,
+        });
+    }
+
     toggleShowAddClass(){
         this.setState({
             ShowAddClass: !this.state.ShowAddClass,
@@ -61,7 +69,7 @@ class Dashboard extends React.Component{
     render(){
         let classes = this.props.classes;
         classes = classes.map((Class,index) => {
-            return <div className="class" key={index} style={{backgroundColor: Class.color}}><span className="class-name">{Class.name}</span></div>;
+            return <div className="class" onClick={this.toggleShowClassDetail} key={index} style={{backgroundColor: Class.color}}><span className="class-name">{Class.name}</span></div>;
         });
         return(
             <div>
@@ -72,7 +80,7 @@ class Dashboard extends React.Component{
                     </div>
                 </div>
                 {this.state.ShowAddClass && <AddClass toggle={this.toggleShowAddClass}/>}
-                <ClassDetail />
+                {this.state.ShowClassDetail && <ClassDetail toggle={this.toggleShowClassDetail} />}
             </div>
         )
     }

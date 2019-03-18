@@ -14,8 +14,13 @@ class ClassDetail extends React.Component{
         }
         this.SetShowtask = this.SetShowtask.bind(this);
         this.SetShowTest = this.SetShowTest.bind(this);
+        this.toggle = this.toggle.bind(this);
     }
 
+    toggle(){
+        this.props.toggle();
+    }
+    
     SetShowTest(){
         this.setState({
             showTask: false,
@@ -37,7 +42,7 @@ class ClassDetail extends React.Component{
                 <div id="class-container">
                     <div id="class-header">
                         <span id="class-header-text">Class Name</span>
-                        <button className="close-button" style={{width: '35px', height: '35px'}} type="button"></button>
+                        <button className="close-button" onClick={this.toggle} style={{width: '35px', height: '35px'}} type="button"></button>
                     </div>
                     <div id="tab-container">
                         <div className="tab" onMouseDown={this.SetShowtask} style={this.state.showTask ? {backgroundColor: '#06CAF2'} : null} >
