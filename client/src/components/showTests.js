@@ -7,14 +7,26 @@ const mapStateToProps = state => {
 }; 
 
 class ShowTests extends React.Component{
-
+    
     render(){
+        let tests = this.props.tests;
+        tests = tests.map((test,index) => {
+            return (
+                <div key={index} className="detail-item">
+                    <p className="item-name">{test.name}</p>
+                    <div className="flex">
+                        <p className="due">{test.due} days left</p>
+                        <button className="item-close" type="button"></button>
+                    </div>
+                </div>
+            )
+        });
         return(
             <div className="detail-container">
                 <div className="offset">
                     <button className="add-button">Add Tests</button>
                     <div className="detail">
-                        <h1>Hello Tests</h1>
+                        {tests}
                     </div>
                 </div>
             </div>

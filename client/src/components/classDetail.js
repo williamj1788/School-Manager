@@ -32,13 +32,12 @@ class ClassDetail extends React.Component{
 
 
     render(){
-        console.log(this.state.showTask);
-        console.log(this.state.showTest);
         return(
             <div id="class-detail">
                 <div id="class-container">
                     <div id="class-header">
                         <span id="class-header-text">Class Name</span>
+                        <button className="close-button" style={{width: '35px', height: '35px'}} type="button"></button>
                     </div>
                     <div id="tab-container">
                         <div className="tab" onMouseDown={this.SetShowtask} style={this.state.showTask ? {backgroundColor: '#06CAF2'} : null} >

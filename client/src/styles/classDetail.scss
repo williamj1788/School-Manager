@@ -39,6 +39,7 @@ $dark-blue: #00A1C2;
         margin-top: 100px;
         border-radius: 10px;
         position: relative;
+        animation: zoomOut 1s;
         #class-header{
             width: 100%;
             height: 90px;
@@ -142,4 +143,9 @@ $dark-blue: #00A1C2;
             }
         }
     }
+}
+
+@keyframes zoomOut{
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
 }

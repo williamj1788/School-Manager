@@ -5,3 +5,7 @@ export function setClass(payload) {
 export function addClass(payload) {
     return { type: "ADD_CLASS", payload };
 };
+
+export function removeTask(payload) {
+    return { type: "REMOVE_TASK", payload };
+};

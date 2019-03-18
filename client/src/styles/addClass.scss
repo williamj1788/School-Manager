@@ -53,21 +53,6 @@ $dark-blue: #00A1C2;
                 color: white;
                 font-size: 30px;
             }
-            #close-button{
-                background-color: transparent;
-                background-image: url('../Img/Close.png');
-                background-size: cover;
-                border: 0;
-                width: 30px;
-                height: 30px;
-                position: absolute;
-                top: 50%;
-                right: 10px;
-                transform: translateY(-50%);
-            }
-            #close-button:hover{
-                cursor: pointer;
-            }
         }
         form{
             width: 100%;
@@ -87,6 +72,22 @@ $dark-blue: #00A1C2;
                 }
             }
         }
+    }
+}
+
+.close-button{
+    background-color: transparent;
+    background-image: url('../Img/Close.png');
+    background-size: cover;
+    border: 0;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    &:hover{
+        cursor: pointer;
     }
 }
 

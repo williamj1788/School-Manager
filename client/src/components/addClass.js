@@ -37,7 +37,7 @@ class AddClass extends React.Component{
                 <div className="add-class-container">
                     <div className="header">
                         <span className="header-text">Add Class</span>
-                        <button id="close-button" type="button" onClick={this.toggle}></button>
+                        <button className="close-button" type="button" onClick={this.toggle}></button>
                     </div>
                     <form onSubmit={this.onSubmit} id="add-class-form">
                         <div className="form-container">
