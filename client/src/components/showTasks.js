@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 class ShowTasks extends React.Component{
 
 
-    handleOnClick = (index) => {
+    handleOnClick = index => {
         this.props.dispatch(removeTask(index));
     }
     

@@ -2,6 +2,8 @@ import React from 'react';
 
 import { connect } from "react-redux";
 
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+
 import { removeTest } from '../action';
 
 const mapStateToProps = state => {
@@ -18,13 +20,18 @@ class ShowTests extends React.Component{
         let tests = this.props.tests;
         tests = tests.map((test,index) => {
             return (
-                <div key={index} className="detail-item">
+                <CSSTransition
+                key={test.id}
+                timeout={300}    
+                classNames="item">
+                <div className="detail-item">
                     <p className="item-name">{test.name}</p>
                     <div className="flex">
                         <p className="due">{test.due} days left</p>
                         <button className="item-close" type="button" onClick={() => this.handleOnClick(index)}></button>
                     </div>
                 </div>
+                </CSSTransition>
             )
         });
         return(
@@ -32,7 +39,7 @@ class ShowTests extends React.Component{
                 <div className="offset">
                     <button className="add-button">Add Tests</button>
                     <div className="detail">
-                        {tests}
+                    <TransitionGroup>{tests}</TransitionGroup>
                     </div>
                 </div>
             </div>
