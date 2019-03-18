@@ -13,9 +13,11 @@ class ClassDetail extends React.Component{
         this.state = {
             showTask: true,
             showTest: false,
+            showAddTask: true,
         }
         this.SetShowtask = this.SetShowtask.bind(this);
         this.SetShowTest = this.SetShowTest.bind(this);
+        this.SetshowAddTask = this.SetshowAddTask.bind(this);
         this.toggle = this.toggle.bind(this);
     }
 
@@ -37,6 +39,12 @@ class ClassDetail extends React.Component{
         });
     }
 
+    SetshowAddTask(){
+        this.setState({
+            showAddTask: !this.state.showAddTask,
+        });
+    }
+
 
     render(){
         return(
@@ -54,10 +62,10 @@ class ClassDetail extends React.Component{
                             <span className="centered" style={this.state.showTest ? {color: 'white'} : null}>Test</span>
                         </div>
                     </div>
-                    {this.state.showTask && <ShowTasks />}
+                    {this.state.showTask && <ShowTasks show={this.SetshowAddTask} />}
                     {this.state.showTest && <ShowTests />}
                 </div>
-                <AddTask />
+                {this.state.showAddTask && <AddTask />}
             </div>
         )
     }

@@ -11,7 +11,9 @@ const mapStateToProps = state => {
 }; 
 
 class ShowTasks extends React.Component{
-
+    showAddTask = () => {
+        this.props.show();
+    }
 
     handleOnClick = index => {
         this.props.dispatch(removeTask(index));
@@ -21,7 +23,7 @@ class ShowTasks extends React.Component{
         return(
             <div className="detail-container">
                 <div className="offset">
-                    <button className="add-button">Add Task</button>
+                    <button className="add-button" onClick={this.showAddTask}>Add Task</button>
                     <div className="detail">
                         <TransitionGroup>
                         {this.props.tasks.map((task,index) => (
