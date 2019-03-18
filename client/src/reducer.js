@@ -22,6 +22,12 @@ function reducer(state = initialState,action){
         return Object.assign({}, state, {
             tasks: copy
         });
+    }else if(action.type === 'REMOVE_TEST'){
+        let copy = state.tests.slice();
+        copy.splice(action.payload,1);
+        return Object.assign({}, state, {
+            tests: copy
+        });
     }
     
     return state;

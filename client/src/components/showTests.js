@@ -2,11 +2,17 @@ import React from 'react';
 
 import { connect } from "react-redux";
 
+import { removeTest } from '../action';
+
 const mapStateToProps = state => {
     return {tests: state.tests };
 }; 
 
 class ShowTests extends React.Component{
+    
+    handleOnClick = index => {
+        this.props.dispatch(removeTest(index));
+    }
     
     render(){
         let tests = this.props.tests;
@@ -16,7 +22,7 @@ class ShowTests extends React.Component{
                     <p className="item-name">{test.name}</p>
                     <div className="flex">
                         <p className="due">{test.due} days left</p>
-                        <button className="item-close" type="button"></button>
+                        <button className="item-close" type="button" onClick={() => this.handleOnClick(index)}></button>
                     </div>
                 </div>
             )

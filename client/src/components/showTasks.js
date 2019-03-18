@@ -10,7 +10,7 @@ const mapStateToProps = state => {
 
 class ShowTasks extends React.Component{
     
-    removeTask = index => {
+    handleOnClick = index => {
         this.props.dispatch(removeTask(index));
     }
     
@@ -22,7 +22,7 @@ class ShowTasks extends React.Component{
                     <p className="item-name">{task.name}</p>
                     <div className="flex">
                         <p className="due">Due in {task.due} days</p>
-                        <button className="item-close" type="button" onClick={() => this.removeTask(index)}></button>
+                        <button className="item-close" type="button" onClick={() => this.handleOnClick(index)}></button>
                     </div>
                 </div>
             )

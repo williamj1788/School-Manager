@@ -9,3 +9,6 @@ export function addClass(payload) {
 export function removeTask(payload) {
     return { type: "REMOVE_TASK", payload };
 };
+export function removeTest(payload) {
+    return { type: "REMOVE_TEST", payload };
+};
