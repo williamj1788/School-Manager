@@ -5,6 +5,8 @@ import '../styles/classDetail.scss';
 import ShowTasks from './showTasks';
 import ShowTests from './showTests';
 
+import AddTask from './addTask';
+
 class ClassDetail extends React.Component{
     constructor(props){
         super(props);
@@ -55,6 +57,7 @@ class ClassDetail extends React.Component{
                     {this.state.showTask && <ShowTasks />}
                     {this.state.showTest && <ShowTests />}
                 </div>
+                <AddTask />
             </div>
         )
     }
