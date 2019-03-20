@@ -1,6 +1,7 @@
 import React from 'react';
 
 import '../styles/classDetail.scss';
+// import { CSSTransition } from 'react-transition-group'
 
 import ShowTasks from './showTasks';
 import ShowTests from './showTests';
@@ -13,7 +14,7 @@ class ClassDetail extends React.Component{
         this.state = {
             showTask: true,
             showTest: false,
-            showAddTask: true,
+            showAddTask: false,
         }
         this.SetShowtask = this.SetShowtask.bind(this);
         this.SetShowTest = this.SetShowTest.bind(this);
@@ -43,6 +44,7 @@ class ClassDetail extends React.Component{
         this.setState({
             showAddTask: !this.state.showAddTask,
         });
+
     }
 
 
@@ -65,7 +67,7 @@ class ClassDetail extends React.Component{
                     {this.state.showTask && <ShowTasks show={this.SetshowAddTask} />}
                     {this.state.showTest && <ShowTests />}
                 </div>
-                {this.state.showAddTask && <AddTask />}
+                {this.state.showAddTask && <AddTask show={this.SetshowAddTask} />}
             </div>
         )
     }

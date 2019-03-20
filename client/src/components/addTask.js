@@ -2,9 +2,10 @@ import React from 'react';
 
 class AddTask extends React.Component{
 
+    
     render(){
         return(
-            <div className="addTask">
+            <div id="addTask">
                 <div id="addTask-header">
                     <span id="addTask-header-text">Add Task</span>
                 </div>
