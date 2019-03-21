@@ -3,7 +3,9 @@ import '../styles/dashboard.scss';
 
 import Navbar from './navbar';
 import AddClass from './addClass';
-import ClassDetail from './classDetail'
+import ClassDetail from './classDetail';
+
+// import { Transition, animated } from 'react-spring/renderprops';
 
 import { connect } from "react-redux";
 
@@ -57,13 +59,13 @@ class Dashboard extends React.Component{
     toggleShowClassDetail(){
         this.setState({
             ShowClassDetail: !this.state.ShowClassDetail,
-        });
+        },() => console.log('clicked'));
     }
 
     toggleShowAddClass(){
         this.setState({
             ShowAddClass: !this.state.ShowAddClass,
-        });
+        },() => console.log('clicked'));
     }
     
     render(){

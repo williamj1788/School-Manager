@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../styles/classDetail.scss';
 // import { CSSTransition } from 'react-transition-group'
-import { transition, Transition } from 'react-spring/renderprops';
+import { Transition, animated } from 'react-spring/renderprops';
 
 import ClassContainer from './classContatiner';
 
@@ -31,13 +31,21 @@ class ClassDetail extends React.Component{
     render(){
         return(
             <div id="class-detail">
-                {/* <Transition
-                items={this.state.showAddTask}
-                from={}
-                > */}
-                <ClassContainer toggle={this.toggle} />
+                <Transition
+                native
+                items={true}
+                from={{transform: "scale(0)"}}
+                enter={{transform: "scale(1)"}}
+                leave={{transform: "scale(0)"}}
+                config={{duration: 400}}
+                >
+                {show => show && (props => (
+                    <animated.div style={props}>
+                        <ClassContainer toggle={this.toggle} />
+                    </animated.div>
+                ))}
+                </Transition>
                 {this.state.showAddTask && <AddTask show={this.SetshowAddTask} />}
-                {/* </Transition> */}
             </div>
         )
     }
