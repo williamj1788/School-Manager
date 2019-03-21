@@ -37,7 +37,7 @@ class ShowTests extends React.Component{
         return(
             <div className="detail-container">
                 <div className="offset">
-                    <button className="add-button">Add Tests</button>
+                    <button className="add-button" onClick={this.props.show}>Add Tests</button>
                     <div className="detail">
                     <TransitionGroup>{tests}</TransitionGroup>
                     </div>

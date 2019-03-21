@@ -37,8 +37,8 @@ class ClassContainer extends React.Component{
                         <span className="centered" style={this.state.showTest ? {color: 'white'} : null}>Test</span>
                     </div>
                 </div>
-                {this.state.showTask && <ShowTasks show={this.props.show} />}
-                {this.state.showTest && <ShowTests />}
+                {this.state.showTask && <ShowTasks show={this.props.show[0]} />}
+                {this.state.showTest && <ShowTests show={this.props.show[1]} />}
             </div>
         )
     }

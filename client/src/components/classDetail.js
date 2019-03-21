@@ -8,12 +8,15 @@ import { easeSinInOut } from 'd3-ease';
 import ClassContainer from './classContatiner';
 
 import AddTask from './addTask';
+import AddTest from './addTest';
 
 class ClassDetail extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            showAddTask: 1,
+            showAddTask: false,
+            showAddTest: false,
+            IsAddTabOpen: false,
         }
         this.SetshowAddTask = this.SetshowAddTask.bind(this);
         this.toggle = this.toggle.bind(this);
@@ -25,33 +28,74 @@ class ClassDetail extends React.Component{
 
     SetshowAddTask(){
         this.setState({
-            showAddTask: this.state.showAddTask === 1 ? 2 : 1,
+            showAddTask: !this.state.showAddTask,
+            showAddTest: false,
+            IsAddTabOpen: !this.state.showAddTask,
         });
-
     }
-    componentWillUnmount(){
-        console.log('component unmouting');
+    SetshowAddTest = () => {
+        this.setState({
+            showAddTest: !this.state.showAddTest,
+            showAddTask: false,
+            IsAddTabOpen: !this.state.showAddTest,
+        });
     }
     render(){
-        // console.log(this.state.showAddTask)
         return(
             <div id="class-detail">
                 <Transition
                 native
-                items={this.state.showAddTask} keys={3}
+                items={this.state.IsAddTabOpen} keys={3}
                 from={{position: 'relative',transform: "scale(0)", right: '0px'}}
                 enter={[{transform: "scale(1)"}]}
                 leave={{transform: "scale(0)"}}
-                update={{ right: '200px'}}
+                update={show => show ? {right: '300%'}:{right: '0'}}
                 config={{duration: 1100, easing: easeSinInOut}}
                 >
                 {show => (props => (
                     <animated.div style={props}>
-                        <ClassContainer toggle={this.toggle} show={this.SetshowAddTask}/>
+                        <ClassContainer toggle={this.toggle} show={[this.SetshowAddTask,this.SetshowAddTest]}/>
                     </animated.div>
                 ))}
                 </Transition>
-                {/* {this.state.showAddTask && <AddTask />} */}
+                <Transition
+                native
+                items={this.state.showAddTask}
+                from={{opacity: 0}}
+                enter={{opacity: 1}}
+                leave={{opacity: 0}}
+                config={(item,state) => {
+                    if(state === 'leave'){
+                        return {duration: 300};
+                    }
+                   return {duration: 1100, delay: 1100};
+                }}
+                >
+                {show => show && (props => (
+                    <animated.div style={props}>
+                        <AddTask />
+                    </animated.div>
+                ))}
+                </Transition>
+                <Transition
+                native
+                items={this.state.showAddTest}
+                from={{opacity: 0}}
+                enter={{opacity: 1}}
+                leave={{opacity: 0}}
+                config={(item,state) => {
+                    if(state === 'leave'){
+                        return {duration: 300};
+                    }
+                   return {duration: 1100, delay: 1100};
+                }}
+                >
+                {show => show && (props => (
+                    <animated.div style={props}>
+                        <AddTest />
+                    </animated.div>
+                ))}
+                </Transition>
             </div>
         )
     }
