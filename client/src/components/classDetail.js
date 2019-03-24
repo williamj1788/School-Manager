@@ -73,7 +73,7 @@ class ClassDetail extends React.Component{
                 >
                 {show => show && (props => (
                     <animated.div style={props}>
-                        <AddTask />
+                        <AddTask show={this.SetshowAddTask} />
                     </animated.div>
                 ))}
                 </Transition>

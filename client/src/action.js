@@ -12,3 +12,6 @@ export function removeTask(payload) {
 export function removeTest(payload) {
     return { type: "REMOVE_TEST", payload };
 };
+export function addTask(payload) {
+    return { type: "ADD_TASK", payload };
+};

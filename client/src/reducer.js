@@ -2,7 +2,7 @@ import uuid from 'uuid';
 const initialState = {
     username: null,
     classes: [],
-    tasks: [{id: uuid(), name: 'finish homework', due: '7'},{id: uuid(),name: 'do stuff', due: '2'},{id: uuid(),name: 'do more stuff', due: '4'},{id: uuid(),name: 'Test1', due: '7'},{id: uuid(), name: 'Test2', due: '7'}],
+    tasks: [{id: uuid(), name: 'finish homework', due: '2019-06-10'},{id: uuid(),name: 'do stuff', due: '2019-03-17'},{id: uuid(),name: 'do more stuff', due: '2019-03-14'},{id: uuid(),name: 'Test1', due: '2019-03-27'},{id: uuid(), name: 'Test2', due: '2019-03-24'}],
     tests: [{id: uuid(),name: 'Test1', due: '7'},{id: uuid(),name: 'Test2', due: '2'},{id: uuid(),name: 'Test3', due: '4'},{id: uuid(),name: 'Test4', due: '7'},{id: uuid(),name: 'Test5', due: '7'},],
 };
 
@@ -12,6 +12,17 @@ function reducer(state = initialState,action){
         copyStateClasses.push(action.payload);
         return Object.assign({}, state, {
             classes: copyStateClasses,
+        });
+    }else if(action.type === 'ADD_TASK'){
+        let task = {
+            id: uuid(),
+            name: action.payload.name,
+            due: action.payload.due,
+        }
+        let copyOfStateTasks = state.tasks.slice();
+        copyOfStateTasks.push(task);
+        return Object.assign({}, state, {
+            tasks: copyOfStateTasks
         });
     }else if(action.type === 'SET_CLASS'){
         return Object.assign({}, state, {
