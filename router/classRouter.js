@@ -12,7 +12,8 @@ router.post('/', (req,res,next) => {
         user_id: id,
     });
     newClass.save().then(Class => {
-        res.json(Class);
+        let {user_id, ...newClass} = Class;
+        res.json(newClass);
     });;
 });
 

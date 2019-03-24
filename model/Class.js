@@ -3,6 +3,9 @@ const Scheme = mongoose.Schema;
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
+const Task = require('./Task');
+const Test = require('./Test');
+
 const ClassScheme = new Scheme({
     name: {
         type: String,
@@ -11,6 +14,14 @@ const ClassScheme = new Scheme({
     color: {
         type: String,
         default: '#000000',
+    },
+    Tasks: {
+        type: [Test],
+        default: [],
+    },
+    Tests: {
+        type: [Task],
+        default: [],
     },
     user_id: {
         type: ObjectId,
