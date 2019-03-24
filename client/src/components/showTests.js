@@ -31,7 +31,7 @@ class ShowTests extends React.Component{
                 return 0;
             }
         });
-        tests = tests.map((test,index) => {
+        tests = tests.map(test => {
             return (
                 <CSSTransition
                 key={test.id}
@@ -41,7 +41,7 @@ class ShowTests extends React.Component{
                     <p className="item-name">{test.name}</p>
                     <div className="flex">
                         <p className="due">{Math.round((parseDateToTime(test.due) - Date.now()) / (1000 * 60 * 60 * 24))} days left</p>
-                        <button className="item-close" type="button" onClick={() => this.handleOnClick(index)}></button>
+                        <button className="item-close" type="button" onClick={() => this.handleOnClick(test.id)}></button>
                     </div>
                 </div>
                 </CSSTransition>

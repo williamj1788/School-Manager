@@ -61,10 +61,10 @@ function reducer(state = initialState,action){
             name: action.payload.name,
             due: action.payload.due,
         }
-        let copyOfStateTasks = state.tasks.slice();
-        copyOfStateTasks.push(task);
+        let copy = state.classes.slice();
+        copy[state.classIndex].tasks.push(task);
         return Object.assign({}, state, {
-            tasks: copyOfStateTasks
+            classes: copy
         });
     }else if(action.type === 'ADD_TEST'){
         let Test = {
@@ -72,10 +72,10 @@ function reducer(state = initialState,action){
             name: action.payload.name,
             due: action.payload.due,
         }
-        let copyOfStateTests = state.tests.slice();
-        copyOfStateTests.push(Test);
+        let copy = state.classes.slice();
+        copy[state.classIndex].tests.push(Test);
         return Object.assign({}, state, {
-            tests: copyOfStateTests
+            classes: copy,
         });
     }else if(action.type === 'SET_CLASS'){
         return Object.assign({}, state, {
@@ -94,10 +94,12 @@ function reducer(state = initialState,action){
             classes: copy
         });
     }else if(action.type === 'REMOVE_TEST'){
-        let copy = state.tests.slice();
-        copy.splice(action.payload,1);
+        let copy = state.classes.slice();
+        copy[state.classIndex].tests = copy[state.classIndex].tests.filter(test => {
+            return test.id !== action.payload;
+        });
         return Object.assign({}, state, {
-            tests: copy
+            classes: copy
         });
     }
     
