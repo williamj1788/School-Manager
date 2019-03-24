@@ -1,7 +1,19 @@
 import React from 'react';
 
-class AddTest extends React.Component{
+import { addTask } from '../action';
 
+import { connect } from "react-redux";
+
+class AddTest extends React.Component{
+    handleOnSubmit = event => {
+        event.preventDefault();
+        let form = document.getElementById('addTask-form');
+        let formData = new FormData(form);
+        this.props.dispatch(addTask({name: 'New Test', due: '2019-03-13'}));
+        console.log('form submitted');
+        form.reset();
+        this.props.show();
+    }
     render(){
         return(
             <div id="addTask">
@@ -9,7 +21,7 @@ class AddTest extends React.Component{
                     <span id="addTask-header-text">Add Test</span>
                 </div>
                 <div className="offset">
-                    <form id="addTask-form">
+                    <form id="addTask-form" onSubmit={this.handleOnSubmit}>
                         <label htmlFor="taskName">
                         Name: <input type="text" name="taskName" placeholder="Enter Name"/>
                         </label>
@@ -23,5 +35,5 @@ class AddTest extends React.Component{
         )
     }
 }
-
+AddTest = connect()(AddTest);
 export default AddTest;

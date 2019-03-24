@@ -9,7 +9,10 @@ import { removeTest } from '../action';
 const mapStateToProps = state => {
     return {tests: state.tests };
 }; 
-
+function parseDateToTime(input) {
+    var parts = input.split('-');
+    return new Date(parts[0], parts[1]-1, parts[2]).getTime();
+}
 class ShowTests extends React.Component{
     
     handleOnClick = index => {
@@ -18,6 +21,17 @@ class ShowTests extends React.Component{
     
     render(){
         let tests = this.props.tests;
+        tests = this.props.tests.slice().sort((a,b) => {
+            let dateA = parseDateToTime(a.due);
+            let dateB = parseDateToTime(b.due);
+            if(dateA > dateB){
+                return 1
+            }else if(dateA < dateB){
+                return -1
+            }else{
+                return 0;
+            }
+        });
         tests = tests.map((test,index) => {
             return (
                 <CSSTransition
@@ -27,7 +41,7 @@ class ShowTests extends React.Component{
                 <div className="detail-item">
                     <p className="item-name">{test.name}</p>
                     <div className="flex">
-                        <p className="due">{test.due} days left</p>
+                        <p className="due">{Math.round((parseDateToTime(test.due) - Date.now()) / (1000 * 60 * 60 * 24))} days left</p>
                         <button className="item-close" type="button" onClick={() => this.handleOnClick(index)}></button>
                     </div>
                 </div>
