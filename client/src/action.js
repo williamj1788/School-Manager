@@ -1,6 +1,9 @@
 export function setClass(payload) {
     return { type: "SET_CLASS", payload };
 };
+export function setClassIndex(payload) {
+    return { type: "SET_CLASS_INDEX", payload };
+};
 export function addClass(payload) {
     return { type: "ADD_CLASS", payload };
 };

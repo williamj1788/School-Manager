@@ -7,8 +7,9 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { removeTask } from '../action';
 
 const mapStateToProps = state => {
-    return { tasks: state.tasks };
-}; 
+    return { classes: state.classes, classIndex: state.classIndex };
+};
+
 function parseDateToTime(input) {
     var parts = input.split('-');
     return new Date(parts[0], parts[1]-1, parts[2]).getTime();
@@ -16,12 +17,12 @@ function parseDateToTime(input) {
 
 class ShowTasks extends React.Component{
 
-    handleOnClick = index => {
-        this.props.dispatch(removeTask(index));
+    handleOnClick = id => {
+        this.props.dispatch(removeTask(id));
     }
     
     render(){
-        let tasks = this.props.tasks.slice().sort((a,b) => {
+        let tasks = this.props.classes[this.props.classIndex].tasks.slice().sort((a,b) => {
             let dateA = parseDateToTime(a.due);
             let dateB = parseDateToTime(b.due);
             if(dateA > dateB){
@@ -38,7 +39,7 @@ class ShowTasks extends React.Component{
                     <button className="add-button" onClick={this.props.show}>Add Task</button>
                     <div className="detail">
                         <TransitionGroup>
-                        {tasks.map((task,index) => (
+                        {tasks.map(task => (
                                 <CSSTransition
                                     key={task.id}
                                     timeout={300}    
@@ -47,7 +48,7 @@ class ShowTasks extends React.Component{
                                         <p className="item-name">{task.name}</p>
                                         <div className="flex">
                                             <p className="due">Due in {Math.round((parseDateToTime(task.due) - Date.now()) / (1000 * 60 * 60 * 24))} days</p>
-                                            <button className="item-close" type="button" onClick={() => this.handleOnClick(index)}></button>
+                                            <button className="item-close" type="button" onClick={() => this.handleOnClick(task.id)}></button>
                                         </div>
                                     </div>
                                 </CSSTransition>

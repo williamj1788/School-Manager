@@ -45,6 +45,7 @@ const initialState = {
             ],
         },
     ],
+    classIndex: null,
 };
 
 function reducer(state = initialState,action){
@@ -80,11 +81,17 @@ function reducer(state = initialState,action){
         return Object.assign({}, state, {
             classes: action.payload
         });
-    }else if(action.type === 'REMOVE_TASK'){
-        let copy = state.tasks.slice();
-        copy.splice(action.payload,1);
+    }else if(action.type === 'SET_CLASS_INDEX'){
         return Object.assign({}, state, {
-            tasks: copy
+            classIndex: action.payload
+        });
+    }else if(action.type === 'REMOVE_TASK'){
+        let copy = state.classes.slice();
+        copy[state.classIndex].tasks = copy[state.classIndex].tasks.filter(task => {
+            return task.id !== action.payload;
+        });
+        return Object.assign({}, state, {
+            classes: copy
         });
     }else if(action.type === 'REMOVE_TEST'){
         let copy = state.tests.slice();

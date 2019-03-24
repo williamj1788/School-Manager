@@ -7,7 +7,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { removeTest } from '../action';
 
 const mapStateToProps = state => {
-    return {tests: state.tests };
+    return { classes: state.classes, classIndex: state.classIndex };
 }; 
 function parseDateToTime(input) {
     var parts = input.split('-');
@@ -20,8 +20,7 @@ class ShowTests extends React.Component{
     }
     
     render(){
-        let tests = this.props.tests;
-        tests = this.props.tests.slice().sort((a,b) => {
+        let tests = this.props.classes[this.props.classIndex].tests.slice().sort((a,b) => {
             let dateA = parseDateToTime(a.due);
             let dateB = parseDateToTime(b.due);
             if(dateA > dateB){
@@ -36,7 +35,7 @@ class ShowTests extends React.Component{
             return (
                 <CSSTransition
                 key={test.id}
-                timeout={300}    
+                timeout={300}  
                 classNames="item">
                 <div className="detail-item">
                     <p className="item-name">{test.name}</p>

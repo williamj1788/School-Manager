@@ -16,16 +16,17 @@ class AddClass extends React.Component{
     onSubmit(event){
         event.preventDefault();
         
-        let form = document.getElementById('add-class-form');
-        let formData = new FormData(form);
-        fetch('http://localhost:8080/api/customer', {
-            method: 'POST',
-            body: formData,
-            credentials: 'include',
-        })
-        .then(res => {return res.json()})
-        .then(res => {this.props.dispatch(addClass(res))})
-        .then(this.toggle);
+        // let form = document.getElementById('add-class-form');
+        // let formData = new FormData(form);
+        // fetch('http://localhost:8080/api/customer', {
+        //     method: 'POST',
+        //     body: formData,
+        //     credentials: 'include',
+        // })
+        // .then(res => {return res.json()})
+        // .then(res => {this.props.dispatch(addClass(res))})
+        // .then(this.toggle);
+        this.props.dispatch(addClass({name: 'PE', color: '#000000'}))
     }
     
     toggle(){

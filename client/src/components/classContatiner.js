@@ -3,6 +3,12 @@ import React from 'react';
 import ShowTasks from './showTasks';
 import ShowTests from './showTests';
 
+import { connect } from "react-redux";
+
+const mapStateToProps = state => {
+    return { classes: state.classes, classIndex: state.classIndex };
+}; 
+
 class ClassContainer extends React.Component{
     state = {
         showTask: true,
@@ -26,7 +32,7 @@ class ClassContainer extends React.Component{
         return(
             <div id="class-container">
                 <div id="class-header">
-                    <span id="class-header-text">Class Name</span>
+                    <span id="class-header-text">{this.props.classes[this.props.classIndex].name}</span>
                     <button className="close-button" onClick={this.props.toggle} style={{width: '35px', height: '35px'}} type="button"></button>
                 </div>
                 <div id="tab-container">
@@ -43,5 +49,5 @@ class ClassContainer extends React.Component{
         )
     }
 }
-
+ClassContainer = connect(mapStateToProps)(ClassContainer);
 export default ClassContainer;

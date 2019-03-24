@@ -9,7 +9,7 @@ import ClassDetail from './classDetail';
 
 import { connect } from "react-redux";
 
-import { setClass } from '../action';
+import { setClass, setClassIndex } from '../action';
 
 const mapStateToProps = state => {
     return { classes: state.classes };
@@ -56,22 +56,23 @@ class Dashboard extends React.Component{
         })
     }
 
-    toggleShowClassDetail(){
+    toggleShowClassDetail(index){
         this.setState({
             ShowClassDetail: !this.state.ShowClassDetail,
-        },() => console.log('clicked'));
+        });
+        this.props.dispatch(setClassIndex(index));
     }
 
     toggleShowAddClass(){
         this.setState({
             ShowAddClass: !this.state.ShowAddClass,
-        },() => console.log('clicked'));
+        });
     }
     
     render(){
         let classes = this.props.classes;
         classes = classes.map((Class,index) => {
-            return <div className="class" onClick={this.toggleShowClassDetail} key={index} style={{backgroundColor: Class.color}}><span className="class-name">{Class.name}</span></div>;
+            return <div className="class" onClick={() => this.toggleShowClassDetail(index)} key={index}  style={{backgroundColor: Class.color}}><span className="class-name">{Class.name}</span></div>;
         });
         return(
             <div>
@@ -82,7 +83,7 @@ class Dashboard extends React.Component{
                     </div>
                 </div>
                 {this.state.ShowAddClass && <AddClass toggle={this.toggleShowAddClass}/>}
-                {this.state.ShowClassDetail && <ClassDetail toggle={this.toggleShowClassDetail} />}
+                {this.state.ShowClassDetail && <ClassDetail toggle={this.toggleShowClassDetail} index={this.state.classIndex}/>}
             </div>
         )
     }
