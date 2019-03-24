@@ -51,7 +51,7 @@ class Dashboard extends React.Component{
                     username: res.username,
                     loading: false,
                 });
-                this.props.dispatch(setClass(res.classes));
+                // this.props.dispatch(setClass(res.classes));
             }
         })
     }

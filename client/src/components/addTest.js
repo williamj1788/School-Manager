@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { addTask } from '../action';
+import { addTest } from '../action';
 
 import { connect } from "react-redux";
 
@@ -9,7 +9,7 @@ class AddTest extends React.Component{
         event.preventDefault();
         let form = document.getElementById('addTask-form');
         let formData = new FormData(form);
-        this.props.dispatch(addTask({name: 'New Test', due: '2019-03-13'}));
+        this.props.dispatch(addTest({name: 'New Test', due: '2019-03-13'}));
         console.log('form submitted');
         form.reset();
         this.props.show();
@@ -23,10 +23,10 @@ class AddTest extends React.Component{
                 <div className="offset">
                     <form id="addTask-form" onSubmit={this.handleOnSubmit}>
                         <label htmlFor="taskName">
-                        Name: <input type="text" name="taskName" placeholder="Enter Name"/>
+                        Name: <input type="text" name="taskName" placeholder="Enter Name" required/>
                         </label>
                         <label htmlFor="dueDate">
-                        Due Date: <input type="date" name="dueDate" placeholder ="Enter Due Date"/>
+                        Due Date: <input type="date" name="dueDate" placeholder ="Enter Due Date" required/>
                         </label>
                         <button id="submit-task" type="submit">Submit</button>
                     </form>
