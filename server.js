@@ -14,6 +14,7 @@ const url = 'mongodb+srv://quez:quez123@project-cluster-8qd4n.mongodb.net/School
 function SetHeaders(req,res,next){
     res.setHeader('Access-Control-Allow-Origin','http://localhost:3000');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 }
 

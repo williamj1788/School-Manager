@@ -58,7 +58,7 @@ function reducer(state = initialState,action){
         });
     }else if(action.type === 'ADD_TASK'){
         let copy = state.classes.slice();
-        copy[state.classIndex].tasks.push(action.payload);
+        copy[state.classIndex].Tasks.push(action.payload);
         return Object.assign({}, state, {
             classes: copy
         });
@@ -69,7 +69,7 @@ function reducer(state = initialState,action){
             due: action.payload.due,
         }
         let copy = state.classes.slice();
-        copy[state.classIndex].tests.push(Test);
+        copy[state.classIndex].Tests.push(Test);
         return Object.assign({}, state, {
             classes: copy,
         });
@@ -80,22 +80,23 @@ function reducer(state = initialState,action){
         });
     }else if(action.type === 'SET_CLASS_INDEX'){
         let copy = state.classes.slice();
+        console.log(action.payload);
         return Object.assign({}, state, {
             classIndex: action.payload,
             classID: copy[action.payload]._id
         });
     }else if(action.type === 'REMOVE_TASK'){
         let copy = state.classes.slice();
-        copy[state.classIndex].tasks = copy[state.classIndex].tasks.filter(task => {
-            return task.id !== action.payload;
+        copy[state.classIndex].Tasks = copy[state.classIndex].Tasks.filter(task => {
+            return task._id !== action.payload;
         });
         return Object.assign({}, state, {
             classes: copy
         });
     }else if(action.type === 'REMOVE_TEST'){
         let copy = state.classes.slice();
-        copy[state.classIndex].tests = copy[state.classIndex].tests.filter(test => {
-            return test.id !== action.payload;
+        copy[state.classIndex].Tests = copy[state.classIndex].Tests.filter(test => {
+            return test._id !== action.payload;
         });
         return Object.assign({}, state, {
             classes: copy

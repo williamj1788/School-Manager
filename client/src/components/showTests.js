@@ -34,14 +34,14 @@ class ShowTests extends React.Component{
         tests = tests.map(test => {
             return (
                 <CSSTransition
-                key={test.id}
+                key={test._id}
                 timeout={300}  
                 classNames="item">
                 <div className="detail-item">
                     <p className="item-name">{test.name}</p>
                     <div className="flex">
                         <p className="due">{Math.round((parseDateToTime(test.due) - Date.now()) / (1000 * 60 * 60 * 24))} days left</p>
-                        <button className="item-close" type="button" onClick={() => this.handleOnClick(test.id)}></button>
+                        <button className="item-close" type="button" onClick={() => this.handleOnClick(test._id)}></button>
                     </div>
                 </div>
                 </CSSTransition>

@@ -7,9 +7,8 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { removeTask } from '../action';
 
 const mapStateToProps = state => {
-    return { classes: state.classes, classIndex: state.classIndex };
+    return { classes: state.classes, classIndex: state.classIndex, classID: state.classID };
 };
-
 function parseDateToTime(input) {
     var parts = input.split('-');
     return new Date(parts[0], parts[1]-1, parts[2]).getTime();
@@ -18,6 +17,10 @@ function parseDateToTime(input) {
 class ShowTasks extends React.Component{
 
     handleOnClick = id => {
+        fetch(`http://localhost:8080/api/class/task?classID=${this.props.classID}&taskID=${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+        });
         this.props.dispatch(removeTask(id));
     }
     
@@ -41,14 +44,14 @@ class ShowTasks extends React.Component{
                         <TransitionGroup>
                         {tasks.map(task => (
                                 <CSSTransition
-                                    key={task.id}
+                                    key={task._id}
                                     timeout={300}    
                                     classNames="item">
                                     <div className="detail-item">
                                         <p className="item-name">{task.name}</p>
                                         <div className="flex">
                                             <p className="due">Due in {Math.round((parseDateToTime(task.due) - Date.now()) / (1000 * 60 * 60 * 24))} days</p>
-                                            <button className="item-close" type="button" onClick={() => this.handleOnClick(task.id)}></button>
+                                            <button className="item-close" type="button" onClick={() => this.handleOnClick(task._id)}></button>
                                         </div>
                                     </div>
                                 </CSSTransition>

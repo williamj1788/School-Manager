@@ -57,7 +57,7 @@ class Dashboard extends React.Component{
         this.setState({
             ShowClassDetail: !this.state.ShowClassDetail,
         });
-        this.props.dispatch(setClassIndex(index));
+        this.props.dispatch(setClassIndex(index || 0));
     }
 
     toggleShowAddClass(){

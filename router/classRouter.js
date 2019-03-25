@@ -32,4 +32,12 @@ router.post('/task', (req, res, next) => {
     res.json(newTask);
 });
 
+router.delete('/task', (req, res, next) => {
+    User.updateOne({_id: req.session.user}, {$pull: {'classes.$[element].Tasks': {_id: req.query.taskID}}}, {arrayFilters: [{'element._id': req.query.classID}]})
+    .exec((err,raw) => {
+        if(err) throw err;
+    });
+    res.send();
+});
+
 module.exports = router;
