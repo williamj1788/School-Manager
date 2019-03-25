@@ -42,7 +42,7 @@ class Login extends React.Component{
     }
     
     render(){
-        if(this.state.login) return <Redirect to="/dashboard" />;
+        if(this.state.login) {return <Redirect to="/dashboard" />};
         return(
             <div className="Main">
                 <form className="main-form" onSubmit={this.handleSubmit}>

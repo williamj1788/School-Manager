@@ -20,7 +20,7 @@ class ShowTests extends React.Component{
     }
     
     render(){
-        let tests = this.props.classes[this.props.classIndex].tests.slice().sort((a,b) => {
+        let tests = this.props.classes[this.props.classIndex].Tests.slice().sort((a,b) => {
             let dateA = parseDateToTime(a.due);
             let dateB = parseDateToTime(b.due);
             if(dateA > dateB){

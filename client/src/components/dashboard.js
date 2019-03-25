@@ -9,10 +9,10 @@ import ClassDetail from './classDetail';
 
 import { connect } from "react-redux";
 
-import { setClass, setClassIndex } from '../action';
+import { setUser, setClassIndex } from '../action';
 
 const mapStateToProps = state => {
-    return { classes: state.classes };
+    return { classes: state.classes,username: state.username };
 }; 
 
 class Dashboard extends React.Component{
@@ -20,7 +20,6 @@ class Dashboard extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            username: '',
             ShowAddClass: false,
             ShowClassDetail: false,
             loading: true,
@@ -45,13 +44,11 @@ class Dashboard extends React.Component{
             }
         })
         .then(res => {
-            console.log(res);
             if(res.username){
+                this.props.dispatch(setUser(res))
                 this.setState({
-                    username: res.username,
                     loading: false,
                 });
-                // this.props.dispatch(setClass(res.classes));
             }
         })
     }

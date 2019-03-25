@@ -4,17 +4,24 @@ import { addTask } from '../action';
 
 import { connect } from "react-redux";
 
+const mapStateToProps = state => {
+    return { classID: state.classID };
+}; 
+
 class AddTask extends React.Component{
 
     handleOnSubmit = event => {
         event.preventDefault();
         let form = document.getElementById('addTask-form');
         let formData = new FormData(form);
-        for(let par of formData){
-            console.log(`${par[0]} is ${par[1]}`);
-        }
-        this.props.dispatch(addTask({name: 'New Task', due: '2019-03-13'}));
-        console.log('form submitted');
+        console.log(this.props.classID);
+        fetch(`http://localhost:8080/api/class/task?id=${this.props.classID}`,{
+            method: 'POST',
+            credentials: 'include',
+            body: formData,
+        })
+        .then(res => res.json())
+        .then(res => this.props.dispatch(addTask(res)));;
         form.reset();
         this.props.show();
     }
@@ -40,5 +47,5 @@ class AddTask extends React.Component{
         )
     }
 }
-AddTask = connect()(AddTask);
+AddTask = connect(mapStateToProps)(AddTask);
 export default AddTask;

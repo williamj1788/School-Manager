@@ -22,7 +22,7 @@ class ShowTasks extends React.Component{
     }
     
     render(){
-        let tasks = this.props.classes[this.props.classIndex].tasks.slice().sort((a,b) => {
+        let tasks = this.props.classes[this.props.classIndex].Tasks.slice().sort((a,b) => {
             let dateA = parseDateToTime(a.due);
             let dateB = parseDateToTime(b.due);
             if(dateA > dateB){

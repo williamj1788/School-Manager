@@ -1,10 +1,27 @@
 const mongoose = require('mongoose');
 const Scheme = mongoose.Schema;
 
-var ObjectId = mongoose.Schema.Types.ObjectId;
+const TestSchema = new Scheme({
+    name: {
+        required: true,
+        type: String,
+    },
+    due: {
+        required: true,
+        type: Date,
+    }
+});
 
-const Task = require('./Task');
-const Test = require('./Test');
+const TaskSchema = new Scheme({
+    name: {
+        required: true,
+        type: String,
+    },
+    due: {
+        required: true,
+        type: Date,
+    }
+});
 
 const ClassScheme = new Scheme({
     name: {
@@ -16,17 +33,13 @@ const ClassScheme = new Scheme({
         default: '#000000',
     },
     Tasks: {
-        type: [Test],
+        type: [TaskSchema],
         default: [],
     },
     Tests: {
-        type: [Task],
+        type: [TestSchema],
         default: [],
     },
-    user_id: {
-        type: ObjectId,
-        required: true,
-    }
 });
 
-module.exports = Class = mongoose.model('class', ClassScheme);
+module.exports = Class = require('mongoose').model('class', ClassScheme);

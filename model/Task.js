@@ -12,4 +12,4 @@ const TaskSchema = new Schema({
     }
 });
 
-module.exports = Class = mongoose.model('task', TaskSchema);
+module.exports = Task = require('mongoose').model('task', TaskSchema);

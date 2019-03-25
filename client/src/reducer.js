@@ -46,6 +46,7 @@ const initialState = {
         },
     ],
     classIndex: null,
+    classID: null,
 };
 
 function reducer(state = initialState,action){
@@ -56,13 +57,8 @@ function reducer(state = initialState,action){
             classes: copyStateClasses,
         });
     }else if(action.type === 'ADD_TASK'){
-        let task = {
-            id: uuid(),
-            name: action.payload.name,
-            due: action.payload.due,
-        }
         let copy = state.classes.slice();
-        copy[state.classIndex].tasks.push(task);
+        copy[state.classIndex].tasks.push(action.payload);
         return Object.assign({}, state, {
             classes: copy
         });
@@ -77,13 +73,16 @@ function reducer(state = initialState,action){
         return Object.assign({}, state, {
             classes: copy,
         });
-    }else if(action.type === 'SET_CLASS'){
+    }else if(action.type === 'SET_USER'){
         return Object.assign({}, state, {
-            classes: action.payload
+            username: action.payload.username,
+            classes: action.payload.classes,
         });
     }else if(action.type === 'SET_CLASS_INDEX'){
+        let copy = state.classes.slice();
         return Object.assign({}, state, {
-            classIndex: action.payload
+            classIndex: action.payload,
+            classID: copy[action.payload]._id
         });
     }else if(action.type === 'REMOVE_TASK'){
         let copy = state.classes.slice();

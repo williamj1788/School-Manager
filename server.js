@@ -33,7 +33,7 @@ app.use(session({
 app.use(SetHeaders);
 
 app.use('/api/user', userRouter);
-app.use('/api/customer', classRouter);
+app.use('/api/class', classRouter);
 
 
 const PORT = 8080;

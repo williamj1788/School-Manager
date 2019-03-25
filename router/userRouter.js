@@ -23,7 +23,7 @@ router.post('/login',(req,res,next) => {
         if(user){
             req.session.user = user._id;
             req.session.save();
-            res.json(user);
+            res.send();
         }else{
             res.status(404).send();
         }
@@ -50,34 +50,14 @@ router.get('/signout',(req,res,next) => {
 
 router.get('/',(req,res,next) => {
     if(req.session.user){
-        let id = mongoose.Types.ObjectId(req.session.user);
-        User.aggregate([
-            {
-                $match:{
-                    _id: id
-                }
-            }, 
-            {
-                $lookup:{
-                    from: 'classes',
-                    localField: '_id',
-                    foreignField: "user_id",
-                    as: 'classes',
-
-                }
-            },
-            {
-                $project:{
-                    _id: 0,
-                    password: 0,
-                    __v: 0,
-                    'classes._id':0,
-                    'classes.user_id': 0,
-                    'classes.__v': 0,
-
-                }
+        User.findById(req.session.user, '-_id',(err,user) => {
+            if(err) throw err;
+            if(user){
+                res.json(user);
+            }else{
+                res.status(404).json({error: 'Could not find user'});
             }
-        ],(err, content) => res.json(content[0]));
+        })
     }else{
         res.status(404).json({error: 'Could not find user'});
     }

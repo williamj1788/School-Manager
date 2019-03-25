@@ -1,5 +1,11 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+
+import { connect } from "react-redux";
+
+const mapStateToProps = state => {
+    return { username: state.username };
+};
 
 class Navbar extends React.Component{
     constructor(props){
@@ -43,5 +49,5 @@ class Navbar extends React.Component{
         )
     }
 }
-
+Navbar = connect(mapStateToProps)(Navbar);
 export default Navbar;

@@ -12,4 +12,4 @@ const TestSchema = new Schema({
     }
 });
 
-module.exports = Class = mongoose.model('test', TestSchema);
+module.exports = Test = require('mongoose').model('test', TestSchema);

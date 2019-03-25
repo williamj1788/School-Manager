@@ -1,8 +1,11 @@
-export function setClass(payload) {
-    return { type: "SET_CLASS", payload };
+export function setUser(payload) {
+    return { type: "SET_USER", payload };
 };
 export function setClassIndex(payload) {
     return { type: "SET_CLASS_INDEX", payload };
+};
+export function setClassID(payload) {
+    return { type: "SET_CLASS_ID", payload };
 };
 export function addClass(payload) {
     return { type: "ADD_CLASS", payload };
