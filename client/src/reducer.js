@@ -75,7 +75,6 @@ function reducer(state = initialState,action){
         });
     }else if(action.type === 'SET_CLASS_INDEX'){
         let copy = state.classes.slice();
-        console.log(action.payload);
         return Object.assign({}, state, {
             classIndex: action.payload,
             classID: copy[action.payload]._id

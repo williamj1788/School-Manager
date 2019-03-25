@@ -38,7 +38,7 @@ class Navbar extends React.Component{
         return(
             <nav>
                 <div id="nav-container">
-                    <span id="nav-logo">School Handle</span>
+                    <span id="nav-logo">School Manager</span>
                     <div id="links">
                         <p className="nav-link" onClick={this.toggle}>Add Class</p>
                         <p className="nav-link" onClick={this.Signout}>Sign Out</p>

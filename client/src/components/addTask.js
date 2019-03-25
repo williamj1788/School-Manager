@@ -14,7 +14,6 @@ class AddTask extends React.Component{
         event.preventDefault();
         let form = document.getElementById('addTask-form');
         let formData = new FormData(form);
-        console.log(this.props.classID);
         fetch(`http://localhost:8080/api/class/task?id=${this.props.classID}`,{
             method: 'POST',
             credentials: 'include',
@@ -35,10 +34,10 @@ class AddTask extends React.Component{
                 <div className="offset">
                     <form id="addTask-form" onSubmit={this.handleOnSubmit} >
                         <label htmlFor="taskName">
-                        Name: <input type="text" name="taskName" placeholder="Enter Name"/>
+                        Name: <input type="text" name="taskName" placeholder="Enter Name" autoComplete="off" required/>
                         </label>
                         <label htmlFor="dueDate">
-                       Due Date: <input type="date" name="dueDate" placeholder ="Enter Due Date"/>
+                       Due Date: <input type="date" name="dueDate" placeholder ="Enter Due Date" required/>
                         </label>
                         <button id="submit-task" type="submit">Submit</button>
                     </form>

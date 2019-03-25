@@ -6,13 +6,11 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
  
 import { removeTask } from '../action';
 
+import moment from 'moment';
+
 const mapStateToProps = state => {
     return { classes: state.classes, classIndex: state.classIndex, classID: state.classID };
 };
-function parseDateToTime(input) {
-    var parts = input.split('-');
-    return new Date(parts[0], parts[1]-1, parts[2]).getTime();
-}
 
 class ShowTasks extends React.Component{
 
@@ -26,8 +24,8 @@ class ShowTasks extends React.Component{
     
     render(){
         let tasks = this.props.classes[this.props.classIndex].Tasks.slice().sort((a,b) => {
-            let dateA = parseDateToTime(a.due);
-            let dateB = parseDateToTime(b.due);
+            let dateA = moment(a.due).unix();
+            let dateB = moment(b.due).unix();
             if(dateA > dateB){
                 return 1
             }else if(dateA < dateB){
@@ -50,7 +48,7 @@ class ShowTasks extends React.Component{
                                     <div className="detail-item">
                                         <p className="item-name">{task.name}</p>
                                         <div className="flex">
-                                            <p className="due">Due in {Math.round((parseDateToTime(task.due) - Date.now()) / (1000 * 60 * 60 * 24))} days</p>
+                                            <p className="due">Due in {Math.round((moment(task.due).unix() - moment().unix()) / (60 * 60 * 24)) + 1} days</p>
                                             <button className="item-close" type="button" onClick={() => this.handleOnClick(task._id)}></button>
                                         </div>
                                     </div>

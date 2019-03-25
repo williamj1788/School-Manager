@@ -32,7 +32,7 @@ class AddTest extends React.Component{
                 <div className="offset">
                     <form id="addTask-form" onSubmit={this.handleOnSubmit}>
                         <label htmlFor="taskName">
-                        Name: <input type="text" name="taskName" placeholder="Enter Name" required/>
+                        Name: <input type="text" name="taskName" placeholder="Enter Name" autoComplete="off" required/>
                         </label>
                         <label htmlFor="dueDate">
                         Due Date: <input type="date" name="dueDate" placeholder ="Enter Due Date" required/>
