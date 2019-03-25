@@ -63,13 +63,8 @@ function reducer(state = initialState,action){
             classes: copy
         });
     }else if(action.type === 'ADD_TEST'){
-        let Test = {
-            id: uuid(),
-            name: action.payload.name,
-            due: action.payload.due,
-        }
         let copy = state.classes.slice();
-        copy[state.classIndex].Tests.push(Test);
+        copy[state.classIndex].Tests.push(action.payload);
         return Object.assign({}, state, {
             classes: copy,
         });

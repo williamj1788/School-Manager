@@ -4,13 +4,22 @@ import { addTest } from '../action';
 
 import { connect } from "react-redux";
 
+const mapStateToProps = state => {
+    return { classID: state.classID };
+};
+
 class AddTest extends React.Component{
     handleOnSubmit = event => {
         event.preventDefault();
         let form = document.getElementById('addTask-form');
         let formData = new FormData(form);
-        this.props.dispatch(addTest({name: 'New Test', due: '2019-03-13'}));
-        console.log('form submitted');
+        fetch(`http://localhost:8080/api/class/test?id=${this.props.classID}`,{
+            method: 'POST',
+            credentials: 'include',
+            body: formData,
+        })
+        .then(res => res.json())
+        .then(res => this.props.dispatch(addTest(res)));;
         form.reset();
         this.props.show();
     }
@@ -35,5 +44,5 @@ class AddTest extends React.Component{
         )
     }
 }
-AddTest = connect()(AddTest);
+AddTest = connect(mapStateToProps)(AddTest);
 export default AddTest;

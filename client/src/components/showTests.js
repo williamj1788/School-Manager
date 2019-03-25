@@ -7,7 +7,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import { removeTest } from '../action';
 
 const mapStateToProps = state => {
-    return { classes: state.classes, classIndex: state.classIndex };
+    return { classes: state.classes, classIndex: state.classIndex, classID: state.classID };
 }; 
 function parseDateToTime(input) {
     var parts = input.split('-');
@@ -15,8 +15,12 @@ function parseDateToTime(input) {
 }
 class ShowTests extends React.Component{
     
-    handleOnClick = index => {
-        this.props.dispatch(removeTest(index));
+    handleOnClick = id => {
+        fetch(`http://localhost:8080/api/class/test?classID=${this.props.classID}&testID=${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+        });
+        this.props.dispatch(removeTest(id));
     }
     
     render(){
@@ -32,6 +36,7 @@ class ShowTests extends React.Component{
             }
         });
         tests = tests.map(test => {
+            console.log(test._id);
             return (
                 <CSSTransition
                 key={test._id}
