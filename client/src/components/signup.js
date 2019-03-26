@@ -18,7 +18,7 @@ class Signup extends React.Component{
         let form = document.getElementsByClassName('main-form')[0];
         let formData = new FormData(form);
         
-        fetch('http://localhost:8080/api/user/signup',{
+        fetch('/api/user/signup',{
             method: 'POST',
             body: formData,
             credentials: 'include',

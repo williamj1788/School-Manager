@@ -15,7 +15,7 @@ const mapStateToProps = state => {
 class ShowTasks extends React.Component{
 
     handleOnClick = id => {
-        fetch(`http://localhost:8080/api/class/task?classID=${this.props.classID}&taskID=${id}`, {
+        fetch(`/api/class/task?classID=${this.props.classID}&taskID=${id}`, {
             method: 'DELETE',
             credentials: 'include',
         });

@@ -29,7 +29,7 @@ class Dashboard extends React.Component{
     }
 
     componentDidMount(){
-        fetch('http://localhost:8080/api/user',{
+        fetch('/api/user',{
             credentials: 'include'
         })
         .then(res => {

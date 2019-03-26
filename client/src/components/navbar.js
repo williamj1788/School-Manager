@@ -18,7 +18,7 @@ class Navbar extends React.Component{
     }
     
     Signout(){
-        fetch('http://localhost:8080/api/user/signout',{
+        fetch('/api/user/signout',{
             credentials: 'include'
         })
         .then(() => {

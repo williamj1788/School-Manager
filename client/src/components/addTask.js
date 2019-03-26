@@ -14,7 +14,7 @@ class AddTask extends React.Component{
         event.preventDefault();
         let form = document.getElementById('addTask-form');
         let formData = new FormData(form);
-        fetch(`http://localhost:8080/api/class/task?id=${this.props.classID}`,{
+        fetch(`/api/class/task?id=${this.props.classID}`,{
             method: 'POST',
             credentials: 'include',
             body: formData,

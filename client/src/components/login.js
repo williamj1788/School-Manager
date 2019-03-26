@@ -22,7 +22,7 @@ class Login extends React.Component{
         let form = document.getElementsByClassName('main-form')[0];
         let formData = new FormData(form);
         
-        fetch('http://localhost:8080/api/user/login',{
+        fetch('/api/user/login',{
             method: 'POST',
             body: formData,
             credentials: 'include',

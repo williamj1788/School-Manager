@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 class ShowTests extends React.Component{
     
     handleOnClick = id => {
-        fetch(`http://localhost:8080/api/class/test?classID=${this.props.classID}&testID=${id}`, {
+        fetch(`/api/class/test?classID=${this.props.classID}&testID=${id}`, {
             method: 'DELETE',
             credentials: 'include',
         });

@@ -18,7 +18,7 @@ class AddClass extends React.Component{
         
         let form = document.getElementById('add-class-form');
         let formData = new FormData(form);
-        fetch('http://localhost:8080/api/class', {
+        fetch('/api/class', {
             method: 'POST',
             body: formData,
             credentials: 'include',
