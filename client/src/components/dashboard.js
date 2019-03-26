@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/dashboard.scss';
 
-import Navbar from '../components/navbar';
+import Navbar from './navbar';
 import AddClass from './addClass';
 import ClassDetail from './classDetail';
 
