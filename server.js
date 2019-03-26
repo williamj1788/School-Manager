@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const session = require('express-session');
 const multer = require('multer');
 const upload = multer();
@@ -36,7 +37,14 @@ app.use(SetHeaders);
 app.use('/api/user', userRouter);
 app.use('/api/class', classRouter);
 
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('client/build'));
 
-const PORT = 8080;
+    app.get('*', (req, res) => {
+        res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {console.log(`Server running on port ${PORT}...`)});
