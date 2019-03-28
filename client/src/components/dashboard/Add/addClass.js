@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../styles/addClass.scss';
 
-import { addClass } from '../action';
+import { addClass } from '../../../redux/action';
 
 import { connect } from "react-redux";
 

@@ -2,12 +2,12 @@ import React from 'react';
 import '../styles/dashboard.scss';
 
 import Navbar from './navbar';
-import AddClass from './addClass';
+import AddClass from './Add/addClass';
 import ClassDetail from './classDetail';
 
 import { connect } from "react-redux";
 
-import { setUser, setClassIndex } from '../action';
+import { setUser, setClassIndex } from '../../redux/action';
 
 const mapStateToProps = state => {
     return { classes: state.classes,username: state.username };

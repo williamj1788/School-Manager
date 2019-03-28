@@ -6,8 +6,8 @@ import { easeSinInOut } from 'd3-ease';
 
 import ClassContainer from './classContatiner';
 
-import AddTask from './addTask';
-import AddTest from './addTest';
+import AddTask from '../addTask';
+import AddTest from './Add/addTest';
 
 class ClassDetail extends React.Component{
     constructor(props){

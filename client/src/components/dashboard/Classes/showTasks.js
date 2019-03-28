@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
  
-import { removeTask } from '../action';
+import { removeTask } from '../../../redux/action';
 
 import moment from 'moment';
 

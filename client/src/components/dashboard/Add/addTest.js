@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { addTest } from '../action';
+import { addTest } from '../../../redux/action';
 
 import { connect } from "react-redux";
 
