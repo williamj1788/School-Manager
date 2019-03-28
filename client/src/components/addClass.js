@@ -2,7 +2,7 @@ import React from 'react';
 
 import '../styles/addClass.scss';
 
-import {addClass} from '../action';
+import { addClass } from '../action';
 
 import { connect } from "react-redux";
 
@@ -18,6 +18,7 @@ class AddClass extends React.Component{
         
         let form = document.getElementById('add-class-form');
         let formData = new FormData(form);
+        
         fetch('/api/class', {
             method: 'POST',
             body: formData,

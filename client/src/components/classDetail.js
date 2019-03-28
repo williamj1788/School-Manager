@@ -1,7 +1,6 @@
 import React from 'react';
 
 import '../styles/classDetail.scss';
-// import { CSSTransition } from 'react-transition-group'
 import { Transition, animated } from 'react-spring/renderprops';
 import { easeSinInOut } from 'd3-ease';
 

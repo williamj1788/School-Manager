@@ -5,8 +5,6 @@ import Navbar from './navbar';
 import AddClass from './addClass';
 import ClassDetail from './classDetail';
 
-// import { Transition, animated } from 'react-spring/renderprops';
-
 import { connect } from "react-redux";
 
 import { setUser, setClassIndex } from '../action';

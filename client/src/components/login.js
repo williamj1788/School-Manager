@@ -17,7 +17,6 @@ class Login extends React.Component{
     
     handleSubmit(event){
         event.preventDefault();
-        console.log('User Login');
         
         let form = document.getElementsByClassName('main-form')[0];
         let formData = new FormData(form);
