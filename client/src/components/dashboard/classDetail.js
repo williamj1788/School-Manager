@@ -1,15 +1,16 @@
 import React from 'react';
 
-import '../styles/classDetail.scss';
+import '../../styles/classDetail.scss';
 import { Transition, animated } from 'react-spring/renderprops';
 import { easeSinInOut } from 'd3-ease';
 
-import ClassContainer from './classContatiner';
+import ClassContainer from './Classes/classContatiner';
 
-import AddTask from '../addTask';
+import AddTask from './Add/addTask';
 import AddTest from './Add/addTest';
 
 class ClassDetail extends React.Component{
+    
     constructor(props){
         super(props);
         this.state = {
@@ -32,6 +33,7 @@ class ClassDetail extends React.Component{
             IsAddTabOpen: !this.state.showAddTask,
         });
     }
+
     SetshowAddTest = () => {
         this.setState({
             showAddTest: !this.state.showAddTest,
@@ -39,6 +41,7 @@ class ClassDetail extends React.Component{
             IsAddTabOpen: !this.state.showAddTest,
         });
     }
+    
     render(){
         return(
             <div id="class-detail">

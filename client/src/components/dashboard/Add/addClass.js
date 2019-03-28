@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../styles/addClass.scss';
+import '../../../styles/addClass.scss';
 
 import { addClass } from '../../../redux/action';
 

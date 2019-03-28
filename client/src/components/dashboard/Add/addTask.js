@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { addTask } from '../action';
+import { addTask } from '../../../redux/action';
 
 import { connect } from "react-redux";
 

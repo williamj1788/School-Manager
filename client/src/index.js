@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import { Route, Switch,BrowserRouter as Router } from 'react-router-dom';
 
 import { Provider } from 'react-redux';
-import store from './store';
+import store from './redux/store';
 
 import './styles/Normalize.css';
 
 import Login from './components/login';
 import Signup from './components/signup';
-import Dashboard from './components/dashboard';
+import Dashboard from './components/dashboard/dashboard';
 
 const Root = ({ store }) => (
     <Provider store={store}>

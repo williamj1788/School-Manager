@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/dashboard.scss';
+import '../../styles/dashboard.scss';
 
 import Navbar from './navbar';
 import AddClass from './Add/addClass';
