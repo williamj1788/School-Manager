@@ -24,6 +24,7 @@ export class Dashboard extends React.Component{
     }
 
     componentDidMount(){
+       
         this.getUserData()
         .then(user => {
             if(user){
