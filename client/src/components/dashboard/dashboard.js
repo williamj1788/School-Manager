@@ -7,7 +7,7 @@ import ClassDetail from './classDetail';
 
 import { connect } from "react-redux";
 
-import { setUser, setClassIndex } from '../../redux/action';
+import { loadUser, setClassIndex } from '../../redux/action';
 
 const mapStateToProps = state => {
     return { classes: state.classes, username: state.username };
@@ -21,23 +21,35 @@ export class Dashboard extends React.Component{
     }
 
     componentDidMount(){
-        fetch('/api/user',{
+        this.getUserData()
+        .then(user => {
+            if(user){
+                this.loadUserData(user);
+            }else{
+                this.redirectUser();
+            }
+        });
+    }
+
+    getUserData(){
+       return fetch('/api/user',{
             credentials: 'include'
         })
         .then(res => res.json())
-        .then(res => {
-            if(res.username){
-                this.props.dispatch(setUser(res))
-                this.setState({
-                    loading: false,
-                });
-            }else{
-                this.setState({
-                    redirect: true,
-                    loading: false,
-                });
-            }
-        })
+    }
+
+    loadUserData = user =>{
+        this.props.dispatch(loadUser(user))
+        this.setState({
+            loading: false,
+        });
+    }
+
+    redirectUser = () =>{
+        this.setState({
+            redirect: true,
+            loading: false,
+        });
     }
 
     toggleShowClassDetail = index =>{
@@ -54,7 +66,7 @@ export class Dashboard extends React.Component{
     }
     
     render(){
-        let classes = this.props.classes;
+        let { classes } = this.props;
         classes = classes.map((Class,index) => {
             return <div className="class" onClick={() => this.toggleShowClassDetail(index)} key={index}  style={{backgroundColor: Class.color}}><span className="class-name">{Class.name}</span></div>;
         });

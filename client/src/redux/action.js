@@ -1,4 +1,4 @@
-export function setUser(payload) {
+export function loadUser(payload) {
     return { type: "SET_USER", payload };
 };
 export function setClassIndex(payload) {
