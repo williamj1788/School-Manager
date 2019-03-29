@@ -10,55 +10,44 @@ import { connect } from "react-redux";
 import { setUser, setClassIndex } from '../../redux/action';
 
 const mapStateToProps = state => {
-    return { classes: state.classes,username: state.username };
+    return { classes: state.classes, username: state.username };
 }; 
 
-class Dashboard extends React.Component{
-    
-    constructor(props){
-        super(props);
-        this.state = {
-            ShowAddClass: false,
-            ShowClassDetail: false,
-            loading: true,
-        }
-        this.toggleShowAddClass = this.toggleShowAddClass.bind(this);
-        this.toggleShowClassDetail = this.toggleShowClassDetail.bind(this);    
+export class Dashboard extends React.Component{
+    state = {
+        ShowAddClass: false,
+        ShowClassDetail: false,
+        loading: true,
     }
 
     componentDidMount(){
         fetch('/api/user',{
             credentials: 'include'
         })
-        .then(res => {
-            if(res.status === 404){
-                this.setState({
-                    redirect: true,
-                    loading: false,
-                });
-                return res;
-            }else{
-                return res.json();
-            }
-        })
+        .then(res => res.json())
         .then(res => {
             if(res.username){
                 this.props.dispatch(setUser(res))
                 this.setState({
                     loading: false,
                 });
+            }else{
+                this.setState({
+                    redirect: true,
+                    loading: false,
+                });
             }
         })
     }
 
-    toggleShowClassDetail(index){
+    toggleShowClassDetail = index =>{
         this.setState({
             ShowClassDetail: !this.state.ShowClassDetail,
         });
         this.props.dispatch(setClassIndex(index || 0));
     }
 
-    toggleShowAddClass(){
+    toggleShowAddClass = () =>{
         this.setState({
             ShowAddClass: !this.state.ShowAddClass,
         });
@@ -69,6 +58,9 @@ class Dashboard extends React.Component{
         classes = classes.map((Class,index) => {
             return <div className="class" onClick={() => this.toggleShowClassDetail(index)} key={index}  style={{backgroundColor: Class.color}}><span className="class-name">{Class.name}</span></div>;
         });
+        if(this.state.loading){
+            return <div>Loading</div>
+        }
         return(
             <div>
                 <div id="dashboard">
@@ -83,5 +75,4 @@ class Dashboard extends React.Component{
         )
     }
 }
-Dashboard = connect(mapStateToProps)(Dashboard);
-export default Dashboard;
+export default connect(mapStateToProps)(Dashboard);

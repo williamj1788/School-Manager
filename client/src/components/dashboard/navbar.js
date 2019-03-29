@@ -2,22 +2,17 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from "react-redux";
-
+import PropTypes from 'prop-types';
 const mapStateToProps = state => {
     return { username: state.username };
 };
 
-class Navbar extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            redirect: false
-        }
-        this.Signout = this.Signout.bind(this);
-        this.toggle = this.toggle.bind(this);
+export class Navbar extends React.Component{
+    state = {
+        redirect: false
     }
     
-    Signout(){
+    Signout = () =>{
         fetch('/api/user/signout',{
             credentials: 'include'
         })
@@ -27,7 +22,7 @@ class Navbar extends React.Component{
             });
         })
     }
-    toggle(){
+    toggle = () =>{
         this.props.toggle();
     }
     
@@ -49,5 +44,7 @@ class Navbar extends React.Component{
         )
     }
 }
-Navbar = connect(mapStateToProps)(Navbar);
-export default Navbar;
+Navbar.propTypes = {
+    username: PropTypes.string.isRequired,
+}
+export default connect(mapStateToProps)(Navbar);

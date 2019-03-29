@@ -55,7 +55,7 @@ router.get('/',(req,res,next) => {
             if(user){
                 res.json(user);
             }else{
-                res.status(404).json({error: 'Could not find user'});
+                res.status(404).json();
             }
         })
     }else{

@@ -6,14 +6,11 @@ import { connect } from "react-redux";
 
 
 export class Login extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-           login: false,
-           error: false,
-        }
+    state = {
+        login: false,
+        error: false,
     }
-    
+
     handleSubmit = event =>{
         event.preventDefault();
         
