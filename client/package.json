@@ -36,11 +36,5 @@
     "enzyme-adapter-react-16": "^1.11.2",
     "enzyme-to-json": "^3.3.5",
     "@babel/plugin-transform-modules-commonjs": "^7.4.0"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "react-spring": "<rootDir>/node_modules/react-spring/web.cjs",
-      "react-spring/renderprops": "<rootDir>/node_modules/react-spring/renderprops.cjs"
-    }
   }
 }
