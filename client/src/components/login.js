@@ -5,17 +5,16 @@ import {Redirect, Link} from 'react-router-dom';
 import { connect } from "react-redux";
 
 
-class Login extends React.Component{
+export class Login extends React.Component{
     constructor(props){
         super(props);
         this.state = {
            login: false,
            error: false,
         }
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
     
-    handleSubmit(event){
+    handleSubmit = event =>{
         event.preventDefault();
         
         let form = document.getElementsByClassName('main-form')[0];
@@ -59,5 +58,4 @@ class Login extends React.Component{
         )
     }
 }
-Login = connect()(Login);
-export default Login;
+export default connect()(Login);
