@@ -13,14 +13,14 @@ class ClassDetail extends React.Component{
     state = {
         showAddTask: false,
         showAddTest: false,
-        IsAddTabOpen: false,
+        IsAnAddModalOpen: false,
     }
 
     SetshowAddTask = () => {
         this.setState({
             showAddTask: !this.state.showAddTask,
             showAddTest: false,
-            IsAddTabOpen: !this.state.showAddTask,
+            IsAnAddModalOpen: !this.state.showAddTask,
         });
     }
 
@@ -28,7 +28,7 @@ class ClassDetail extends React.Component{
         this.setState({
             showAddTest: !this.state.showAddTest,
             showAddTask: false,
-            IsAddTabOpen: !this.state.showAddTest,
+            IsAnAddModalOpen: !this.state.showAddTest,
         });
     }
     
@@ -37,7 +37,7 @@ class ClassDetail extends React.Component{
             <div id="class-detail">
                 <Transition
                 native
-                items={this.state.IsAddTabOpen} keys={3}
+                items={this.state.IsAnAddModalOpen} keys={3}
                 from={{position: 'relative',transform: "scale(0)", right: '0px'}}
                 enter={[{transform: "scale(1)"}]}
                 leave={{transform: "scale(0)"}}
@@ -64,8 +64,8 @@ class ClassDetail extends React.Component{
                 }}
                 >
                 {show => show && (props => (
-                    <animated.div style={props}> <AddTask show={this.SetshowAddTask} />
-                       
+                    <animated.div style={props}> 
+                        <AddTask show={this.SetshowAddTask} />
                     </animated.div>
                 ))}
                 </Transition>

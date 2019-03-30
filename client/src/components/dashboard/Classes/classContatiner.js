@@ -3,6 +3,8 @@ import React from 'react';
 import ShowTasks from './showTasks';
 import ShowTests from './showTests';
 
+import { Transition, animated } from 'react-spring/renderprops';
+
 import { connect } from "react-redux";
 
 const mapStateToProps = state => {
@@ -30,6 +32,7 @@ class ClassContainer extends React.Component{
     }
     render(){
         return(
+            
             <div id="class-container">
                 <div id="class-header">
                     <span id="class-header-text">{this.props.classes[this.props.classIndex].name}</span>
