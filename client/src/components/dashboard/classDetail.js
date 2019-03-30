@@ -10,23 +10,13 @@ import AddTask from './Add/addTask';
 import AddTest from './Add/addTest';
 
 class ClassDetail extends React.Component{
-    
-    constructor(props){
-        super(props);
-        this.state = {
-            showAddTask: false,
-            showAddTest: false,
-            IsAddTabOpen: false,
-        }
-        this.SetshowAddTask = this.SetshowAddTask.bind(this);
-        this.toggle = this.toggle.bind(this);
+    state = {
+        showAddTask: false,
+        showAddTest: false,
+        IsAddTabOpen: false,
     }
 
-    toggle(){
-        this.props.toggle();
-    }
-
-    SetshowAddTask(){
+    SetshowAddTask = () => {
         this.setState({
             showAddTask: !this.state.showAddTask,
             showAddTest: false,
@@ -56,7 +46,7 @@ class ClassDetail extends React.Component{
                 >
                 {show => (props => (
                     <animated.div style={props}>
-                        <ClassContainer toggle={this.toggle} show={[this.SetshowAddTask,this.SetshowAddTest]}/>
+                        <ClassContainer toggle={this.props.toggle} show={[this.SetshowAddTask,this.SetshowAddTest]}/>
                     </animated.div>
                 ))}
                 </Transition>

@@ -95,7 +95,7 @@ export class Dashboard extends React.Component{
         return(
             <div>
                 <div id="dashboard">
-                    <Navbar toggle={this.toggleShowAddClass} signOut={this.signOut}/>
+                    <Navbar toggle={this.toggleShowAddClass} signOut={this.signOut} />
                     <div id="class-container">
                         {classes}
                     </div>

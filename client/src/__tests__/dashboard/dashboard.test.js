@@ -93,5 +93,4 @@ describe('Dashboard component', () => {
         expect(loading.length).toEqual(1);
     });
 
-
 });

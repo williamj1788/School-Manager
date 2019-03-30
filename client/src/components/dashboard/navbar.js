@@ -14,8 +14,8 @@ export class Navbar extends React.Component{
                 <div id="nav-container">
                     <span id="nav-logo">School Manager</span>
                     <div id="links">
-                        <p className="nav-link" onClick={this.props.toggle}>Add Class</p>
-                        <p className="nav-link" onClick={this.props.signOut}>Sign Out</p>
+                        <p className="nav-link toggle" onClick={this.props.toggle}>Add Class</p>
+                        <p className="nav-link signout" onClick={this.props.signOut}>Sign Out</p>
                         <p className="nav-user">{this.props.username}</p>
                     </div>
                 </div>

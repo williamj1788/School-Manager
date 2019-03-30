@@ -1,44 +1,41 @@
 import React from 'react';
-
 import '../../../styles/addClass.scss';
 
-import { addClass } from '../../../redux/action';
+import PropTypes from 'prop-types';
 
+import { addClass } from '../../../redux/action';
 import { connect } from "react-redux";
 
-class AddClass extends React.Component{
-    
-    constructor(props){
-        super(props);
-        this.toggle = this.toggle.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-    }
-    onSubmit(event){
+export class AddClass extends React.Component{
+    onSubmit = event =>{
         event.preventDefault();
         
-        let form = document.getElementById('add-class-form');
-        let formData = new FormData(form);
-        
-        fetch('/api/class', {
+        return this.postNewClass()
+        .then(newClass => {this.props.dispatch(addClass(newClass))})
+        .then(this.props.toggle);
+    }
+
+    postNewClass = () => {
+        return fetch('/api/class', {
             method: 'POST',
-            body: formData,
+            body: this.getFormData(),
             credentials: 'include',
         })
-        .then(res => {return res.json()})
-        .then(res => {this.props.dispatch(addClass(res))})
-        .then(this.toggle);
+        .then(res => res.json())
     }
-    
-    toggle(){
-        this.props.toggle();
+
+    getFormData = () => {
+        const form = document.getElementById('add-class-form');
+        return new FormData(form);
     }
+
     render(){
         return(
             <div className="add-class">
                 <div className="add-class-container">
                     <div className="header">
                         <span className="header-text">Add Class</span>
-                        <button className="close-button" type="button" onClick={this.toggle}></button>
+                        <button className="close-button" type="button" onClick={this.props.toggle}></button>
                     </div>
                     <form onSubmit={this.onSubmit} id="add-class-form">
                         <div className="form-container">
@@ -52,5 +49,7 @@ class AddClass extends React.Component{
         )
     }
 }
-AddClass = connect()(AddClass);
-export default AddClass;
+AddClass.propTypes = {
+    toggle: PropTypes.func.isRequired,
+}
+export default connect()(AddClass);
