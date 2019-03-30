@@ -19,13 +19,13 @@ export class Dashboard extends React.Component{
     state = {
         ShowAddClass: false,
         ShowClassDetail: false,
-        redirect: false,
+        redirectToLogin: false,
         loading: true,
     }
 
+    // returns promise for testing proposes
     componentDidMount(){
-       
-        this.getUserData()
+        return this.getUserData()
         .then(user => {
             if(user){
                 this.loadUserData(user);
@@ -50,15 +50,18 @@ export class Dashboard extends React.Component{
     }
 
     signOut = () =>{
-        fetch('/api/user/signout',{
+        return this.sendSignRequest()
+        .then(this.redirectToLogin);
+    }
+    sendSignRequest = () => {
+        return fetch('/api/user/signout',{
             credentials: 'include'
         })
-        .then(this.redirectToLogin);
     }
 
     redirectToLogin = () =>{
         this.setState({
-            redirect: true,
+            redirectToLogin: true,
         });
     }
 

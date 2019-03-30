@@ -12,7 +12,7 @@ const classRouter = require('./router/classRouter');
 const app = express();
 const url = 'mongodb+srv://quez:quez123@project-cluster-8qd4n.mongodb.net/SchoolManager?retryWrites=true';
 
-function SetHeaders(req,res,next){
+function allowCrossDomain(req,res,next){
     res.setHeader('Access-Control-Allow-Origin','http://localhost:3000');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
@@ -32,7 +32,7 @@ app.use(session({
     }
 }));
 
-app.use(SetHeaders);
+app.use(allowCrossDomain);
 
 app.use('/api/user', userRouter);
 app.use('/api/class', classRouter);

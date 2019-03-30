@@ -45,7 +45,7 @@ router.post('/signup', CheckUsernames,(req,res,next) => {
 router.get('/signout',(req,res,next) => {
     req.session.user = null;
     req.session.save();
-    res.send('asdf');
+    res.send();
 });
 
 router.get('/',(req,res,next) => {

@@ -82,6 +82,7 @@
     "@babel/plugin-transform-modules-commonjs": "^7.4.0"
   },
   "jest": {
+    "restoreMocks": true,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts"
