@@ -59,7 +59,7 @@ router.get('/',(req,res,next) => {
             }
         })
     }else{
-        res.status(404).json({error: 'Could not find user'});
+        res.status(404).json();
     }
 });
 

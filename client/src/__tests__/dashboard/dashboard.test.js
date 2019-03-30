@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Dashboard } from "../../components/dashboard/dashboard";
+import { Redirect } from 'react-router-dom';
 import uuid from 'uuid';
 
 const props = {
@@ -58,7 +59,6 @@ describe('Dashboard component', () => {
     });
 
     test('loadUserData calls a dispatch with proper args', async () => {
-        const instance = component.instance();
         const fakeUser = {
             username: 'fake'
         }
@@ -73,13 +73,24 @@ describe('Dashboard component', () => {
     });
 
     test('toggleShowClassDetail calls a dispatch with proper args', async () => {
-        const instance = component.instance();
         const expectedPayload = {
             payload: 2,
             type: 'SET_CLASS_INDEX'
         }
         instance.toggleShowClassDetail(2);
         expect(props.dispatch).toBeCalledWith(expectedPayload);
+    });
+
+    test('Redirected to login when redirectToLogin is set to true', () => {
+        instance.redirectToLogin();
+        expect(instance.render()).toEqual(<Redirect to='/' />);
+    });
+
+    test('loading screen when loading is set to true', () => {
+        component.setState({loading: true, redirectToLogin: false});
+        instance.render();
+        const loading = component.find('#loading').hostNodes();
+        expect(loading.length).toEqual(1);
     });
 
 

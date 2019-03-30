@@ -39,7 +39,7 @@ export class Dashboard extends React.Component{
        return fetch('/api/user',{
             credentials: 'include'
         })
-        .then(res => res.json())
+        .then(res => res.status === 404 ? null : res.json())
     }
 
     loadUserData = user =>{
@@ -79,17 +79,18 @@ export class Dashboard extends React.Component{
     }
     
     render(){
+
+        if(this.state.redirectToLogin){
+            return <Redirect to="/" />;
+        }
+        // set id of div to loading for testing purposes
+        if(this.state.loading){
+            return <div id="loading">Loading</div>
+        }
         let { classes } = this.props;
         classes = classes.map((Class,index) => {
             return <ClassItem item={Class} onClick={() => this.toggleShowClassDetail(index)} key={index}/>;
         });
-
-        if(this.state.redirect){
-            return <Redirect to="/" />;
-        }
-        if(this.state.loading){
-            return <div>Loading</div>
-        }
         
         return(
             <div>
