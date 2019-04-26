@@ -1,68 +1,63 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# School-Manager
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+> This project helps students manage their school life. Students can log all their classes, tasks, and tests. This will allow them to never miss a test or homework assignment again.
 
-### `npm start`
+## Timeline
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+> March 13, 2019 - March 30, 2019
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Technology
 
-### `npm test`
+> * Express
+>   * express-sessions
+> * Node.js
+> * React
+>   * react-router
+>   * react-redux
+>   * react-spring
+>   * react-transition-groups
+> * MongoDB
+>   * mongoose
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## What I learned
 
-### `npm run build`
+> * react-spring
+> * react-transition-groups
+> * MongoDB
+> * Sessions
+> * cookies
+> * mongoose
+> * Unit Testing
+> * Jest
+> * Enzyme
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How to install
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+To view or edit this project, follow these instructions
+```
+git clone https://github.com/williamj1788/School-Manager
+cd School-Manager
+npm install && npm install --prefix client
+npm run dev
+```
+The project should show open up in a new tab
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+If it doesn't, you can view it on localhost 3000
 
-### `npm run eject`
+## Pages
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+> You can view this site [here](https://schoolmanager03.herokuapp.com)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Login
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![Login](../img/Login.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Dashboard
 
-## Learn More
+![Dashboard](../img/Dashboard.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Task
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+![Task](../img/Task.png)
