@@ -52,12 +52,12 @@ If it doesn't, you can view it on localhost 3000
 
 ### Login
 
-![Login](../img/Login.png)
+![Login](./img/Login.png)
 
 ### Dashboard
 
-![Dashboard](../img/Dashboard.png)
+![Dashboard](./img/Dashboard.png)
 
 ### Task
 
-![Task](../img/Task.png)
+![Task](./img/Task.png)
