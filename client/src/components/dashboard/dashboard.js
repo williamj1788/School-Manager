@@ -69,7 +69,9 @@ export class Dashboard extends React.Component{
         this.setState({
             ShowClassDetail: !this.state.ShowClassDetail,
         });
-        this.props.dispatch(setClassIndex(index || 0));
+        if(typeof index === 'number'){
+            this.props.dispatch(setClassIndex(index || 0));
+        } 
     }
 
     toggleShowAddClass = () =>{
@@ -88,7 +90,7 @@ export class Dashboard extends React.Component{
             return <div id="loading">Loading</div>
         }
         let { classes } = this.props;
-        classes = classes.map((Class,index) => {
+        classes = classes.map((Class, index) => {
             return <ClassItem item={Class} onClick={() => this.toggleShowClassDetail(index)} key={index}/>;
         });
         

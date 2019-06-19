@@ -3,45 +3,48 @@ const initialState = {
     username: null,
     classes: [
         {
+            _id: uuid(),
             name: 'Math',
             color: '#000000',
             tasks:  [
-                {id: uuid(), name: 'Math1', due: '2019-06-10'},
-                {id: uuid(),name: 'Math2', due: '2019-03-17'},
-                {id: uuid(),name: 'Math3', due: '2019-03-14'},
+                {_id: uuid(), name: 'Math1', due: '2019-06-10'},
+                {_id: uuid(),name: 'Math2', due: '2019-03-17'},
+                {_id: uuid(),name: 'Math3', due: '2019-03-14'},
             ],
             tests: [
-                {id: uuid(),name: 'Test1', due: '2019-06-10'},
-                {id: uuid(),name: 'Test2', due: '2019-03-17'},
-                {id: uuid(),name: 'Test3', due: '2019-03-14'},
+                {_id: uuid(),name: 'Test1', due: '2019-06-10'},
+                {_id: uuid(),name: 'Test2', due: '2019-03-17'},
+                {_id: uuid(),name: 'Test3', due: '2019-03-14'},
             ],
         },
         {
+            _id: uuid(),
             name: 'History',
             color: '#000000',
             tasks:  [
-                {id: uuid(), name: 'History1', due: '2019-06-10'},
-                {id: uuid(),name: 'History2', due: '2019-03-17'},
-                {id: uuid(),name: 'History3', due: '2019-03-14'},
+                {_id: uuid(), name: 'History1', due: '2019-06-10'},
+                {_id: uuid(),name: 'History2', due: '2019-03-17'},
+                {_id: uuid(),name: 'History3', due: '2019-03-14'},
             ],
             tests: [
-                {id: uuid(),name: 'Test1', due: '2019-06-10'},
-                {id: uuid(),name: 'Test2', due: '2019-03-17'},
-                {id: uuid(),name: 'Test3', due: '2019-03-14'},
+                {_id: uuid(),name: 'Test1', due: '2019-06-10'},
+                {_id: uuid(),name: 'Test2', due: '2019-03-17'},
+                {_id: uuid(),name: 'Test3', due: '2019-03-14'},
             ],
         },
         {
+            _id: uuid(),
             name: 'English',
             color: '#c1424b',
             tasks:  [
-                {id: uuid(), name: 'English1', due: '2019-06-10'},
-                {id: uuid(),name: 'English2', due: '2019-03-17'},
-                {id: uuid(),name: 'English3', due: '2019-03-14'},
+                {_id: uuid(), name: 'English1', due: '2019-06-10'},
+                {_id: uuid(),name: 'English2', due: '2019-03-17'},
+                {_id: uuid(),name: 'English3', due: '2019-03-14'},
             ],
             tests: [
-                {id: uuid(),name: 'Test1', due: '2019-06-10'},
-                {id: uuid(),name: 'Test2', due: '2019-03-17'},
-                {id: uuid(),name: 'Test3', due: '2019-03-14'},
+                {_id: uuid(),name: 'Test1', due: '2019-06-10'},
+                {_id: uuid(),name: 'Test2', due: '2019-03-17'},
+                {_id: uuid(),name: 'Test3', due: '2019-03-14'},
             ],
         },
     ],
@@ -74,10 +77,9 @@ function reducer(state = initialState,action){
             classes: action.payload.classes,
         });
     }else if(action.type === 'SET_CLASS_INDEX'){
-        let copy = state.classes.slice();
         return Object.assign({}, state, {
             classIndex: action.payload,
-            classID: copy[action.payload]._id
+            classID: state.classes[action.payload] ? state.classes[action.payload]._id  : null,
         });
     }else if(action.type === 'REMOVE_TASK'){
         let copy = state.classes.slice();
@@ -95,6 +97,14 @@ function reducer(state = initialState,action){
         return Object.assign({}, state, {
             classes: copy
         });
+    }else if(action.type === 'REMOVE_CLASS'){
+        let copy = state.classes.slice();
+        let index = copy.findIndex(x => x._id === action.payload);
+        copy.splice(index, 1);
+        return {
+            ...state,
+            classes: copy,
+        }
     }
     
     return state;

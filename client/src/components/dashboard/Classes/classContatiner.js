@@ -2,21 +2,38 @@ import React from 'react';
 
 import ShowTasks from './showTasks';
 import ShowTests from './showTests';
+import { FaTrashAlt } from "react-icons/fa";
 
 import { Transition, animated } from 'react-spring/renderprops';
 
 import { connect } from "react-redux";
+import { removeClass } from '../../../redux/action';
 
 const mapStateToProps = state => {
-    return { classes: state.classes, classIndex: state.classIndex };
+    return { classes: state.classes, classIndex: state.classIndex, classID: state.classID };
 }; 
 
 class ClassContainer extends React.Component{
     state = {
         showTask: true,
         showTest: false,
+        isDeleting: false,
     }
     
+    deleteClass = id => {
+        if(!this.state.isDeleting){
+            this.setState({ isDeleting: true})
+            fetch(`/api/class/${id}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            })
+            .then(() => {
+                this.props.toggle();
+                this.props.dispatch(removeClass(id));
+            });
+        }
+    }
+
     SetShowTest = () =>{
         this.setState({
             showTask: false,
@@ -31,12 +48,19 @@ class ClassContainer extends React.Component{
         });
     }
     render(){
+        console.log(this.props.classes);
         return(
             
             <div id="class-container">
                 <div id="class-header">
+                    <div style={{cursor:  'pointer'}} onClick={() => this.deleteClass(this.props.classID)}>
+                        <FaTrashAlt 
+                        color='white'
+                        size='3em'
+                        />
+                    </div>
                     <span id="class-header-text">{this.props.classes[this.props.classIndex].name}</span>
-                    <button className="close-button" onClick={this.props.toggle} style={{width: '35px', height: '35px'}} type="button"></button>
+                    <button className="close-button" onClick={() => this.props.toggle()} style={{width: '35px', height: '35px'}} type="button"></button>
                 </div>
                 <div id="tab-container">
                     <div className="tab" onMouseDown={this.SetShowtask} style={this.state.showTask ? {backgroundColor: '#06CAF2'} : null} >
