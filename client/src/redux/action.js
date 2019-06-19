@@ -25,3 +25,9 @@ export function removeTest(payload) {
 export function removeClass(payload) {
     return { type: "REMOVE_CLASS", payload }
 }
+export function toggleGuestFalse() {
+    return { type: "TOGGLE_GUEST_FALSE" }
+}
+export function toggleGuestTrue() {
+    return { type: "TOGGLE_GUEST_TRUE" }
+}

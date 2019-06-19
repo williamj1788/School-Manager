@@ -9,10 +9,10 @@ import ClassDetail from './classDetail';
 import ClassItem from './classItem';
 
 import { connect } from "react-redux";
-import { loadUser, setClassIndex } from '../../redux/action';
+import { loadUser, setClassIndex, toggleGuestFalse } from '../../redux/action';
 
 const mapStateToProps = state => {
-    return { classes: state.classes };
+    return { classes: state.classes, isGuess: state.isGuess };
 }; 
 
 export class Dashboard extends React.Component{
@@ -25,14 +25,18 @@ export class Dashboard extends React.Component{
 
     // returns promise for testing proposes
     componentDidMount(){
-        return this.getUserData()
-        .then(user => {
-            if(user){
-                this.loadUserData(user);
-            }else{
-                this.redirectToLogin();
-            }
-        });
+        if(!this.props.isGuess){
+            return this.getUserData()
+            .then(user => {
+                if(user){
+                    this.loadUserData(user);
+                }else{
+                    this.redirectToLogin();
+                }
+            });
+        }else{
+            this.setState({loading: false});
+        }
     }
 
     getUserData = () =>{
@@ -50,6 +54,7 @@ export class Dashboard extends React.Component{
     }
 
     signOut = () =>{
+        this.props.dispatch(toggleGuestFalse());
         return this.sendSignRequest()
         .then(this.redirectToLogin);
     }

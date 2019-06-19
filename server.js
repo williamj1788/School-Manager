@@ -10,7 +10,8 @@ const userRouter = require('./router/userRouter');
 const classRouter = require('./router/classRouter');
 
 const app = express();
-const url = 'mongodb+srv://quez:quez123@project-cluster-8qd4n.mongodb.net/SchoolManager?retryWrites=true';
+
+const keys = require('./config');
 
 function allowCrossDomain(req,res,next){
     res.setHeader('Access-Control-Allow-Origin','http://localhost:3000');
@@ -19,13 +20,13 @@ function allowCrossDomain(req,res,next){
     next();
 }
 
-mongoose.connect(url, {useNewUrlParser: true})
+mongoose.connect(keys.url, {useNewUrlParser: true})
     .then(() => console.log('connected to database'))
     .catch(err => console.log(err));
 
 app.use(upload.none());
 app.use(session({
-    secret: 'key board cat',
+    secret: keys.secret,
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: {
         maxAge: 600000000
@@ -41,7 +42,7 @@ if(process.env.NODE_ENV === 'production'){
     app.use(express.static(path.join(__dirname, 'client/build')));
 
     app.get('*', (req, res) => {
-        res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
 

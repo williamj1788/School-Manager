@@ -1,17 +1,20 @@
 import uuid from 'uuid';
+
+const isGuess = sessionStorage.getItem('guest');
+
 const initialState = {
-    username: null,
+    username: 'Guest',
     classes: [
         {
             _id: uuid(),
             name: 'Math',
             color: '#000000',
-            tasks:  [
+            Tasks:  [
                 {_id: uuid(), name: 'Math1', due: '2019-06-10'},
                 {_id: uuid(),name: 'Math2', due: '2019-03-17'},
                 {_id: uuid(),name: 'Math3', due: '2019-03-14'},
             ],
-            tests: [
+            Tests: [
                 {_id: uuid(),name: 'Test1', due: '2019-06-10'},
                 {_id: uuid(),name: 'Test2', due: '2019-03-17'},
                 {_id: uuid(),name: 'Test3', due: '2019-03-14'},
@@ -21,12 +24,12 @@ const initialState = {
             _id: uuid(),
             name: 'History',
             color: '#000000',
-            tasks:  [
+            Tasks:  [
                 {_id: uuid(), name: 'History1', due: '2019-06-10'},
                 {_id: uuid(),name: 'History2', due: '2019-03-17'},
                 {_id: uuid(),name: 'History3', due: '2019-03-14'},
             ],
-            tests: [
+            Tests: [
                 {_id: uuid(),name: 'Test1', due: '2019-06-10'},
                 {_id: uuid(),name: 'Test2', due: '2019-03-17'},
                 {_id: uuid(),name: 'Test3', due: '2019-03-14'},
@@ -36,12 +39,12 @@ const initialState = {
             _id: uuid(),
             name: 'English',
             color: '#c1424b',
-            tasks:  [
+            Tasks:  [
                 {_id: uuid(), name: 'English1', due: '2019-06-10'},
                 {_id: uuid(),name: 'English2', due: '2019-03-17'},
                 {_id: uuid(),name: 'English3', due: '2019-03-14'},
             ],
-            tests: [
+            Tests: [
                 {_id: uuid(),name: 'Test1', due: '2019-06-10'},
                 {_id: uuid(),name: 'Test2', due: '2019-03-17'},
                 {_id: uuid(),name: 'Test3', due: '2019-03-14'},
@@ -50,6 +53,7 @@ const initialState = {
     ],
     classIndex: null,
     classID: null,
+    isGuess,
 };
 
 function reducer(state = initialState,action){
@@ -104,6 +108,18 @@ function reducer(state = initialState,action){
         return {
             ...state,
             classes: copy,
+        }
+    }else if(action.type === 'TOGGLE_GUEST_FALSE'){
+        sessionStorage.setItem('guest', false);
+        return{
+            ...state,
+            isGuess: false,
+        }
+    }else if(action.type === 'TOGGLE_GUEST_TRUE'){
+        sessionStorage.setItem('guest', true);
+        return{
+            ...initialState,
+            isGuess: true,
         }
     }
     

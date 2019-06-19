@@ -3,7 +3,7 @@ import '../styles/Main.scss';
 import {Redirect, Link} from 'react-router-dom';
 
 import { connect } from "react-redux";
-
+import { toggleGuestTrue } from '../redux/action';
 
 export class Login extends React.Component{
     state = {
@@ -35,6 +35,11 @@ export class Login extends React.Component{
             form.reset();
         })
     }
+
+    loginAsGuest = () => {
+        this.props.dispatch(toggleGuestTrue());
+        this.setState({login: true});
+    }
     
     render(){
         if(this.state.login) {return <Redirect to="/dashboard" />};
@@ -50,6 +55,7 @@ export class Login extends React.Component{
                         <p>Don't have an account?</p>
                         <Link to="/signup" id="account-link">Sign up</Link>
                     </div>
+                    <button id='guest' type='button' onClick={this.loginAsGuest}>Login As Guest</button>
                 </form>
             </div>
         )

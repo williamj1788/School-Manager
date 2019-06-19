@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 
 import { addClass } from '../../../redux/action';
 import { connect } from "react-redux";
+import uuid from 'uuid';
+
 
 export class AddClass extends React.Component{
     onSubmit = event =>{
@@ -16,12 +18,24 @@ export class AddClass extends React.Component{
     }
 
     postNewClass = () => {
-        return fetch('/api/class', {
-            method: 'POST',
-            body: this.getFormData(),
-            credentials: 'include',
-        })
-        .then(res => res.json())
+        if(!this.props.isGuess){
+            return fetch('/api/class', {
+                method: 'POST',
+                body: this.getFormData(),
+                credentials: 'include',
+            })
+            .then(res => res.json())
+        }else{
+            const name = document.querySelector('input[name = classname]').value;
+            const color = document.querySelector('input[name = classcolor]').value;
+            return Promise.resolve({
+                _id: uuid(),
+                name,
+                color,
+                Tasks: [],
+                Tests: [],
+            });
+        }
     }
 
     getFormData = () => {
@@ -52,4 +66,8 @@ export class AddClass extends React.Component{
 AddClass.propTypes = {
     toggle: PropTypes.func.isRequired,
 }
-export default connect()(AddClass);
+export default connect(state => {
+    return{
+        isGuess: state.isGuess
+    }
+})(AddClass);

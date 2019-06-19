@@ -9,15 +9,17 @@ import { removeTest } from '../../../redux/action';
 import moment from 'moment';
 
 const mapStateToProps = state => {
-    return { classes: state.classes, classIndex: state.classIndex, classID: state.classID };
+    return { classes: state.classes, classIndex: state.classIndex, classID: state.classID, isGuess: state.isGuess };
 }; 
 class ShowTests extends React.Component{
     
     handleOnClick = id => {
-        fetch(`/api/class/test?classID=${this.props.classID}&testID=${id}`, {
-            method: 'DELETE',
-            credentials: 'include',
-        });
+        if(!this.props.isGuess){
+            fetch(`/api/class/test?classID=${this.props.classID}&testID=${id}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+        }
         this.props.dispatch(removeTest(id));
     }
     

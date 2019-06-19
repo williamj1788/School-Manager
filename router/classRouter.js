@@ -60,4 +60,11 @@ router.delete('/test', (req, res, next) => {
     res.send();
 });
 
+router.delete('/:id', (req, res) => {
+    User.updateOne({_id: req.session.user}, {$pull: {classes: {_id: req.params.id}}}, (err , raw) => {
+        if(err) throw err;
+        res.send();
+    });
+});
+
 module.exports = router;

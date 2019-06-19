@@ -3,25 +3,38 @@ import React from 'react';
 import { addTest } from '../../../redux/action';
 
 import { connect } from "react-redux";
+import uuid from 'uuid';
 
 const mapStateToProps = state => {
-    return { classID: state.classID };
+    return { classID: state.classID, isGuess: state.isGuess };
 };
 
 class AddTest extends React.Component{
     handleOnSubmit = event => {
         event.preventDefault();
         let form = document.getElementById('addTask-form');
-        let formData = new FormData(form);
-        fetch(`/api/class/test?id=${this.props.classID}`,{
-            method: 'POST',
-            credentials: 'include',
-            body: formData,
-        })
-        .then(res => res.json())
-        .then(res => this.props.dispatch(addTest(res)));;
-        form.reset();
-        this.props.show();
+        if(!this.props.isGuess){
+            let formData = new FormData(form);
+            fetch(`/api/class/task?id=${this.props.classID}`,{
+                method: 'POST',
+                credentials: 'include',
+                body: formData,
+            })
+            .then(res => res.json())
+            .then(res => this.props.dispatch(addTest(res)));;
+            form.reset();
+            this.props.show();
+        }else{
+            const name = document.querySelector('input[name = taskName]').value;
+            const due = document.querySelector('input[name = dueDate]').value;
+            this.props.dispatch(addTest({
+                _id: uuid(),
+                name,
+                due,
+            }))
+            form.reset();
+            this.props.show();
+        }
     }
     render(){
         return(

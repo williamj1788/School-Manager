@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { removeClass } from '../../../redux/action';
 
 const mapStateToProps = state => {
-    return { classes: state.classes, classIndex: state.classIndex, classID: state.classID };
+    return { classes: state.classes, classIndex: state.classIndex, classID: state.classID, isGuess: state.isGuess };
 }; 
 
 class ClassContainer extends React.Component{
@@ -23,14 +23,19 @@ class ClassContainer extends React.Component{
     deleteClass = id => {
         if(!this.state.isDeleting){
             this.setState({ isDeleting: true})
-            fetch(`/api/class/${id}`, {
-                method: 'DELETE',
-                credentials: 'include',
-            })
-            .then(() => {
+            if(!this.props.isGuess){
+                fetch(`/api/class/${id}`, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                })
+                .then(() => {
+                    this.props.toggle();
+                    this.props.dispatch(removeClass(id));
+                });
+            }else{
                 this.props.toggle();
                 this.props.dispatch(removeClass(id));
-            });
+            }
         }
     }
 
@@ -48,7 +53,6 @@ class ClassContainer extends React.Component{
         });
     }
     render(){
-        console.log(this.props.classes);
         return(
             
             <div id="class-container">
