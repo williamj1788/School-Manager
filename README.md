@@ -6,7 +6,12 @@
 
 ## Timeline
 
-> March 13, 2019 - March 30, 2019
+> March 13, 2019 - March 30, 2019 (Main Application)
+>
+> June 19, 2019
+>
+> * Added the ability to delete Classes
+> * Can now login as guest
 
 ## Technology
 
