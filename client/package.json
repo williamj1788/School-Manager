@@ -76,6 +76,7 @@
     "not op_mini all"
   ],
   "proxy": "http://localhost:8080",
+  "homepage": "https://www.schoolmanager.ml",
   "devDependencies": {
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",

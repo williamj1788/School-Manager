@@ -8,63 +8,95 @@ const Task = require('../model/Task');
 const Test = require('../model/Test');
 
 
-router.post('/', (req,res,next) => {
-    let newClass = new Class({
-        name: req.body.classname,
-        color: req.body.classcolor,
-    });
-    User.findByIdAndUpdate( req.session.user, {$push: {classes: newClass}})
-    .exec((err, user) => {
-        if(err) throw err;
+router.post('/', async (req, res, next) => {
+    try {
+        const { classname, classcolor } = req.body;
+        let newClass = new Class({
+            name: classname,
+            color: classcolor,
+        });
+        await User.findByIdAndUpdate( req.session.user, {$push: {classes: newClass}});
         res.json(newClass);
-    });
+    } catch(err) {
+        next(err);
+    }
+    
 });
 
-router.post('/task', (req, res, next) => {
-    let newTask = new Task({
-        name: req.body.taskName,
-        due: req.body.dueDate,
-    });
-    User.updateOne({_id: req.session.user}, {$push: {'classes.$[element].Tasks': newTask}}, {arrayFilters: [{'element._id': req.query.id}]})
-    .exec((err,raw) => {
-        if(err) throw err;
-    });;
-    res.json(newTask);
+router.post('/task', async (req, res, next) => {
+    try {
+        const { taskName, dueDate } = req.body;
+        let newTask = new Task({
+            name: taskName,
+            due: dueDate,
+        });
+        await User.findByIdAndUpdate(
+            req.session.user,
+            {$push: {'classes.$[element].Tasks': newTask}},
+            {arrayFilters: [{'element._id': req.query.id}]}
+        );
+        res.json(newTask);
+    } catch (err) {
+        next(err);
+    }
+    
 });
 
-router.delete('/task', (req, res, next) => {
-    User.updateOne({_id: req.session.user}, {$pull: {'classes.$[element].Tasks': {_id: req.query.taskID}}}, {arrayFilters: [{'element._id': req.query.classID}]})
-    .exec((err,raw) => {
-        if(err) throw err;
-    });
-    res.send();
-});
-
-router.post('/test', (req, res, next) => {
-    let newTest = new Test({
-        name: req.body.taskName,
-        due: req.body.dueDate,
-    });
-    User.updateOne({_id: req.session.user}, {$push: {'classes.$[element].Tests': newTest}}, {arrayFilters: [{'element._id': req.query.id}]})
-    .exec((err,raw) => {
-        if(err) throw err;
-    });;
-    res.json(newTest);
-});
-
-router.delete('/test', (req, res, next) => {
-    User.updateOne({_id: req.session.user}, {$pull: {'classes.$[element].Tests': {_id: req.query.testID}}}, {arrayFilters: [{'element._id': req.query.classID}]})
-    .exec((err,raw) => {
-        if(err) throw err;
-    });
-    res.send();
-});
-
-router.delete('/:id', (req, res) => {
-    User.updateOne({_id: req.session.user}, {$pull: {classes: {_id: req.params.id}}}, (err , raw) => {
-        if(err) throw err;
+router.delete('/task', async (req, res, next) => {
+    try {
+        await User.findByIdAndUpdate(
+            req.session.user,
+            {$pull: {'classes.$[element].Tasks': {_id: req.query.taskID}}},
+            {arrayFilters: [{'element._id': req.query.classID}]}
+        )
         res.send();
-    });
+    } catch (err) {
+        next(err);
+    }
 });
+
+router.post('/test', async (req, res, next) => {
+    try {
+        const { taskName, dueDate } = req.body;
+        let newTest = new Test({
+            name: taskName,
+            due: dueDate,
+        });
+        await User.findByIdAndUpdate(
+            req.session.user,
+            {$push: {'classes.$[element].Tests': newTest}},
+            {arrayFilters: [{'element._id': req.query.id}]}
+        );
+        res.json(newTest);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.delete('/test', async (req, res, next) => {
+    try {
+        await User.findByIdAndUpdate(
+            req.session.user,
+            {$pull: {'classes.$[element].Tests': {_id: req.query.testID}}},
+            {arrayFilters: [{'element._id': req.query.classID}]}
+        )
+        res.send();
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    try {
+        await User.findByIdAndUpdate(req.session.user, {$pull: {classes: {_id: req.params.id}}});
+        res.send();
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.use((err, req, res, next) => {
+    res.sendStatus(500);
+})
 
 module.exports = router;

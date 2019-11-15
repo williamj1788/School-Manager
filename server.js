@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const session = require('express-session');
@@ -11,8 +12,6 @@ const classRouter = require('./router/classRouter');
 
 const app = express();
 
-const keys = require('./config');
-
 function allowCrossDomain(req,res,next){
     res.setHeader('Access-Control-Allow-Origin','http://localhost:3000');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
@@ -20,13 +19,13 @@ function allowCrossDomain(req,res,next){
     next();
 }
 
-mongoose.connect(keys.url, {useNewUrlParser: true})
+mongoose.connect(process.env.DB_URL, {useNewUrlParser: true})
     .then(() => console.log('connected to database'))
-    .catch(err => console.log(err));
+    .catch(console.log);
 
 app.use(upload.none());
 app.use(session({
-    secret: keys.secret,
+    secret: process.env.SESSION_SECRET,
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     cookie: {
         maxAge: 600000000
@@ -38,13 +37,7 @@ app.use(allowCrossDomain);
 app.use('/api/user', userRouter);
 app.use('/api/class', classRouter);
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static(path.join(__dirname, 'client/build')));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-}
+app.use(express.static(path.join(__dirname, 'build')));
 
 const PORT = process.env.PORT || 8080;
 
