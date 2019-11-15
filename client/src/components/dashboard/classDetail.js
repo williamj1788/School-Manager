@@ -35,59 +35,60 @@ class ClassDetail extends React.Component{
     render(){
         return(
             <div id="class-detail">
-                <Transition
-                native
-                items={this.state.IsAnAddModalOpen} keys={3}
-                from={{position: 'relative',transform: "scale(0)", right: '0px'}}
-                enter={[{transform: "scale(1)"}]}
-                leave={{transform: "scale(0)"}}
-                update={show => show ? {right: '300%'}:{right: '0'}}
-                config={{duration: 1100, easing: easeSinInOut}}
-                >
-                {show => (props => (
-                    <animated.div style={props}>
-                        <ClassContainer toggle={this.props.toggle} show={[this.SetshowAddTask,this.SetshowAddTest]}/>
-                    </animated.div>
-                ))}
-                </Transition>
-                <Transition
-                native
-                items={this.state.showAddTask}
-                from={{opacity: 0}}
-                enter={{opacity: 1}}
-                leave={{opacity: 0}}
-                config={(item,state) => {
-                    if(state === 'leave'){
-                        return {duration: 300};
-                    }
-                   return {duration: 1100, delay: 1100};
-                }}
-                >
-                {show => show && (props => (
-                    <animated.div style={props}> 
-                        <AddTask show={this.SetshowAddTask} />
-                    </animated.div>
-                ))}
-                </Transition>
-                <Transition
-                native
-                items={this.state.showAddTest}
-                from={{opacity: 0}}
-                enter={{opacity: 1}}
-                leave={{opacity: 0}}
-                config={(item,state) => {
-                    if(state === 'leave'){
-                        return {duration: 300};
-                    }
-                   return {duration: 1100, delay: 1100};
-                }}
-                >
-                {show => show && (props => (
-                    <animated.div style={props}>
-                        <AddTest show={this.SetshowAddTest} />
-                    </animated.div>
-                ))}
-                </Transition>
+                <div className={`flexbox ${this.state.IsAnAddModalOpen && "expand"}`}>
+                    <Transition
+                    native
+                    items={this.state.IsAnAddModalOpen} keys={3}
+                    from={{position: 'relative', transform: "scale(0)", right: '0px'}}
+                    enter={[{transform: "scale(1)"}]}
+                    leave={{transform: "scale(0)"}}
+                    config={{duration: 1100, easing: easeSinInOut}}
+                    >
+                    {show => (props => (
+                        <animated.div style={{...props, width: '100%'}}>
+                            <ClassContainer toggle={this.props.toggle} show={[this.SetshowAddTask,this.SetshowAddTest]}/>
+                        </animated.div>
+                    ))}
+                    </Transition>
+                    <Transition
+                    native
+                    items={this.state.showAddTask}
+                    from={{opacity: 0}}
+                    enter={{opacity: 1}}
+                    leave={{opacity: 0}}
+                    config={(item, state) => {
+                        if(state === 'leave'){
+                            return {duration: 300};
+                        }
+                    return {duration: 1100, delay: 1100};
+                    }}
+                    >
+                    {show => show && (props => (
+                        <animated.div style={props}> 
+                            <AddTask show={this.SetshowAddTask} />
+                        </animated.div>
+                    ))}
+                    </Transition>
+                    <Transition
+                    native
+                    items={this.state.showAddTest}
+                    from={{opacity: 0}}
+                    enter={{opacity: 1}}
+                    leave={{opacity: 0}}
+                    config={(item, state) => {
+                        if(state === 'leave'){
+                            return {duration: 300};
+                        }
+                    return {duration: 1100, delay: 1100};
+                    }}
+                    >
+                    {show => show && (props => (
+                        <animated.div style={props}>
+                            <AddTest show={this.SetshowAddTest} />
+                        </animated.div>
+                    ))}
+                    </Transition>
+                </div>
             </div>
         )
     }

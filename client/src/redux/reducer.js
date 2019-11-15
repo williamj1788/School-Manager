@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import moment from 'moment';
 
 const isGuess = sessionStorage.getItem('guest');
 
@@ -10,14 +11,14 @@ const initialState = {
             name: 'Math',
             color: '#000000',
             Tasks:  [
-                {_id: uuid(), name: 'Math1', due: '2019-06-10'},
-                {_id: uuid(),name: 'Math2', due: '2019-03-17'},
-                {_id: uuid(),name: 'Math3', due: '2019-03-14'},
+                {_id: uuid(), name: 'Math1', due: moment().add(5, 'd')},
+                {_id: uuid(),name: 'Math2', due: moment().add(3, 'd')},
+                {_id: uuid(),name: 'Math3', due: moment().add(1, 'd')},
             ],
             Tests: [
-                {_id: uuid(),name: 'Test1', due: '2019-06-10'},
-                {_id: uuid(),name: 'Test2', due: '2019-03-17'},
-                {_id: uuid(),name: 'Test3', due: '2019-03-14'},
+                {_id: uuid(),name: 'Test1', due: moment().add(5, 'd')},
+                {_id: uuid(),name: 'Test2', due: moment().add(3, 'd')},
+                {_id: uuid(),name: 'Test3', due: moment().add(1, 'd')},
             ],
         },
         {
@@ -25,14 +26,14 @@ const initialState = {
             name: 'History',
             color: '#000000',
             Tasks:  [
-                {_id: uuid(), name: 'History1', due: '2019-06-10'},
-                {_id: uuid(),name: 'History2', due: '2019-03-17'},
-                {_id: uuid(),name: 'History3', due: '2019-03-14'},
+                {_id: uuid(), name: 'History1', due: moment().add(5, 'd')},
+                {_id: uuid(),name: 'History2', due: moment().add(3, 'd')},
+                {_id: uuid(),name: 'History3', due: moment().add(1, 'd')},
             ],
             Tests: [
-                {_id: uuid(),name: 'Test1', due: '2019-06-10'},
-                {_id: uuid(),name: 'Test2', due: '2019-03-17'},
-                {_id: uuid(),name: 'Test3', due: '2019-03-14'},
+                {_id: uuid(),name: 'Test1', due: moment().add(5, 'd')},
+                {_id: uuid(),name: 'Test2', due: moment().add(3, 'd')},
+                {_id: uuid(),name: 'Test3', due: moment().add(1, 'd')},
             ],
         },
         {
@@ -40,14 +41,14 @@ const initialState = {
             name: 'English',
             color: '#c1424b',
             Tasks:  [
-                {_id: uuid(), name: 'English1', due: '2019-06-10'},
-                {_id: uuid(),name: 'English2', due: '2019-03-17'},
-                {_id: uuid(),name: 'English3', due: '2019-03-14'},
+                {_id: uuid(), name: 'English1', due: moment().add(5, 'd')},
+                {_id: uuid(),name: 'English2', due: moment().add(3, 'd')},
+                {_id: uuid(),name: 'English3', due: moment().add(1, 'd')},
             ],
             Tests: [
-                {_id: uuid(),name: 'Test1', due: '2019-06-10'},
-                {_id: uuid(),name: 'Test2', due: '2019-03-17'},
-                {_id: uuid(),name: 'Test3', due: '2019-03-14'},
+                {_id: uuid(),name: 'Test1', due: moment().add(5, 'd')},
+                {_id: uuid(),name: 'Test2', due: moment().add(3, 'd')},
+                {_id: uuid(),name: 'Test3', due: moment().add(1, 'd')},
             ],
         },
     ],
