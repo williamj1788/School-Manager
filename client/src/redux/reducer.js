@@ -1,7 +1,8 @@
 import uuid from 'uuid';
 import moment from 'moment';
 
-const isGuess = sessionStorage.getItem('guest');
+const isGuess = sessionStorage.getItem('guest') === "true";
+
 
 const initialState = {
     username: 'Guest',
