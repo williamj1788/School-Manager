@@ -24,11 +24,10 @@
             #links{
                 display: flex;
                 justify-content: space-between;
-                width: 450px;
                 align-items: center;
                 .nav-link{
                     height: fit-content;
-                    margin: 0;
+                    margin: 0 15px;
                     font-size: 46px;
                     font-family: 'Passion One', cursive;
                     color: white;
@@ -39,7 +38,7 @@
                 }
                 .nav-user{
                     height: fit-content;
-                    margin: 0;
+                    margin: 0 15px;
                     font-size: 46px;
                     font-family: 'Passion One', cursive;
                     color: white;
