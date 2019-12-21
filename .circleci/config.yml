@@ -18,7 +18,7 @@ jobs:
             cd client
             npm install
       - save_cache:
-          key: my-project-client-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          key: my-project-client-{{ .Branch }}-{{ checksum "client/package-lock.json" }}
           paths:
             - "client/node_modules"
       - run:
