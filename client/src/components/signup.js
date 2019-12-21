@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/Main.scss";
 import { Redirect, Link } from "react-router-dom";
 
 export class Signup extends React.Component {
