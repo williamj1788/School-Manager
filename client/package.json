@@ -9,12 +9,12 @@
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
     "babel-loader": "8.0.5",
-    "babel-plugin-named-asset-import": "^0.3.1",
+    "babel-plugin-named-asset-import": "^0.3.5",
     "babel-preset-react-app": "^7.0.2",
     "bfj": "6.1.1",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "1.0.0",
-    "d3-ease": "^1.0.5",
+    "d3-ease": "^1.0.6",
     "dotenv": "6.0.0",
     "dotenv-expand": "4.2.0",
     "eslint": "5.12.0",
@@ -31,7 +31,7 @@
     "jest": "23.6.0",
     "jest-pnp-resolver": "1.0.2",
     "jest-resolve": "23.6.0",
-    "jest-watch-typeahead": "^0.2.1",
+    "jest-watch-typeahead": "^0.4.2",
     "mini-css-extract-plugin": "0.5.0",
     "moment": "^2.24.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
@@ -40,10 +40,10 @@
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
-    "react": "^16.8.4",
+    "react": "^16.12.0",
     "react-app-polyfill": "^0.2.2",
     "react-dev-utils": "^8.0.0",
-    "react-dom": "^16.8.4",
+    "react-dom": "^16.12.0",
     "react-icons": "^3.7.0",
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
@@ -64,7 +64,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "test-ci": "node scripts/test.js --no-watch"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -78,10 +79,10 @@
   "proxy": "http://localhost:8080",
   "homepage": "https://www.schoolmanager.ml",
   "devDependencies": {
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.11.2",
-    "enzyme-to-json": "^3.3.5",
-    "@babel/plugin-transform-modules-commonjs": "^7.4.0"
+    "@babel/plugin-transform-modules-commonjs": "^7.7.5",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.3.5"
   },
   "jest": {
     "restoreMocks": true,
@@ -126,10 +127,6 @@
       "web.jsx",
       "jsx",
       "node"
-    ],
-    "watchPlugins": [
-      "C:\\Users\\deathkiller101x\\Desktop\\Projects\\Websites\\School Manager\\client\\node_modules\\jest-watch-typeahead\\filename.js",
-      "C:\\Users\\deathkiller101x\\Desktop\\Projects\\Websites\\School Manager\\client\\node_modules\\jest-watch-typeahead\\testname.js"
     ]
   },
   "babel": {

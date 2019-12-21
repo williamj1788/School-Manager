@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/my-project
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Client Cache
+          keys:
+            - my-project-client-{{ .Branch }}-{{ checksum "client/package-lock.json" }}
+            - my-project-client-{{ .Branch }}
+            - my-project-client-
+      - run:
+          name: Install client dependencies
+          command: |
+            cd client
+            npm install
+      - save_cache:
+          key: my-project-client-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - "client/node_modules"
+      - run:
+          name: Run Client Test
+          command: |
+            cd client
+            npm run test-ci
