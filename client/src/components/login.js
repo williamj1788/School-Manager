@@ -49,13 +49,14 @@ export class Login extends React.Component {
       <div className="Main">
         <form className="main-form" onSubmit={this.handleSubmit}>
           <h2 className="form-title">StudyBit</h2>
-          <input
+          <TextField label="Username" />
+          {/* <input
             type="text"
             className="input-field"
             name="username"
             placeholder="Username"
             autoComplete="off"
-          />
+          /> */}
           <input
             type="password"
             className="input-field"
