@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Passion+One");
-@import url("https://fonts.googleapis.com/css?family=Passion+One");
 
 @mixin button($width, $height, $font) {
   width: $width;
@@ -92,7 +91,6 @@ body {
         color: #535353;
       }
       #account-link {
-        text-decoration: none;
         color: $light-blue;
         font-size: 21px;
         margin: 0;

@@ -17,7 +17,7 @@ import { toggleGuestTrue } from "../redux/action";
 
 import GoogleIcon from "../Img/g-logo.png";
 
-export class Login extends React.Component {
+export class AuthForm extends React.Component {
   state = {
     login: false,
     error: false
@@ -99,15 +99,17 @@ export class Login extends React.Component {
             style={{
               margin: "10px 0",
               position: "relative",
-              backgroundColor: "#4285F4"
+              color: "#333332",
+              backgroundColor: "#ffffff"
             }}
             variant="contained"
-            color="primary"
             fullWidth
           >
             <img
               src={GoogleIcon}
               alt="Google Logo"
+              width="30"
+              height="30"
               style={{ fontSize: 30, position: "absolute", left: 10 }}
             />
             Login with Google
@@ -141,4 +143,4 @@ export class Login extends React.Component {
     );
   }
 }
-export default connect()(Login);
+export default connect()(AuthForm);
