@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./AuthForm.scss";
 
@@ -13,54 +13,53 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import FacebookIcon from "@material-ui/icons/Facebook";
 
-import { connect } from "react-redux";
-import { toggleGuestTrue } from "../../redux/action";
-
 import GoogleIcon from "../../Img/g-logo.png";
 
 export default function AuthForm() {
-  const [login, setLogin] = useState(false);
-  const [error, setError] = useState(false);
+  const [form, setForm] = useState({
+    email: null
+  });
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  const [formErrors, setFormErrors] = useState({
+    email: null
+  });
 
-    let form = document.getElementsByClassName("main-form")[0];
-    let formData = new FormData(form);
-
-    fetch("/api/user/login", {
-      method: "POST",
-      body: formData,
-      credentials: "include"
-    }).then(res => {
-      if (res.status !== 404) {
-        this.setState({
-          login: true
-        });
-      } else {
-        this.setState({
-          error: true
-        });
-      }
-      form.reset();
+  function handleOnChange(e) {
+    console.log(e.target.value);
+    setForm({
+      ...form,
+      [e.target.id.toLowerCase()]: e.target.value
     });
   }
 
-  function loginAsGuest() {
-    this.props.dispatch(toggleGuestTrue());
-    this.setState({ login: true });
+  function validateEmail() {
+    if (!form.email) {
+      return setFormErrors({
+        ...formErrors,
+        email: "Email is Required"
+      });
+    }
+    setFormErrors({
+      ...formErrors,
+      email: null
+    });
   }
-  if (login) return <Redirect to="/dashboard" />;
+
   return (
     <div className="Main">
       <form className="main-form" noValidate>
         <h2 className="form-title">StudyBit</h2>
         <TextField
+          InputLabelProps={{ "data-testid": "Email" }}
+          error={!!formErrors.email}
           margin="normal"
           label="Email"
+          id="Email"
           variant="outlined"
-          helperText="This is a message"
+          helperText={formErrors.email}
           fullWidth
+          onChange={handleOnChange}
+          onBlur={validateEmail}
           required
         />
         <TextField
@@ -137,3 +136,30 @@ export default function AuthForm() {
     </div>
   );
 }
+// function handleSubmit(event) {
+//     event.preventDefault();
+
+//     let form = document.getElementsByClassName("main-form")[0];
+//     let formData = new FormData(form);
+
+//     fetch("/api/user/login", {
+//       method: "POST",
+//       body: formData,
+//       credentials: "include"
+//     }).then(res => {
+//       if (res.status !== 404) {
+//         this.setState({
+//           login: true
+//         });
+//       } else {
+//         this.setState({
+//           error: true
+//         });
+//       }
+//       form.reset();
+//     });
+//   }
+// function loginAsGuest() {
+//     this.props.dispatch(toggleGuestTrue());
+//     this.setState({ login: true });
+//   }
