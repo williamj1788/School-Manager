@@ -17,15 +17,16 @@ import GoogleIcon from "../../Img/g-logo.png";
 
 export default function AuthForm() {
   const [form, setForm] = useState({
-    email: null
+    email: null,
+    password: null
   });
 
   const [formErrors, setFormErrors] = useState({
-    email: null
+    email: null,
+    password: null
   });
 
   function handleOnChange(e) {
-    console.log(e.target.value);
     setForm({
       ...form,
       [e.target.id.toLowerCase()]: e.target.value
@@ -39,9 +40,30 @@ export default function AuthForm() {
         email: "Email is Required"
       });
     }
+    const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (!emailRegex.test(form.email)) {
+      return setFormErrors({
+        ...formErrors,
+        email: "Email is Invalid"
+      });
+    }
     setFormErrors({
       ...formErrors,
       email: null
+    });
+  }
+
+  function validatePassword() {
+    if (!form.password) {
+      return setFormErrors({
+        ...formErrors,
+        password: "Password is Required"
+      });
+    }
+    setFormErrors({
+      ...formErrors,
+      password: null
     });
   }
 
@@ -63,10 +85,15 @@ export default function AuthForm() {
           required
         />
         <TextField
+          InputLabelProps={{ "data-testid": "Password" }}
+          error={!!formErrors.password}
           margin="normal"
           label="Password"
+          id="Password"
           variant="outlined"
-          helperText="This is a message"
+          helperText={formErrors.password}
+          onChange={handleOnChange}
+          onBlur={validatePassword}
           fullWidth
           required
           InputProps={{
