@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
+
+import "./AuthForm.scss";
 
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -13,9 +15,9 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import FacebookIcon from "@material-ui/icons/Facebook";
 
 import { connect } from "react-redux";
-import { toggleGuestTrue } from "../redux/action";
+import { toggleGuestTrue } from "../../redux/action";
 
-import GoogleIcon from "../Img/g-logo.png";
+import GoogleIcon from "../../Img/g-logo.png";
 
 export class AuthForm extends React.Component {
   state = {

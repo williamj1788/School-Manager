@@ -113,9 +113,7 @@
     ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-      "react-spring": "<rootDir>/node_modules/react-spring/web.cjs",
-      "react-spring/renderprops": "<rootDir>/node_modules/react-spring/renderprops.cjs"
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
     },
     "moduleFileExtensions": [
       "web.js",

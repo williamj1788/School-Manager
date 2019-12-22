@@ -8,8 +8,7 @@ import store from "./redux/store";
 import "./styles/Normalize.css";
 import "./styles/index.scss";
 
-import AuthForm from "./components/AuthForm";
-import Signup from "./components/signup";
+import AuthForm from "./components/AuthForm/AuthForm";
 import Dashboard from "./components/dashboard/dashboard";
 
 const Root = ({ store }) => (
@@ -18,7 +17,6 @@ const Root = ({ store }) => (
       <div>
         <Switch>
           <Route exact path="/" component={AuthForm} />
-          <Route path="/signup" component={Signup} />
           <Route path="/dashboard" component={Dashboard} />
         </Switch>
       </div>
