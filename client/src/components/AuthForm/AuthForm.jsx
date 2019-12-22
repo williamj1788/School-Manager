@@ -18,13 +18,11 @@ import { toggleGuestTrue } from "../../redux/action";
 
 import GoogleIcon from "../../Img/g-logo.png";
 
-export class AuthForm extends React.Component {
-  state = {
-    login: false,
-    error: false
-  };
+export default function AuthForm() {
+  const [login, setLogin] = useState(false);
+  const [error, setError] = useState(false);
 
-  handleSubmit = event => {
+  function handleSubmit(event) {
     event.preventDefault();
 
     let form = document.getElementsByClassName("main-form")[0];
@@ -46,102 +44,96 @@ export class AuthForm extends React.Component {
       }
       form.reset();
     });
-  };
+  }
 
-  loginAsGuest = () => {
+  function loginAsGuest() {
     this.props.dispatch(toggleGuestTrue());
     this.setState({ login: true });
-  };
-
-  render() {
-    if (this.state.login) {
-      return <Redirect to="/dashboard" />;
-    }
-    return (
-      <div className="Main">
-        <form className="main-form" noValidate onSubmit={this.handleSubmit}>
-          <h2 className="form-title">StudyBit</h2>
-          <TextField
-            margin="normal"
-            label="Email"
-            variant="outlined"
-            helperText="This is a message"
-            fullWidth
-            required
-          />
-          <TextField
-            margin="normal"
-            label="Password"
-            variant="outlined"
-            helperText="This is a message"
-            fullWidth
-            required
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    {true ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              )
-            }}
-          />
-          <Button
-            style={{ margin: "10px 0" }}
-            variant="contained"
-            color="primary"
-            type="submit"
-            fullWidth
-          >
-            Login
-          </Button>
-          <Divider />
-          <Button
-            style={{
-              margin: "10px 0",
-              position: "relative",
-              color: "#333332",
-              backgroundColor: "#ffffff"
-            }}
-            variant="contained"
-            fullWidth
-          >
-            <img
-              src={GoogleIcon}
-              alt="Google Logo"
-              width="30"
-              height="30"
-              style={{ fontSize: 30, position: "absolute", left: 10 }}
-            />
-            Login with Google
-          </Button>
-          <Button
-            style={{ margin: "10px 0", position: "relative" }}
-            variant="contained"
-            color="primary"
-            fullWidth
-          >
-            <FacebookIcon
-              style={{ fontSize: 30, position: "absolute", left: 10 }}
-            />
-            Login with Facebook
-          </Button>
-          <Button
-            style={{ margin: "10px 0" }}
-            variant="contained"
-            color="primary"
-            fullWidth
-          >
-            Login As Guest
-          </Button>
-          <div className="account">
-            <Link to="/signup" id="account-link">
-              Don't have an account? Sign up
-            </Link>
-          </div>
-        </form>
-      </div>
-    );
   }
+  if (login) return <Redirect to="/dashboard" />;
+  return (
+    <div className="Main">
+      <form className="main-form" noValidate>
+        <h2 className="form-title">StudyBit</h2>
+        <TextField
+          margin="normal"
+          label="Email"
+          variant="outlined"
+          helperText="This is a message"
+          fullWidth
+          required
+        />
+        <TextField
+          margin="normal"
+          label="Password"
+          variant="outlined"
+          helperText="This is a message"
+          fullWidth
+          required
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton>
+                  {true ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
+        <Button
+          style={{ margin: "10px 0" }}
+          variant="contained"
+          color="primary"
+          type="submit"
+          fullWidth
+        >
+          Login
+        </Button>
+        <Divider />
+        <Button
+          style={{
+            margin: "10px 0",
+            position: "relative",
+            color: "#333332",
+            backgroundColor: "#ffffff"
+          }}
+          variant="contained"
+          fullWidth
+        >
+          <img
+            src={GoogleIcon}
+            alt="Google Logo"
+            width="30"
+            height="30"
+            style={{ fontSize: 30, position: "absolute", left: 10 }}
+          />
+          Login with Google
+        </Button>
+        <Button
+          style={{ margin: "10px 0", position: "relative" }}
+          variant="contained"
+          color="primary"
+          fullWidth
+        >
+          <FacebookIcon
+            style={{ fontSize: 30, position: "absolute", left: 10 }}
+          />
+          Login with Facebook
+        </Button>
+        <Button
+          style={{ margin: "10px 0" }}
+          variant="contained"
+          color="primary"
+          fullWidth
+        >
+          Login As Guest
+        </Button>
+        <div className="account">
+          <Link to="/signup" id="account-link">
+            Don't have an account? Sign up
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
 }
-export default connect()(AuthForm);

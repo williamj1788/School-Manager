@@ -66,12 +66,13 @@ $dark-blue: #00a1c2;
     font-size: 21px;
     color: #535353;
   }
-  #account-link {
-    color: $light-blue;
-    font-size: 21px;
-    margin: 0;
-    height: fit-content;
-  }
+}
+
+#account-link {
+  color: $light-blue;
+  font-size: 21px;
+  margin: 0;
+  height: fit-content;
 }
 
 #guest {
