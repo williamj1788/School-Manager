@@ -47,7 +47,7 @@
     "react-dev-utils": "^8.0.0",
     "react-dom": "^16.12.0",
     "react-icons": "^3.7.0",
-    "react-redux": "^6.0.1",
+    "react-redux": "^7.0.0",
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "resolve": "1.10.0",
@@ -80,6 +80,7 @@
   "homepage": "https://www.schoolmanager.ml",
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.7.5",
+    "@testing-library/react": "^9.4.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.3.5",

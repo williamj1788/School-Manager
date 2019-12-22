@@ -8,7 +8,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import Paper from "@material-ui/core/Paper";
 
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -59,7 +58,7 @@ export class AuthForm extends React.Component {
       return <Redirect to="/dashboard" />;
     }
     return (
-      <Paper className="Main">
+      <div className="Main">
         <form className="main-form" noValidate onSubmit={this.handleSubmit}>
           <h2 className="form-title">StudyBit</h2>
           <TextField
@@ -141,7 +140,7 @@ export class AuthForm extends React.Component {
             </Link>
           </div>
         </form>
-      </Paper>
+      </div>
     );
   }
 }
