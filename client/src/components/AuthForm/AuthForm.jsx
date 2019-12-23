@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./AuthForm.scss";
@@ -26,18 +26,6 @@ export default function AuthForm({ onSubmit, pending }) {
     password: null
   });
   const [visiblePassword, setVisiblePassword] = useState(false);
-  const [isSubmiting, setIsSubmiting] = useState(false);
-
-  useEffect(() => {
-    if (!isSubmiting) {
-      return;
-    }
-    setIsSubmiting(false);
-    if (formErrors.email || formErrors.password) {
-      return;
-    }
-    onSubmit(form);
-  }, [isSubmiting]);
 
   function handleOnChange(e) {
     setForm({
@@ -46,52 +34,42 @@ export default function AuthForm({ onSubmit, pending }) {
     });
   }
 
-  function validateEmail() {
-    if (!form.email) {
-      return setFormErrors({
-        ...formErrors,
-        email: "Email is Required"
-      });
-    }
-    const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-    if (!emailRegex.test(form.email)) {
-      return setFormErrors({
-        ...formErrors,
-        email: "Email is Invalid"
-      });
-    }
+  function validateForm() {
     setFormErrors({
-      ...formErrors,
-      email: null
+      password: getPasswordValidationError(),
+      email: getEmailValidationError()
     });
   }
 
-  function validatePassword() {
+  function getEmailValidationError() {
+    if (!form.email) {
+      return "Email is Required";
+    }
+
+    const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (!emailRegex.test(form.email)) {
+      return "Email is Invalid";
+    }
+    return null;
+  }
+
+  function getPasswordValidationError() {
     if (!form.password) {
-      return setFormErrors({
-        ...formErrors,
-        password: "Password is Required"
-      });
+      return "Password is Required";
     }
     if (form.password.length < 6) {
-      return setFormErrors({
-        ...formErrors,
-        password: "Password must have at least 6 characters"
-      });
+      return "Password must have at least 6 characters";
     }
-    setFormErrors({
-      ...formErrors,
-      password: null
-    });
+    return null;
   }
 
   function handleOnSubmit(e) {
     e.preventDefault();
-    setIsSubmiting(true);
 
-    validateEmail();
-    validatePassword();
+    if (getEmailValidationError() || getPasswordValidationError()) {
+      return validateForm();
+    }
+    onSubmit(form);
   }
 
   return (
@@ -113,7 +91,7 @@ export default function AuthForm({ onSubmit, pending }) {
           helperText={formErrors.email}
           fullWidth
           onChange={handleOnChange}
-          onBlur={validateEmail}
+          onBlur={validateForm}
           required
         />
         <TextField
@@ -125,7 +103,7 @@ export default function AuthForm({ onSubmit, pending }) {
           variant="outlined"
           helperText={formErrors.password}
           onChange={handleOnChange}
-          onBlur={validatePassword}
+          onBlur={validateForm}
           type={visiblePassword ? "text" : "password"}
           fullWidth
           required

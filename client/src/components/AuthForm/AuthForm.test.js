@@ -34,9 +34,7 @@ describe("AuthForm", () => {
     const { getByText, getByLabelText } = render(<AuthForm />);
 
     fireEvent.change(getByLabelText(/Email/i), {
-      target: {
-        value: "invalidEmail.com"
-      }
+      target: { value: "invalidEmail.com" }
     });
 
     fireEvent.blur(getByLabelText(/Email/i));
@@ -53,9 +51,7 @@ describe("AuthForm", () => {
     fireEvent.blur(getByLabelText(/Email/i));
 
     fireEvent.change(getByLabelText(/Email/i), {
-      target: {
-        value: "email@gmail.com"
-      }
+      target: { value: "email@gmail.com" }
     });
 
     fireEvent.blur(getByLabelText(/Email/i));
@@ -89,9 +85,7 @@ describe("AuthForm", () => {
     const { getByText, getByLabelText } = render(<AuthForm />);
 
     fireEvent.change(getByLabelText(/Password/i), {
-      target: {
-        value: "foooo"
-      }
+      target: { value: "foooo" }
     });
 
     fireEvent.blur(getByLabelText(/Password/i));
@@ -108,9 +102,7 @@ describe("AuthForm", () => {
     fireEvent.blur(getByLabelText(/Password/i));
 
     fireEvent.change(getByLabelText(/Password/i), {
-      target: {
-        value: "password1"
-      }
+      target: { value: "password1" }
     });
 
     fireEvent.blur(getByLabelText(/Password/i));
@@ -148,15 +140,11 @@ describe("AuthForm", () => {
     );
 
     fireEvent.change(getByLabelText(/Email/i), {
-      target: {
-        value: "email@gmail.com"
-      }
+      target: { value: "email@gmail.com" }
     });
 
     fireEvent.change(getByLabelText(/Password/i), {
-      target: {
-        value: "password1"
-      }
+      target: { value: "password1" }
     });
 
     fireEvent.submit(getByTestId("form"));
@@ -176,15 +164,11 @@ describe("AuthForm", () => {
     );
 
     fireEvent.change(getByLabelText(/Email/i), {
-      target: {
-        value: "email"
-      }
+      target: { value: "email" }
     });
 
     fireEvent.change(getByLabelText(/Password/i), {
-      target: {
-        value: "pass"
-      }
+      target: { value: "pass" }
     });
 
     fireEvent.submit(getByTestId("form"));
@@ -193,9 +177,7 @@ describe("AuthForm", () => {
   });
 
   test("should show spinner when pending", () => {
-    const { getByTestId, getByLabelText, getByText } = render(
-      <AuthForm pending />
-    );
+    const { getByTestId } = render(<AuthForm pending />);
 
     expect(getByTestId("submit button").disabled).toBeTruthy();
     expect(getByTestId("spinner")).toBeTruthy();
