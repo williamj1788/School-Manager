@@ -139,4 +139,72 @@ describe("AuthForm", () => {
     expect(queryByTestId("not visible")).toBeTruthy();
     expect(getByLabelText(/Password/i).type).toBe("password");
   });
+
+  test("should call onSubmit on submit", () => {
+    const onSubmit = jest.fn();
+
+    const { getByTestId, getByLabelText } = render(
+      <AuthForm onSubmit={onSubmit} />
+    );
+
+    fireEvent.change(getByLabelText(/Email/i), {
+      target: {
+        value: "email@gmail.com"
+      }
+    });
+
+    fireEvent.change(getByLabelText(/Password/i), {
+      target: {
+        value: "password1"
+      }
+    });
+
+    fireEvent.submit(getByTestId("form"));
+
+    expect(onSubmit.mock.calls.length).toBe(1);
+    expect(onSubmit.mock.calls[0][0]).toEqual({
+      email: "email@gmail.com",
+      password: "password1"
+    });
+  });
+
+  test("should not call onSubmit on submit when form is invalid", () => {
+    const onSubmit = jest.fn();
+
+    const { getByTestId, getByLabelText } = render(
+      <AuthForm onSubmit={onSubmit} />
+    );
+
+    fireEvent.change(getByLabelText(/Email/i), {
+      target: {
+        value: "email"
+      }
+    });
+
+    fireEvent.change(getByLabelText(/Password/i), {
+      target: {
+        value: "pass"
+      }
+    });
+
+    fireEvent.submit(getByTestId("form"));
+
+    expect(onSubmit.mock.calls.length).toBe(0);
+  });
+
+  test("should show spinner when pending", () => {
+    const { getByTestId, getByLabelText, getByText } = render(
+      <AuthForm pending />
+    );
+
+    expect(getByTestId("submit button").disabled).toBeTruthy();
+    expect(getByTestId("spinner")).toBeTruthy();
+  });
+
+  test("should not show spinner when not pending", () => {
+    const { getByTestId, queryByTestId } = render(<AuthForm />);
+
+    expect(getByTestId("submit button").disabled).toBeFalsy();
+    expect(queryByTestId("spinner")).toBeFalsy();
+  });
 });

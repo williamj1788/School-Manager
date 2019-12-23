@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import "./AuthForm.scss";
@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Divider from "@material-ui/core/Divider";
 
 import Visibility from "@material-ui/icons/Visibility";
@@ -15,7 +16,7 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 
 import GoogleIcon from "../../Img/g-logo.png";
 
-export default function AuthForm() {
+export default function AuthForm({ onSubmit, pending }) {
   const [form, setForm] = useState({
     email: null,
     password: null
@@ -25,6 +26,18 @@ export default function AuthForm() {
     password: null
   });
   const [visiblePassword, setVisiblePassword] = useState(false);
+  const [isSubmiting, setIsSubmiting] = useState(false);
+
+  useEffect(() => {
+    if (!isSubmiting) {
+      return;
+    }
+    setIsSubmiting(false);
+    if (formErrors.email || formErrors.password) {
+      return;
+    }
+    onSubmit(form);
+  }, [isSubmiting]);
 
   function handleOnChange(e) {
     setForm({
@@ -73,9 +86,22 @@ export default function AuthForm() {
     });
   }
 
+  function handleOnSubmit(e) {
+    e.preventDefault();
+    setIsSubmiting(true);
+
+    validateEmail();
+    validatePassword();
+  }
+
   return (
     <div className="Main">
-      <form className="main-form" noValidate>
+      <form
+        className="main-form"
+        noValidate
+        data-testid="form"
+        onSubmit={handleOnSubmit}
+      >
         <h2 className="form-title">StudyBit</h2>
         <TextField
           InputLabelProps={{ "data-testid": "Email" }}
@@ -123,11 +149,17 @@ export default function AuthForm() {
         <Button
           style={{ margin: "10px 0" }}
           variant="contained"
+          data-testid="submit button"
           color="primary"
           type="submit"
           fullWidth
+          disabled={pending}
         >
-          Login
+          {pending ? (
+            <CircularProgress data-testid="spinner" size={25} />
+          ) : (
+            "Login"
+          )}
         </Button>
         <Divider />
         <Button
@@ -177,30 +209,3 @@ export default function AuthForm() {
     </div>
   );
 }
-// function handleSubmit(event) {
-//     event.preventDefault();
-
-//     let form = document.getElementsByClassName("main-form")[0];
-//     let formData = new FormData(form);
-
-//     fetch("/api/user/login", {
-//       method: "POST",
-//       body: formData,
-//       credentials: "include"
-//     }).then(res => {
-//       if (res.status !== 404) {
-//         this.setState({
-//           login: true
-//         });
-//       } else {
-//         this.setState({
-//           error: true
-//         });
-//       }
-//       form.reset();
-//     });
-//   }
-// function loginAsGuest() {
-//     this.props.dispatch(toggleGuestTrue());
-//     this.setState({ login: true });
-//   }
