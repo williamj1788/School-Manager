@@ -20,11 +20,11 @@ export default function AuthForm() {
     email: null,
     password: null
   });
-
   const [formErrors, setFormErrors] = useState({
     email: null,
     password: null
   });
+  const [visiblePassword, setVisiblePassword] = useState(false);
 
   function handleOnChange(e) {
     setForm({
@@ -61,6 +61,12 @@ export default function AuthForm() {
         password: "Password is Required"
       });
     }
+    if (form.password.length < 6) {
+      return setFormErrors({
+        ...formErrors,
+        password: "Password must have at least 6 characters"
+      });
+    }
     setFormErrors({
       ...formErrors,
       password: null
@@ -94,13 +100,21 @@ export default function AuthForm() {
           helperText={formErrors.password}
           onChange={handleOnChange}
           onBlur={validatePassword}
+          type={visiblePassword ? "text" : "password"}
           fullWidth
           required
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton>
-                  {true ? <Visibility /> : <VisibilityOff />}
+                <IconButton
+                  data-testid="visible button"
+                  onClick={() => setVisiblePassword(p => !p)}
+                >
+                  {visiblePassword ? (
+                    <Visibility data-testid="visible" />
+                  ) : (
+                    <VisibilityOff data-testid="not visible" />
+                  )}
                 </IconButton>
               </InputAdornment>
             )

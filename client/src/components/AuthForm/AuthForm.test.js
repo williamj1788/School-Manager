@@ -85,6 +85,23 @@ describe("AuthForm", () => {
     );
   });
 
+  test("password input should show error when password has less than 6 characters", () => {
+    const { getByText, getByLabelText } = render(<AuthForm />);
+
+    fireEvent.change(getByLabelText(/Password/i), {
+      target: {
+        value: "foooo"
+      }
+    });
+
+    fireEvent.blur(getByLabelText(/Password/i));
+
+    expect(getByText("Password must have at least 6 characters")).toBeTruthy();
+    expect(
+      getByText("Password must have at least 6 characters").className.split(" ")
+    ).toContain("Mui-error");
+  });
+
   test("password input should remove error if value is valid", () => {
     const { getByLabelText, getByTestId } = render(<AuthForm />);
 
@@ -101,5 +118,25 @@ describe("AuthForm", () => {
     expect(getByTestId("Password").className.split(" ")).not.toContain(
       "Mui-error"
     );
+  });
+
+  test("password input value's should be able to toggle visibility", () => {
+    const { queryByTestId, getByTestId, getByLabelText } = render(<AuthForm />);
+
+    expect(queryByTestId("visible")).toBeFalsy();
+    expect(queryByTestId("not visible")).toBeTruthy();
+    expect(getByLabelText(/Password/i).type).toBe("password");
+
+    fireEvent.click(getByTestId("visible button"));
+
+    expect(queryByTestId("visible")).toBeTruthy();
+    expect(queryByTestId("not visible")).toBeFalsy();
+    expect(getByLabelText(/Password/i).type).toBe("text");
+
+    fireEvent.click(getByTestId("visible button"));
+
+    expect(queryByTestId("visible")).toBeFalsy();
+    expect(queryByTestId("not visible")).toBeTruthy();
+    expect(getByLabelText(/Password/i).type).toBe("password");
   });
 });
