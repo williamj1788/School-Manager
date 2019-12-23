@@ -16,7 +16,7 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 
 import GoogleIcon from "../../Img/g-logo.png";
 
-export default function AuthForm({ onSubmit, pending }) {
+export default function AuthForm({ onSubmit, pending, error }) {
   const [form, setForm] = useState({
     email: null,
     password: null
@@ -84,7 +84,7 @@ export default function AuthForm({ onSubmit, pending }) {
         <TextField
           InputLabelProps={{ "data-testid": "Email" }}
           error={!!formErrors.email}
-          margin="normal"
+          margin="dense"
           label="Email"
           id="Email"
           variant="outlined"
@@ -92,12 +92,13 @@ export default function AuthForm({ onSubmit, pending }) {
           fullWidth
           onChange={handleOnChange}
           onBlur={validateForm}
+          size="small"
           required
         />
         <TextField
           InputLabelProps={{ "data-testid": "Password" }}
           error={!!formErrors.password}
-          margin="normal"
+          margin="dense"
           label="Password"
           id="Password"
           variant="outlined"
@@ -105,6 +106,7 @@ export default function AuthForm({ onSubmit, pending }) {
           onChange={handleOnChange}
           onBlur={validateForm}
           type={visiblePassword ? "text" : "password"}
+          size="small"
           fullWidth
           required
           InputProps={{
@@ -124,6 +126,7 @@ export default function AuthForm({ onSubmit, pending }) {
             )
           }}
         />
+        {error && <p className="form-error">{error}</p>}
         <Button
           style={{ margin: "10px 0" }}
           variant="contained"
@@ -140,9 +143,11 @@ export default function AuthForm({ onSubmit, pending }) {
           )}
         </Button>
         <Divider />
+        <Divider />
+        <Divider />
         <Button
           style={{
-            margin: "10px 0",
+            margin: "20px 0 10px 0",
             position: "relative",
             color: "#333332",
             backgroundColor: "#ffffff"
@@ -160,7 +165,7 @@ export default function AuthForm({ onSubmit, pending }) {
           Login with Google
         </Button>
         <Button
-          style={{ margin: "10px 0", position: "relative" }}
+          style={{ margin: "10px 0 20px 0", position: "relative" }}
           variant="contained"
           color="primary"
           fullWidth
@@ -170,8 +175,11 @@ export default function AuthForm({ onSubmit, pending }) {
           />
           Login with Facebook
         </Button>
+        <Divider />
+        <Divider />
+        <Divider />
         <Button
-          style={{ margin: "10px 0" }}
+          style={{ margin: "20px 0 10px 0" }}
           variant="contained"
           color="primary"
           fullWidth

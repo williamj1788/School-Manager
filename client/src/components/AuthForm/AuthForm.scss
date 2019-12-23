@@ -32,6 +32,12 @@ $dark-blue: #00a1c2;
   padding-top: 20px;
   color: $light-blue;
 }
+
+.form-error {
+  color: #f44336;
+  text-align: center;
+  margin: 0;
+}
 .input-field {
   width: 300px;
   height: 46px;

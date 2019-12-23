@@ -17,6 +17,7 @@ const Root = ({ store }) => (
       <div>
         <Switch>
           <Route exact path="/" component={AuthPage} />
+          <Route path="/signup" component={AuthPage} />
           <Route path="/dashboard" component={Dashboard} />
         </Switch>
       </div>
