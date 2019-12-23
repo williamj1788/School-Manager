@@ -5,8 +5,10 @@ import { useHistory } from "react-router-dom";
 
 export default function AuthPage() {
   const [errorMessage, setErrorMessage] = useState(null);
+  const [pending, setPending] = useState(false);
   const history = useHistory();
   async function onSubmit(form) {
+    setPending(true);
     try {
       const res = await axios.post("/api/user/login", form);
       history.push("dashboard");
@@ -19,7 +21,11 @@ export default function AuthPage() {
       } else if (err.response.status === 500) {
         setErrorMessage("Internal Server Error");
       }
+    } finally {
+      setPending(false);
     }
   }
-  return <AuthForm onSubmit={onSubmit} error={errorMessage} />;
+  return (
+    <AuthForm onSubmit={onSubmit} error={errorMessage} pending={pending} />
+  );
 }
