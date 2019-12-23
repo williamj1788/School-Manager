@@ -4,7 +4,10 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.2.2",
+    "@material-ui/core": "^4.8.0",
+    "@material-ui/icons": "^4.5.1",
     "@svgr/webpack": "4.1.0",
+    "axios": "^0.19.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
     "babel-jest": "23.6.0",
@@ -45,10 +48,8 @@
     "react-dev-utils": "^8.0.0",
     "react-dom": "^16.12.0",
     "react-icons": "^3.7.0",
-    "react-redux": "^6.0.1",
-    "react-router-dom": "^4.3.1",
-    "react-spring": "^8.0.17",
-    "react-transition-group": "^2.6.1",
+    "react-redux": "^7.0.0",
+    "react-router-dom": "^5.1.2",
     "redux": "^4.0.1",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
@@ -80,9 +81,11 @@
   "homepage": "https://www.schoolmanager.ml",
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.7.5",
+    "@testing-library/react": "^9.4.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
-    "enzyme-to-json": "^3.3.5"
+    "enzyme-to-json": "^3.3.5",
+    "node-sass": "^4.13.0"
   },
   "jest": {
     "restoreMocks": true,
@@ -112,9 +115,7 @@
     ],
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-      "react-spring": "<rootDir>/node_modules/react-spring/web.cjs",
-      "react-spring/renderprops": "<rootDir>/node_modules/react-spring/renderprops.cjs"
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
     },
     "moduleFileExtensions": [
       "web.js",
