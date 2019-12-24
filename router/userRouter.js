@@ -7,19 +7,19 @@ const User = require("../model/User");
 function CheckUsernames(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Access-Control-Allow-Credentials", "true");
-  User.findOne({ username: req.body.username }, (err, user) => {
+  User.findOne({ username: req.body.email }, (err, user) => {
     if (err) throw err;
     if (!user) {
       next();
     } else {
-      res.status(400).json({ error: "Username already taken" });
+      res.status(409).json({ error: "Username already taken" });
     }
   });
 }
 
 router.post("/login", express.json(), (req, res, next) => {
   User.findOne(
-    { username: req.body.username, password: req.body.password },
+    { username: req.body.email, password: req.body.password },
     (err, user) => {
       if (err) throw err;
       if (user) {
@@ -33,9 +33,9 @@ router.post("/login", express.json(), (req, res, next) => {
   );
 });
 
-router.post("/signup", CheckUsernames, (req, res, next) => {
+router.post("/signup", express.json(), CheckUsernames, (req, res, next) => {
   var newUser = new User({
-    username: req.body.username,
+    username: req.body.email,
     password: req.body.password
   });
   newUser.save().then(user => {
