@@ -9,7 +9,7 @@ jobs:
       - restore_cache:
           name: Restore Client Cache
           keys:
-            - my-project-client-{{ .Branch }}-{{ checksum "client/package-lock.json" }}
+            - my-project-client-{{ .Branch }}-{{ checksum "client/package.json" }}
             - my-project-client-{{ .Branch }}
             - my-project-client-
       - run:
@@ -18,7 +18,7 @@ jobs:
             cd client
             npm install
       - save_cache:
-          key: my-project-client-{{ .Branch }}-{{ checksum "client/package-lock.json" }}
+          key: my-project-client-{{ .Branch }}-{{ checksum "client/package.json" }}
           paths:
             - "client/node_modules"
       - run:
