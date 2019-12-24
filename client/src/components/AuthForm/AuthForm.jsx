@@ -16,29 +16,52 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 
 import GoogleIcon from "../../Img/g-logo.png";
 
-export default function AuthForm({ onSubmit, pending, error }) {
+export default function AuthForm({ onSubmit, pending, error, type }) {
   const [form, setForm] = useState({
     email: null,
-    password: null
+    password: null,
+    confirmPassword: null
   });
   const [formErrors, setFormErrors] = useState({
     email: null,
-    password: null
+    password: null,
+    confirmPassword: null
   });
   const [visiblePassword, setVisiblePassword] = useState(false);
 
   function handleOnChange(e) {
     setForm({
       ...form,
-      [e.target.id.toLowerCase()]: e.target.value
+      [e.target.id]: e.target.value
     });
   }
 
   function validateForm() {
     setFormErrors({
       password: getPasswordValidationError(),
-      email: getEmailValidationError()
+      email: getEmailValidationError(),
+      confirmPassword: getConfirmPasswordValidationError()
     });
+  }
+
+  function validateInput(input) {
+    setFormErrors({
+      ...formErrors,
+      [input]: getInputValidationError()
+    });
+
+    function getInputValidationError() {
+      switch (input) {
+        case "email":
+          return getEmailValidationError();
+        case "password":
+          return getPasswordValidationError();
+        case "confirmPassword":
+          return getConfirmPasswordValidationError();
+        default:
+          return "";
+      }
+    }
   }
 
   function getEmailValidationError() {
@@ -63,13 +86,30 @@ export default function AuthForm({ onSubmit, pending, error }) {
     return null;
   }
 
+  function getConfirmPasswordValidationError() {
+    if (!form.confirmPassword) {
+      return "please enter password again";
+    }
+
+    if (form.password !== form.confirmPassword) {
+      return "must match password";
+    }
+
+    return null;
+  }
+
   function handleOnSubmit(e) {
     e.preventDefault();
-
-    if (getEmailValidationError() || getPasswordValidationError()) {
+    if (
+      getEmailValidationError() ||
+      getPasswordValidationError() ||
+      (type === "signup" && getConfirmPasswordValidationError())
+    ) {
       return validateForm();
     }
-    onSubmit(form);
+
+    const { email, password } = form;
+    onSubmit({ email, password });
   }
 
   return (
@@ -86,12 +126,12 @@ export default function AuthForm({ onSubmit, pending, error }) {
           error={!!formErrors.email}
           margin="dense"
           label="Email"
-          id="Email"
+          id="email"
           variant="outlined"
           helperText={formErrors.email}
           fullWidth
           onChange={handleOnChange}
-          onBlur={validateForm}
+          onBlur={() => validateInput("email")}
           size="small"
           required
         />
@@ -100,11 +140,11 @@ export default function AuthForm({ onSubmit, pending, error }) {
           error={!!formErrors.password}
           margin="dense"
           label="Password"
-          id="Password"
+          id="password"
           variant="outlined"
           helperText={formErrors.password}
           onChange={handleOnChange}
-          onBlur={validateForm}
+          onBlur={() => validateInput("password")}
           type={visiblePassword ? "text" : "password"}
           size="small"
           fullWidth
@@ -126,6 +166,39 @@ export default function AuthForm({ onSubmit, pending, error }) {
             )
           }}
         />
+        {type === "signup" && (
+          <TextField
+            InputLabelProps={{ "data-testid": "Confirm Password" }}
+            error={!!formErrors.confirmPassword}
+            margin="dense"
+            label="Confirm Password"
+            id="confirmPassword"
+            variant="outlined"
+            helperText={formErrors.confirmPassword}
+            onChange={handleOnChange}
+            onBlur={() => validateInput("confirmPassword")}
+            type={visiblePassword ? "text" : "password"}
+            size="small"
+            fullWidth
+            required
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    data-testid="visible button C"
+                    onClick={() => setVisiblePassword(p => !p)}
+                  >
+                    {visiblePassword ? (
+                      <Visibility data-testid="visible C" />
+                    ) : (
+                      <VisibilityOff data-testid="not visible C" />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+          />
+        )}
         {error && <p className="form-error">{error}</p>}
         <Button
           style={{ margin: "10px 0" }}
@@ -138,6 +211,8 @@ export default function AuthForm({ onSubmit, pending, error }) {
         >
           {pending ? (
             <CircularProgress data-testid="spinner" size={25} />
+          ) : type === "signup" ? (
+            "Sign Up"
           ) : (
             "Login"
           )}
@@ -187,8 +262,10 @@ export default function AuthForm({ onSubmit, pending, error }) {
           Login As Guest
         </Button>
         <div className="account">
-          <Link to="/signup" id="account-link">
-            Don't have an account? Sign up
+          <Link to={type === "signup" ? "/" : "/signup"} id="account-link">
+            {type === "signup"
+              ? "Already have an account? Log in"
+              : "Don't have an account? Sign Up"}
           </Link>
         </div>
       </form>

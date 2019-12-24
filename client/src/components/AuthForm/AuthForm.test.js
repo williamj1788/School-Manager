@@ -14,14 +14,18 @@ describe("AuthForm", () => {
     const onSubmit = jest.fn();
 
     const { getByTestId, getByLabelText } = render(
-      <AuthForm onSubmit={onSubmit} />
+      <AuthForm onSubmit={onSubmit} type="signup" />
     );
 
     fireEvent.change(getByLabelText(/Email/i), {
       target: { value: "email@gmail.com" }
     });
 
-    fireEvent.change(getByLabelText(/Password/i), {
+    fireEvent.change(getByLabelText(/^Password/i), {
+      target: { value: "password1" }
+    });
+
+    fireEvent.change(getByLabelText(/Confirm Password/i), {
       target: { value: "password1" }
     });
 
@@ -40,15 +44,19 @@ describe("AuthForm", () => {
     const onSubmit = jest.fn();
 
     const { getByTestId, getByLabelText } = render(
-      <AuthForm onSubmit={onSubmit} />
+      <AuthForm onSubmit={onSubmit} type="signup" />
     );
 
     fireEvent.change(getByLabelText(/Email/i), {
       target: { value: "email" }
     });
 
-    fireEvent.change(getByLabelText(/Password/i), {
+    fireEvent.change(getByLabelText(/^Password/i), {
       target: { value: "pass" }
+    });
+
+    fireEvent.change(getByLabelText(/Confirm Password/i), {
+      target: { value: "passqq" }
     });
 
     fireEvent.submit(getByTestId("form"));
@@ -75,27 +83,34 @@ describe("AuthForm", () => {
 
     expect(getByText("this is a error message")).toBeTruthy();
   });
-  describe("email input", () => {
+
+  describe.each([
+    [/Email/i, "Email is Required"],
+    [/^Password/i, "Password is Required"],
+    [/Confirm Password/i, "please enter password again"]
+  ])("%s input", (labelRegex, requiredText) => {
     test("should start empty with no errors", () => {
-      const { getByText, getByLabelText } = render(<AuthForm />);
+      const { getByText, getByLabelText } = render(<AuthForm type="signup" />);
 
-      expect(getByLabelText(/Email/i).value).toBeFalsy();
-      expect(getByText(/Email/i).className.split(" ")).not.toContain(
+      expect(getByLabelText(labelRegex).value).toBeFalsy();
+      expect(getByText(labelRegex).className.split(" ")).not.toContain(
         "Mui-error"
       );
     });
 
-    test("should show error when missing email", () => {
-      const { getByText, getByLabelText } = render(<AuthForm />);
+    test("should show error when missing value", () => {
+      const { getByText, getByLabelText } = render(<AuthForm type="signup" />);
 
-      fireEvent.blur(getByLabelText(/Email/i));
+      fireEvent.blur(getByLabelText(labelRegex));
 
-      expect(getByText("Email is Required")).toBeTruthy();
-      expect(getByText("Email is Required").className.split(" ")).toContain(
+      expect(getByText(requiredText)).toBeTruthy();
+      expect(getByText(requiredText).className.split(" ")).toContain(
         "Mui-error"
       );
     });
+  });
 
+  describe("email input", () => {
     test("should show error when email is invalid", () => {
       const { getByText, getByLabelText } = render(<AuthForm />);
 
@@ -129,34 +144,14 @@ describe("AuthForm", () => {
   });
 
   describe("password input", () => {
-    test("password input should start empty with no errors", () => {
+    test("should show error when password has less than 6 characters", () => {
       const { getByText, getByLabelText } = render(<AuthForm />);
 
-      expect(getByLabelText(/Password/i).value).toBeFalsy();
-      expect(getByText(/Password/i).className.split(" ")).not.toContain(
-        "Mui-error"
-      );
-    });
-
-    test("password input should show error when password is missing", () => {
-      const { getByText, getByLabelText } = render(<AuthForm />);
-
-      fireEvent.blur(getByLabelText(/Password/i));
-
-      expect(getByText("Password is Required")).toBeTruthy();
-      expect(getByText("Password is Required").className.split(" ")).toContain(
-        "Mui-error"
-      );
-    });
-
-    test("password input should show error when password has less than 6 characters", () => {
-      const { getByText, getByLabelText } = render(<AuthForm />);
-
-      fireEvent.change(getByLabelText(/Password/i), {
+      fireEvent.change(getByLabelText(/^Password/i), {
         target: { value: "foooo" }
       });
 
-      fireEvent.blur(getByLabelText(/Password/i));
+      fireEvent.blur(getByLabelText(/^Password/i));
 
       expect(
         getByText("Password must have at least 6 characters")
@@ -168,51 +163,103 @@ describe("AuthForm", () => {
       ).toContain("Mui-error");
     });
 
-    test("password input should remove error if value is valid", () => {
+    test("should remove error if value is valid", () => {
       const { getByLabelText, getByTestId } = render(<AuthForm />);
 
-      fireEvent.blur(getByLabelText(/Password/i));
+      fireEvent.blur(getByLabelText(/^Password/i));
 
-      fireEvent.change(getByLabelText(/Password/i), {
+      fireEvent.change(getByLabelText(/^Password/i), {
         target: { value: "password1" }
       });
 
-      fireEvent.blur(getByLabelText(/Password/i));
+      fireEvent.blur(getByLabelText(/^Password/i));
 
       expect(getByTestId("Password").className.split(" ")).not.toContain(
         "Mui-error"
       );
     });
 
-    test("password input value's should be able to toggle visibility", () => {
+    test("values should be able to toggle visibility", () => {
       const { queryByTestId, getByTestId, getByLabelText } = render(
         <AuthForm />
       );
 
       expect(queryByTestId("visible")).toBeFalsy();
       expect(queryByTestId("not visible")).toBeTruthy();
-      expect(getByLabelText(/Password/i).type).toBe("password");
+      expect(getByLabelText(/^Password/i).type).toBe("password");
 
       fireEvent.click(getByTestId("visible button"));
 
       expect(queryByTestId("visible")).toBeTruthy();
       expect(queryByTestId("not visible")).toBeFalsy();
-      expect(getByLabelText(/Password/i).type).toBe("text");
+      expect(getByLabelText(/^Password/i).type).toBe("text");
 
       fireEvent.click(getByTestId("visible button"));
 
       expect(queryByTestId("visible")).toBeFalsy();
       expect(queryByTestId("not visible")).toBeTruthy();
-      expect(getByLabelText(/Password/i).type).toBe("password");
+      expect(getByLabelText(/^Password/i).type).toBe("password");
     });
   });
 
-  test("password input should start empty with no errors", () => {
-    const { getByText, getByLabelText } = render(<AuthForm />);
+  describe("confirm password input ", () => {
+    test("should show based on type", () => {
+      const {
+        getByLabelText,
+        queryByLabelText,
+        rerender,
+        getByText,
+        queryByText
+      } = render(<AuthForm type="signup" />);
 
-    expect(getByLabelText(/Password/i).value).toBeFalsy();
-    expect(getByText(/Password/i).className.split(" ")).not.toContain(
-      "Mui-error"
-    );
+      expect(getByLabelText(/Confirm Password/i));
+      expect(getByText("Sign Up"));
+
+      rerender(<AuthForm />);
+
+      expect(queryByLabelText(/Confirm Password/i)).toBeFalsy();
+      expect(queryByText("Sign Up")).toBeFalsy();
+    });
+
+    test("should show error when value and password don't match", () => {
+      const { getByLabelText, getByText } = render(<AuthForm type="signup" />);
+
+      fireEvent.change(getByLabelText(/^Password/i), {
+        target: { value: "password1" }
+      });
+
+      fireEvent.change(getByLabelText(/Confirm Password/i), {
+        target: { value: "pasdfsdfs1" }
+      });
+
+      fireEvent.blur(getByLabelText(/Confirm Password/i));
+
+      expect(getByText("must match password")).toBeTruthy();
+      expect(getByText("must match password").className.split(" ")).toContain(
+        "Mui-error"
+      );
+    });
+
+    test("should remove error if value is valid", () => {
+      const { getByLabelText, getByTestId } = render(
+        <AuthForm type="signup" />
+      );
+
+      fireEvent.blur(getByLabelText(/Confirm Password/i));
+
+      fireEvent.change(getByLabelText(/^Password/i), {
+        target: { value: "password1" }
+      });
+
+      fireEvent.change(getByLabelText(/Confirm Password/i), {
+        target: { value: "password1" }
+      });
+
+      fireEvent.blur(getByLabelText(/Confirm Password/i));
+
+      expect(getByTestId("Password").className.split(" ")).not.toContain(
+        "Mui-error"
+      );
+    });
   });
 });

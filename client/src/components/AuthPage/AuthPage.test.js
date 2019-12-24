@@ -6,6 +6,10 @@ import axiosMock from "axios";
 
 jest.mock("axios");
 
+beforeEach(() => {
+  axiosMock.post.mockReset();
+});
+
 describe("AuthPage", () => {
   test("renders without cashing", () => {
     render(
@@ -15,49 +19,67 @@ describe("AuthPage", () => {
     );
   });
 
-  test("should send login request to server", async () => {
-    axiosMock.post.mockResolvedValue();
+  test.each(["login", "signup"])(
+    "%s: should send send correct request to server",
+    async type => {
+      axiosMock.post.mockResolvedValueOnce();
 
-    let locationTest;
-    const { getByLabelText, getByTestId } = render(
-      <MemoryRouter>
-        <Route
-          path="*"
-          render={({ history, location }) => {
-            locationTest = location;
-            return <AuthPage history={history} />;
-          }}
-        />
-      </MemoryRouter>
-    );
+      let locationTest;
+      let historyTest;
+      const { getByLabelText, getByTestId } = render(
+        <MemoryRouter>
+          <Route
+            path="*"
+            render={props => {
+              locationTest = props.location;
+              historyTest = props.history;
+              return <AuthPage {...props} />;
+            }}
+          />
+        </MemoryRouter>
+      );
 
-    fireEvent.change(getByLabelText(/Email/i), {
-      target: { value: "email@gmail.com" }
-    });
+      if (type === "signup") historyTest.push("/signup");
 
-    fireEvent.change(getByLabelText(/Password/i), {
-      target: { value: "password1" }
-    });
+      fireEvent.change(getByLabelText(/Email/i), {
+        target: { value: "email@gmail.com" }
+      });
 
-    fireEvent.submit(getByTestId("form"));
+      fireEvent.change(getByLabelText(/^Password/i), {
+        target: { value: "password1" }
+      });
 
-    await wait();
+      if (type === "signup") {
+        fireEvent.change(getByLabelText(/Confirm Password/i), {
+          target: { value: "password1" }
+        });
+      }
 
-    expect(axiosMock.post.mock.calls.length).toBe(1);
-    expect(axiosMock.post.mock.calls[0][0]).toBe("/api/user/login");
-    expect(axiosMock.post.mock.calls[0][1]).toEqual({
-      email: "email@gmail.com",
-      password: "password1"
-    });
+      fireEvent.submit(getByTestId("form"));
 
-    expect(locationTest.pathname).toBe("/dashboard");
-  });
+      await wait();
+
+      expect(axiosMock.post.mock.calls.length).toBe(1);
+      expect(axiosMock.post.mock.calls[0][0]).toBe("/api/user/" + type);
+      expect(axiosMock.post.mock.calls[0][1]).toEqual({
+        email: "email@gmail.com",
+        password: "password1"
+      });
+
+      expect(locationTest.pathname).toBe("/dashboard");
+    }
+  );
 
   test("should show an error when login request fails", async () => {
     axiosMock.post
       .mockRejectedValueOnce({
         response: {
           status: 404
+        }
+      })
+      .mockRejectedValueOnce({
+        response: {
+          status: 409
         }
       })
       .mockRejectedValueOnce({
@@ -77,7 +99,7 @@ describe("AuthPage", () => {
       target: { value: "email@gmail.com" }
     });
 
-    fireEvent.change(getByLabelText(/Password/i), {
+    fireEvent.change(getByLabelText(/^Password/i), {
       target: { value: "password1" }
     });
 
@@ -86,6 +108,12 @@ describe("AuthPage", () => {
     await wait(); // wait for api call
 
     expect(getByText("username or password is incorrect"));
+
+    fireEvent.submit(getByTestId("form"));
+
+    await wait(); // wait for api call
+
+    expect(getByText("email is already taken"));
 
     fireEvent.submit(getByTestId("form"));
 
