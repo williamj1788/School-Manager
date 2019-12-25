@@ -11,7 +11,9 @@
     "client": "npm start --prefix client",
     "server": "nodemon server.js",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
-    "server-test": "env NODE_ENV=testing nodemon --exec \"mocha -R min\""
+    "lint": "eslint ./",
+    "server-test": "env NODE_ENV=testing nodemon --exec \"mocha -R min\"",
+    "server-test-ci": "mocha --exit"
   },
   "repository": {
     "type": "git",
