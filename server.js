@@ -1,47 +1,50 @@
-require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const morgan = require('morgan');
 const session = require('express-session');
-const multer = require('multer');
-const upload = multer();
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 
-const userRouter = require('./router/userRouter');
-const classRouter = require('./router/classRouter');
+const userRouter = require('./users/userRouter');
+const classRouter = require('./classes/classRouter');
+
+const {dbUrl, sessionSecret} = require('./config');
 
 const app = express();
 
-function allowCrossDomain(req,res,next){
-    res.setHeader('Access-Control-Allow-Origin','http://localhost:3000');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    next();
-}
-
-mongoose.connect(process.env.DB_URL, {useNewUrlParser: true})
+mongoose
+    .connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => console.log('connected to database'))
     .catch(console.log);
 
-app.use(upload.none());
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    cookie: {
-        maxAge: 600000000
-    }
-}));
+app.use(morgan('dev'));
+app.use(express.json());
 
-app.use(allowCrossDomain);
+app.use(
+    session({
+      secret: sessionSecret,
+      resave: false,
+      saveUninitialized: false,
+      store: new MongoStore({mongooseConnection: mongoose.connection}),
+      cookie: {
+        maxAge: 600000000,
+        sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'none',
+      },
+    }),
+);
 
 app.use('/api/user', userRouter);
 app.use('/api/class', classRouter);
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-})
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, () => {console.log(`Server running on port ${PORT}...`)});
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}...`);
+});
+
+module.exports = app;

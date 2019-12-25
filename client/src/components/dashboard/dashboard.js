@@ -60,6 +60,7 @@ export class Dashboard extends React.Component{
     }
     sendSignRequest = () => {
         return fetch('/api/user/signout',{
+            method: "POST",
             credentials: 'include'
         })
     }

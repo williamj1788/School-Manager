@@ -7,22 +7,41 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          name: Restore Client Cache
+          name: restore server cache
           keys:
-            - my-project-client-{{ .Branch }}-{{ checksum "client/package-lock.json" }}
+            - my-project-server-{{ .Branch }}-{{ checksum "client/package.json" }}
+            - my-project-server-{{ .Branch }}
+            - my-project-server-
+      - restore_cache:
+          name: restore client cache
+          keys:
+            - my-project-client-{{ .Branch }}-{{ checksum "client/package.json" }}
             - my-project-client-{{ .Branch }}
             - my-project-client-
       - run:
-          name: Install client dependencies
+          name: install client dependencies
           command: |
             cd client
             npm install
+      - run:
+          name: install server dependencies
+          command: npm install
       - save_cache:
-          key: my-project-client-{{ .Branch }}-{{ checksum "client/package-lock.json" }}
+          key: my-project-client-{{ .Branch }}-{{ checksum "client/package.json" }}
           paths:
             - "client/node_modules"
+      - save_cache:
+          key: my-project-server-{{ .Branch }}-{{ checksum "client/package.json" }}
+          paths:
+            - "node_modules"
       - run:
-          name: Run Client Test
+          name: run server test
+          command: npm run server-test-ci
+      - run:
+          name: run client test
           command: |
             cd client
             npm run test-ci
+      - run:
+          name: run linter
+          command: npm run lint

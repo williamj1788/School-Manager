@@ -1,4 +1,11 @@
+require('dotenv').config();
+const env = process.env.NODE_ENV;
 module.exports = {
-    url: 'mongodb+srv://quez:Will321.@project-cluster-8qd4n.mongodb.net/SchoolManager?retryWrites=true',
-    secret: 'qiwuhgbgpolrfolsdfngppojlknoi321'
-}
+  dbUrl:
+    env === 'production' ? process.env.PRODUCTION_DB_URL :
+    env === 'testing' ? process.env.TEST_DB_URL :
+    env === 'ci' ? process.env.CI_DB_URL :
+    process.env.DEV_DB_URL,
+  sessionSecret: process.env.SESSION_SECRET,
+  env,
+};
