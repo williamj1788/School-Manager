@@ -13,7 +13,8 @@
     "ecmaVersion": 2018
   },
   "rules": {
-    "new-cap": ["error", { "properties": false }]
+    "new-cap": ["error", { "properties": false }],
+    "linebreak-style": "off"
   },
   "root": true,
   "ignorePatterns": ["/client"]
