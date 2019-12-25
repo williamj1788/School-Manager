@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const User = require('../model/User');
-const Class = require('../model/Class');
-const Task = require('../model/Task');
-const Test = require('../model/Test');
+const User = require('../users/userModel');
+const Class = require('./classModel');
+const Task = require('./taskModel');
+const Test = require('./testModel');
 
 router.post('/', async (req, res, next) => {
   try {

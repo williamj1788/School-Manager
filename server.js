@@ -4,8 +4,8 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 
-const userRouter = require('./router/userRouter');
-const classRouter = require('./router/classRouter');
+const userRouter = require('./users/userRouter');
+const classRouter = require('./classes/classRouter');
 
 const {dbUrl, sessionSecret} = require('./config');
 
@@ -44,3 +44,5 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}...`);
 });
+
+module.exports = app;

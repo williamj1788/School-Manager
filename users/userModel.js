@@ -44,13 +44,14 @@ const ClassScheme = new Scheme({
 
 
 const UserScheme = new Scheme({
-  username: {
+  email: {
     type: String,
     required: true,
   },
   password: {
     type: String,
     required: true,
+    select: false,
   },
   classes: {
     type: [ClassScheme],
