@@ -45,14 +45,18 @@ router.post('/signout', (req, res, next) => {
 });
 
 router.get('/', async (req, res, next) => {
-  if (!req.session.user) {
-    return res.sendStatus(401);
+  try {
+    if (!req.session.user) {
+      return res.sendStatus(401);
+    }
+    const user = await accessService.getAuthUser(req.session.user);
+    if (!user) {
+      return res.sendStatus(401);
+    }
+    res.json(user);
+  } catch (err) {
+    next(err);
   }
-  const user = await accessService.getAuthUser(req.session.user);
-  if (!user) {
-    return res.sendStatus(401);
-  }
-  res.json(user);
 });
 
 router.use((err, req, res, next) => {

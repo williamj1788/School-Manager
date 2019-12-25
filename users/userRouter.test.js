@@ -19,6 +19,8 @@ res.then((doc) => {
 const userForm = {
   email: 'email123@gmail.com', password: 'password1',
 };
+const passwordHash =
+  '$2b$10$BIfKfrOhPW/.3U4bGnJ6/.lgWYkiH.3F8nToYiChXt/rDWlq47XgS';
 
 describe('userRouter', () => {
   describe('POST /signup', () => {
@@ -48,7 +50,7 @@ describe('userRouter', () => {
     it('should retrieve user with given credentials if user exits',
         async () => {
           await mongoose.connection.collection('users')
-              .insertOne({email: 'email123@gmail.com', password: 'password1'});
+              .insertOne({email: 'email123@gmail.com', password: passwordHash});
 
           const res = await request.post('/api/user/login').send(userForm);
 
@@ -62,6 +64,19 @@ describe('userRouter', () => {
 
     it('should return error if user doesn\'t exits', async () => {
       const res = await request.post('/api/user/login').send(userForm);
+
+      assert.strictEqual(res.status, 404, 'wrong status code');
+      assert.doesNotHaveAnyKeys(res.header, ['set-cookie']);
+    });
+
+    it('should return error if password is wrong', async () => {
+      await mongoose.connection.collection('users')
+          .insertOne({email: userForm.email, password: passwordHash});
+
+      const res = await request.post('/api/user/login').send({
+        email: userForm.email,
+        password: 'fakePassword',
+      });
 
       assert.strictEqual(res.status, 404, 'wrong status code');
       assert.doesNotHaveAnyKeys(res.header, ['set-cookie']);
@@ -82,7 +97,10 @@ describe('userRouter', () => {
 
   describe('GET /', () => {
     it('should return user data if session is found', async () => {
-      await mongoose.connection.collection('users').insertOne(userForm);
+      await mongoose.connection.collection('users').insertOne({
+        email: userForm.email,
+        password: passwordHash,
+      });
       const agent = supertest.agent(app);
       await agent.post('/api/user/login').send(userForm);
       const res = await agent.get('/api/user');
