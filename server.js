@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const morgan = require('morgan');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
@@ -16,6 +17,7 @@ mongoose
     .then(() => console.log('connected to database'))
     .catch(console.log);
 
+app.use(morgan('dev'));
 app.use(express.json());
 
 app.use(
