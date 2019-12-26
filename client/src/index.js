@@ -9,7 +9,7 @@ import "./styles/Normalize.css";
 import "./styles/index.scss";
 
 import AuthPage from "./components/AuthPage/AuthPage";
-import Dashboard from "./components/dashboard/dashboard";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 const Root = ({ store }) => (
   <Provider store={store}>

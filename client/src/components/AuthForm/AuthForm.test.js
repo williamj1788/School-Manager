@@ -10,7 +10,7 @@ describe("AuthForm", () => {
   test("renders without cashing", () => {
     render(<AuthForm />);
   });
-  test("should call onSubmit on submit", () => {
+  test("should call #onSubmit on submit when form is valid", () => {
     const onSubmit = jest.fn();
 
     const { getByTestId, getByLabelText } = render(
@@ -40,7 +40,7 @@ describe("AuthForm", () => {
     });
   });
 
-  test("should not call onSubmit on submit when form is invalid", () => {
+  test("should not call #onSubmit on submit when form is invalid", () => {
     const onSubmit = jest.fn();
 
     const { getByTestId, getByLabelText } = render(
