@@ -10,18 +10,18 @@ $dark-blue: #00a1c2;
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .main-form {
-  width: 500px;
-  height: 600px;
+  max-width: 500px;
+  width: 100%;
+  height: 100%;
   padding: 0 35px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 12px;
   background-color: white;
+  box-sizing: border-box;
 }
 .form-title {
   margin: 0;
@@ -38,35 +38,11 @@ $dark-blue: #00a1c2;
   text-align: center;
   margin: 0;
 }
-.input-field {
-  width: 300px;
-  height: 46px;
-  display: block;
-  margin: 50px auto;
-  text-align: center;
-  font-size: 25px;
-  border: 0;
-  border-bottom: 2px solid gray;
-  color: gray;
-}
-.input-field:focus {
-  outline: none;
-}
-.error {
-  color: red;
-  font-size: 21px;
-  left: 50%;
-  transform: translateX(-50%);
-  margin: 0;
-  height: fit-content;
-  text-align: center;
-  position: absolute;
-}
 .account {
   display: flex;
   width: 90%;
   justify-content: space-around;
-  margin: 0 auto;
+  margin: 10px auto;
   p {
     margin: 0;
     font-size: 21px;
@@ -79,23 +55,5 @@ $dark-blue: #00a1c2;
   font-size: 21px;
   margin: 0;
   height: fit-content;
-}
-
-#guest {
-  width: 200px;
-  height: 50px;
-  display: block;
-  margin: 20px auto 0 auto;
-  background-color: transparent;
-  border: 1px solid #009ff2;
-  border-radius: 5px;
-  cursor: pointer;
-  color: #535353;
-  font-size: 18px;
-  transition: 400ms;
-
-  &:hover {
-    background-color: #009ff2;
-    color: white;
-  }
+  text-align: center;
 }

@@ -25,7 +25,7 @@ export default function AuthPage() {
         setErrorMessage("username or password is incorrect");
       } else if (err.response.status === 409) {
         setErrorMessage("email is already taken");
-      } else if (err.response.status === 500) {
+      } else {
         setErrorMessage("Internal Server Error");
       }
     } finally {

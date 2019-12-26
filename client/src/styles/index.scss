@@ -20,6 +20,12 @@
 
 $light-blue: #06caf2;
 $dark-blue: #00a1c2;
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   font-family: "Roboto", sans-serif;
 }
