@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  BrowserRouter as Router,
+  Redirect
+} from "react-router-dom";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -22,9 +27,14 @@ const Root = ({ store }) => (
             <Route exact path="/" component={AuthPage} />
             <Route path="/signup" component={AuthPage} />
             <Route path="/dashboard" component={Dashboard} />
+            <Route path="/classes" component={Dashboard} />
+            <Route path="/tasks" component={Dashboard} />
+            <Route path="/exams" component={Dashboard} />
+            <Route path="/settings" component={Dashboard} />
+            <Redirect to="/dashboard" />
           </Switch>
         </div>
-      </Router>  
+      </Router>
     </ThemeProvider>
   </Provider>
 );

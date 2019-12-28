@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useHistory } from "react-router-dom";
+
 import Box from "@material-ui/core/Box";
 import Drawer from "@material-ui/core/Drawer";
 import Typography from "@material-ui/core/Typography";
@@ -43,6 +45,7 @@ const useStyle = makeStyles(theme => ({
 
 function AppDrawer(props) {
   const classes = useStyle();
+  const history = useHistory();
   return (
     <Drawer {...props}>
       <div className={classes.top}>
@@ -65,36 +68,18 @@ function AppDrawer(props) {
         </div>
       </div>
       <List className={classes.list}>
-        <ListItem button>
-          <ListItemIcon>
-            <MenuIcon />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <ScheduleIcon />
-          </ListItemIcon>
-          <ListItemText primary="Classes" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <CheckSharpIcon />
-          </ListItemIcon>
-          <ListItemText primary="Tasks" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <AssignmentIcon />
-          </ListItemIcon>
-          <ListItemText primary="Exams" />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <SettingsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Settings" />
-        </ListItem>
+        {[
+          ["Dashboard", <MenuIcon />, "/dashboard"],
+          ["Classes", <ScheduleIcon />, "/classes"],
+          ["Tasks", <CheckSharpIcon />, "/tasks"],
+          ["Exams", <AssignmentIcon />, "/exams"],
+          ["Settings", <SettingsIcon />, "/settings"]
+        ].map((list, index) => (
+          <ListItem button key={index} onClick={() => history.push(list[2])}>
+            <ListItemIcon>{list[1]}</ListItemIcon>
+            <ListItemText primary={list[0]} />
+          </ListItem>
+        ))}
       </List>
     </Drawer>
   );
