@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import SettingsIcon from "@material-ui/icons/Settings";
 
-function NavBar({ onMenuClick, children }) {
+function NavBar({ onMenuClick, children, title }) {
   return (
     <AppBar position="sticky">
       <ToolBar>
@@ -16,7 +16,7 @@ function NavBar({ onMenuClick, children }) {
           <MenuIcon data-testid="menu" />
         </IconButton>
         <Typography variant="h6" className="dashboard-title">
-          Dashboard
+          {title}
         </Typography>
         <IconButton color="inherit">
           <SettingsIcon />

@@ -25,4 +25,10 @@ describe("AppDrawer", () => {
 
     expect(() => getByTestId("test")).not.toThrow();
   });
+
+  test("should set title", () => {
+    const { getByText } = render(<NavBar title="someTitle" />);
+
+    expect(() => getByText("someTitle")).not.toThrow();
+  });
 });

@@ -30,7 +30,7 @@ function Dashboard() {
   const [open, setOpen] = useState(false);
   return (
     <React.Fragment>
-      <NavBar onMenuClick={() => setOpen(!open)}>
+      <NavBar title="Dashboard" onMenuClick={() => setOpen(!open)}>
         <TabsNav />
       </NavBar>
       <AppDrawer open={open} onClose={() => setOpen(false)} />

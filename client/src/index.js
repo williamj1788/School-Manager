@@ -11,6 +11,9 @@ import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "./redux/store";
 import { fetchUser } from "./redux/action";
 
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import { ThemeProvider } from "@material-ui/core/styles";
 
 import "./styles/Normalize.css";
@@ -18,6 +21,7 @@ import "./styles/index.scss";
 
 import AuthPage from "./components/AuthPage/AuthPage";
 import Dashboard from "./components/Dashboard/Dashboard";
+import Classes from "./components/Classes/Classes";
 
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -28,7 +32,7 @@ const Root = ({ store }) => (
             <AuthRoute exact path="/" component={AuthPage} />
             <AuthRoute path="/signup" component={AuthPage} />
             <AuthRoute path="/dashboard" component={Dashboard} />
-            <AuthRoute path="/classes" component={Dashboard} />
+            <AuthRoute path="/classes" component={Classes} />
             <AuthRoute path="/tasks" component={Dashboard} />
             <AuthRoute path="/exams" component={Dashboard} />
             <AuthRoute path="/settings" component={Dashboard} />
@@ -47,7 +51,12 @@ function AuthRoute(props) {
     dispatch(fetchUser());
   }, []);
 
-  if (!user.isAuthenticated) return <div>Loading...</div>;
+  if (!user.isAuthenticated)
+    return (
+      <Backdrop style={{ zIndex: 99 }} open>
+        <CircularProgress color="primary" />
+      </Backdrop>
+    );
   return <Route {...props} />;
 }
 
