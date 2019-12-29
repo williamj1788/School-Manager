@@ -1,33 +1,21 @@
-export function loadUser(payload) {
-    return { type: "SET_USER", payload };
-};
-export function setClassIndex(payload) {
-    return { type: "SET_CLASS_INDEX", payload };
-};
-export function setClassID(payload) {
-    return { type: "SET_CLASS_ID", payload };
-};
-export function addClass(payload) {
-    return { type: "ADD_CLASS", payload };
-};
-export function addTask(payload) {
-    return { type: "ADD_TASK", payload };
-};
-export function addTest(payload) {
-    return { type: "ADD_TEST", payload };
-};
-export function removeTask(payload) {
-    return { type: "REMOVE_TASK", payload };
-};
-export function removeTest(payload) {
-    return { type: "REMOVE_TEST", payload };
-};
-export function removeClass(payload) {
-    return { type: "REMOVE_CLASS", payload }
-}
-export function toggleGuestFalse() {
-    return { type: "TOGGLE_GUEST_FALSE" }
-}
-export function toggleGuestTrue() {
-    return { type: "TOGGLE_GUEST_TRUE" }
+import axios from "axios";
+
+export function fetchUser() {
+  return async dispatch => {
+    try {
+      if (localStorage.user) {
+        const data = JSON.parse(localStorage.user);
+        dispatch({ type: "FETCH_USER", payload: data });
+      }
+      const { data } = await axios.get("/api/user", { withCredentials: true });
+      localStorage.setItem("user", JSON.stringify(data));
+      dispatch({ type: "FETCH_USER", payload: data });
+    } catch (err) {
+      // TODO: add path for 401 and 500
+      if (!err.response) {
+        const data = JSON.parse(localStorage.user);
+        return dispatch({ type: "FETCH_USER", payload: data });
+      }
+    }
+  };
 }

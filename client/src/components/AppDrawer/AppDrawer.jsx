@@ -2,6 +2,8 @@ import React from "react";
 
 import { useHistory } from "react-router-dom";
 
+import { useSelector } from "react-redux";
+
 import Box from "@material-ui/core/Box";
 import Drawer from "@material-ui/core/Drawer";
 import Typography from "@material-ui/core/Typography";
@@ -46,6 +48,7 @@ const useStyle = makeStyles(theme => ({
 function AppDrawer(props) {
   const classes = useStyle();
   const history = useHistory();
+  const email = useSelector(state => state.user.email);
   return (
     <Drawer {...props}>
       <div className={classes.top}>
@@ -63,7 +66,7 @@ function AppDrawer(props) {
             williamj1788
           </Typography>
           <Typography color="inherit" noWrap paragraph>
-            jacquezwilliams115@gmail.com
+            {email}
           </Typography>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import {
   Route,
@@ -7,8 +7,9 @@ import {
   Redirect
 } from "react-router-dom";
 
-import { Provider } from "react-redux";
+import { Provider, useSelector, useDispatch } from "react-redux";
 import store from "./redux/store";
+import { fetchUser } from "./redux/action";
 
 import { ThemeProvider } from "@material-ui/core/styles";
 
@@ -24,13 +25,13 @@ const Root = ({ store }) => (
       <Router>
         <div>
           <Switch>
-            <Route exact path="/" component={AuthPage} />
-            <Route path="/signup" component={AuthPage} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/classes" component={Dashboard} />
-            <Route path="/tasks" component={Dashboard} />
-            <Route path="/exams" component={Dashboard} />
-            <Route path="/settings" component={Dashboard} />
+            <AuthRoute exact path="/" component={AuthPage} />
+            <AuthRoute path="/signup" component={AuthPage} />
+            <AuthRoute path="/dashboard" component={Dashboard} />
+            <AuthRoute path="/classes" component={Dashboard} />
+            <AuthRoute path="/tasks" component={Dashboard} />
+            <AuthRoute path="/exams" component={Dashboard} />
+            <AuthRoute path="/settings" component={Dashboard} />
             <Redirect to="/dashboard" />
           </Switch>
         </div>
@@ -38,5 +39,16 @@ const Root = ({ store }) => (
     </ThemeProvider>
   </Provider>
 );
+
+function AuthRoute(props) {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
+
+  if (!user.isAuthenticated) return <div>Loading...</div>;
+  return <Route {...props} />;
+}
 
 ReactDOM.render(<Root store={store} />, document.getElementById("root"));
