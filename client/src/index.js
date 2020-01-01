@@ -27,10 +27,10 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <ThemeProvider>
       <Router>
-        <div>
+        <SuspendTilUser>
           <Switch>
-            <AuthRoute exact path="/" component={AuthPage} />
-            <AuthRoute path="/signup" component={AuthPage} />
+            <NoAuthRoute exact path="/" component={AuthPage} />
+            <NoAuthRoute path="/signup" component={AuthPage} />
             <AuthRoute path="/dashboard" component={Dashboard} />
             <AuthRoute path="/classes" component={Classes} />
             <AuthRoute path="/tasks" component={Dashboard} />
@@ -38,25 +38,43 @@ const Root = ({ store }) => (
             <AuthRoute path="/settings" component={Dashboard} />
             <Redirect to="/dashboard" />
           </Switch>
-        </div>
+        </SuspendTilUser>
       </Router>
     </ThemeProvider>
   </Provider>
 );
 
-function AuthRoute(props) {
+function SuspendTilUser({ children }) {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
+  const isAuthenticated = useSelector(state => state.user.isAuthenticated);
   useEffect(() => {
     dispatch(fetchUser());
   }, []);
 
-  if (!user.isAuthenticated)
+  if (!isAuthenticated) {
     return (
       <Backdrop style={{ zIndex: 99 }} open>
         <CircularProgress color="primary" />
       </Backdrop>
     );
+  }
+
+  return children;
+}
+
+function AuthRoute(props) {
+  const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+  if (!isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
+  return <Route {...props} />;
+}
+
+function NoAuthRoute(props) {
+  const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
   return <Route {...props} />;
 }
 

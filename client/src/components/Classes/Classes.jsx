@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import NavBar from "../NavBar/NavBar";
 import AppDrawer from "../AppDrawer/AppDrawer";
+import CreateClassForm from "../CreateClassForm/CreateClassForm";
 
 const useStyles1 = makeStyles({
   screen: {
@@ -29,6 +30,7 @@ const useStyles1 = makeStyles({
 function Classes() {
   const classes = useStyles1();
   const [open, setOpen] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
   return (
     <React.Fragment>
       <NavBar title="Classes" onMenuClick={() => setOpen(!open)} />
@@ -52,10 +54,15 @@ function Classes() {
         <Class />
       </Container>
       <div className={classes.screen}>
-        <Fab color="primary" className={classes.fab}>
+        <Fab
+          color="primary"
+          className={classes.fab}
+          onClick={() => setOpenForm(true)}
+        >
           <AddIcon />
         </Fab>
       </div>
+      <CreateClassForm open={openForm} onClose={() => setOpenForm(false)} />
     </React.Fragment>
   );
 }
