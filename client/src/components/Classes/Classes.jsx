@@ -31,6 +31,9 @@ function Classes() {
   const classes = useStyles1();
   const [open, setOpen] = useState(false);
   const [openForm, setOpenForm] = useState(false);
+
+  function onSubmit(form) {}
+
   return (
     <React.Fragment>
       <NavBar title="Classes" onMenuClick={() => setOpen(!open)} />

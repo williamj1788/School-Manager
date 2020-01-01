@@ -17,9 +17,6 @@ import AppDrawer from "../AppDrawer/AppDrawer";
 import NavBar from "../NavBar/NavBar";
 
 const useStyle = makeStyles({
-  container: {
-    height: "200vh"
-  },
   paper: {
     position: "sticky"
   }
@@ -34,7 +31,7 @@ function Dashboard() {
         <TabsNav />
       </NavBar>
       <AppDrawer open={open} onClose={() => setOpen(false)} />
-      <Container className={classes.container}>sdfsd</Container>
+      <Container>sdfsd</Container>
     </React.Fragment>
   );
 }

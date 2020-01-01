@@ -17,21 +17,47 @@ const useStyle = makeStyles(theme => ({
     color: theme.palette.getContrastText(theme.palette.primary.main)
   },
   colorBall: {
-    margin: "5px",
+    display: "inline-block",
+    marginRight: "5px",
     width: 0,
     height: 0,
     borderRadius: "50%",
     borderWidth: "8px",
     borderStyle: "solid"
+  },
+  select: {
+    display: "flex"
   }
 }));
 
-function CreateClassForm({ open, onClose }) {
+function CreateClassForm({ open, onClose, onSubmit }) {
   const [form, setForm] = useState({
     name: null,
     teacher: null,
-    color: null
+    color: "#000"
   });
+  const [formErrors, setFormErrors] = useState({
+    name: null,
+    teacher: null
+  });
+
+  function handleOnSubmit(event) {
+    event.preventDefault();
+
+    validateForm(); // always call to remove errors if form is valid
+    if (!form.name || !form.teacher) {
+      return;
+    }
+
+    onSubmit(form);
+  }
+
+  function validateForm() {
+    setFormErrors({
+      name: !form.name ? "name is required" : null,
+      teacher: !form.teacher ? "teacher is required" : null
+    });
+  }
 
   function handleOnChange(e) {
     setForm({
@@ -45,50 +71,57 @@ function CreateClassForm({ open, onClose }) {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle className={classes.title}>Add Class</DialogTitle>
       <DialogContent>
-        <form>
+        <form onSubmit={handleOnSubmit} noValidate>
           <TextField
+            error={!!formErrors.name}
+            helperText={formErrors.name}
+            required
             fullWidth
             variant="outlined"
             label="Name"
             name="name"
             onChange={handleOnChange}
+            margin="normal"
           />
           <TextField
+            error={!!formErrors.teacher}
+            helperText={formErrors.teacher}
+            required
             fullWidth
             variant="outlined"
             label="Teacher"
             name="teacher"
             onChange={handleOnChange}
+            margin="normal"
           />
           <TextField
+            required
             fullWidth
             variant="outlined"
             label="Color"
             name="color"
             select
             onChange={handleOnChange}
+            className={classes.select}
+            value={form.color}
+            margin="normal"
           >
-            <MenuItem>
-              <div
-                className={classes.colorBall}
-                style={{ borderColor: "#000" }}
-              />
-              Black
-            </MenuItem>
-            <MenuItem>
-              <div className={classes.colorBall} />
-              Black
-            </MenuItem>
-            <MenuItem>
-              <div className={classes.colorBall} />
-              Black
-            </MenuItem>
-            <MenuItem>
-              <div className={classes.colorBall} />
-              Black
-            </MenuItem>
+            {[
+              ["#000", "Black"],
+              ["#f00", "Red"],
+              ["#0f0", "Green"],
+              ["#00f", "Blue"]
+            ].map((item, i) => (
+              <MenuItem value={item[0]} key={i}>
+                <div
+                  className={classes.colorBall}
+                  style={{ borderColor: item[0] }}
+                />
+                {item[1]}
+              </MenuItem>
+            ))}
           </TextField>
-          <Button fullWidth variant="contained" color="primary">
+          <Button fullWidth variant="contained" color="primary" type="submit">
             Add
           </Button>
         </form>

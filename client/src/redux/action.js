@@ -19,3 +19,5 @@ export function fetchUser() {
     }
   };
 }
+
+export function createClas(form) {}
