@@ -1,4 +1,5 @@
 import axios from "axios";
+import Db from "../Db/Db";
 
 export function fetchUser() {
   return async dispatch => {
@@ -20,4 +21,12 @@ export function fetchUser() {
   };
 }
 
-export function createClas(form) {}
+export function createClass(form) {
+  return async dispatch => {
+    await Db.init();
+
+    const newClass = await Db.createClass(form);
+
+    dispatch({});
+  };
+}
