@@ -4,25 +4,18 @@ const supertest = require('supertest');
 const request = supertest(app);
 const mongoose = require('mongoose');
 
-afterEach(async () => {
-  await mongoose.connection.model('user').remove();
-  await mongoose.connection.model('class').remove();
-  await mongoose.connection.model('task').remove();
-  await mongoose.connection.model('test').remove();
-  await mongoose.connection.collection('sessions').deleteMany({});
-});
-const res = mongoose.connection.collection('users').insertOne({email: 'email'});
-res.then((doc) => {
-  doc.insertedId;
-});
 
 const userForm = {
   email: 'email123@gmail.com', password: 'password1',
 };
 const passwordHash =
-  '$2b$10$BIfKfrOhPW/.3U4bGnJ6/.lgWYkiH.3F8nToYiChXt/rDWlq47XgS';
+'$2b$10$BIfKfrOhPW/.3U4bGnJ6/.lgWYkiH.3F8nToYiChXt/rDWlq47XgS';
 
 describe('userRouter', () => {
+  afterEach(async () => {
+    await mongoose.connection.model('user').deleteMany();
+    await mongoose.connection.collection('sessions').deleteMany({});
+  });
   describe('POST /signup', () => {
     it(
         `should return correct user data and 

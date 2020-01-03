@@ -7,5 +7,6 @@ module.exports = {
     env === 'ci' ? process.env.CI_DB_URL :
     process.env.DEV_DB_URL,
   sessionSecret: process.env.SESSION_SECRET,
+  port: env === 'testing' ? 2000 : 8080,
   env,
 };
