@@ -24,22 +24,35 @@ const TaskSchema = new Scheme({
 });
 
 const ClassScheme = new Scheme({
+  _id: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
   },
   color: {
     type: String,
-    default: '#000000',
+    required: true,
   },
-  Tasks: {
+  teacher: {
+    type: String,
+    required: true,
+  },
+  tasks: {
     type: [TaskSchema],
     default: [],
   },
-  Tests: {
+  tests: {
     type: [TestSchema],
     default: [],
   },
-});
+}, {_id: false});
 
-module.exports = Class = require('mongoose').model('class', ClassScheme);
+module.exports = {
+  ClassScheme,
+  Class: require('mongoose').model('class', ClassScheme),
+  Test: TestSchema,
+  Task: TaskSchema,
+};

@@ -8,7 +8,7 @@ const MongoStore = require('connect-mongo')(session);
 const userRouter = require('./users/userRouter');
 const classRouter = require('./classes/classRouter');
 
-const {dbUrl, sessionSecret} = require('./config');
+const {dbUrl, sessionSecret, env, port} = require('./config');
 
 const app = express();
 
@@ -17,7 +17,10 @@ mongoose
     .then(() => console.log('connected to database'))
     .catch(console.log);
 
-app.use(morgan('dev'));
+if (env === 'development') {
+  app.use(morgan('dev'));
+}
+
 app.use(express.json());
 
 app.use(
@@ -28,7 +31,7 @@ app.use(
       store: new MongoStore({mongooseConnection: mongoose.connection}),
       cookie: {
         maxAge: 600000000,
-        sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'none',
+        sameSite: env === 'production' ? 'strict' : 'none',
       },
     }),
 );
@@ -41,10 +44,8 @@ app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-const PORT = process.env.PORT || 8080;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}...`);
+app.listen(port, () => {
+  console.log(`Server running on port ${port}...`);
 });
 
 module.exports = app;

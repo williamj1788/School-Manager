@@ -13,8 +13,20 @@ class AccessService {
    */
   async signUp(email, password) {
     try {
-      Joi.assert(email, Joi.string().email().required(), 'Email:');
-      Joi.assert(password, Joi.string().min(6).required(), 'Password:');
+      Joi.assert(
+          email,
+          Joi.string()
+              .email()
+              .required(),
+          'Email:',
+      );
+      Joi.assert(
+          password,
+          Joi.string()
+              .min(6)
+              .required(),
+          'Password:',
+      );
     } catch (err) {
       throw new AppError(err.message, 400);
     }
@@ -66,11 +78,14 @@ class AccessService {
   /**
    * Gets the user from the database. Will throw if user is not found
    * @param {string} id id of user to be fetch from database
-   *
+   * @param {string} [projection] optional fields to return
    */
-  async getAuthUser(id) {
-    const user = await User.findById(id, '-_id');
-    return user.toJSON();
+  async getUserById(id, projection) {
+    const user = await User.findById(id, projection);
+    if (!user) {
+      throw new Error('user not found', 404);
+    }
+    return user;
   }
 }
 

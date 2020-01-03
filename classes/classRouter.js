@@ -2,20 +2,19 @@ const express = require('express');
 const router = express.Router();
 
 const User = require('../users/userModel');
-const Class = require('./classModel');
-const Task = require('./taskModel');
-const Test = require('./testModel');
+const {Task, Test} = require('./classModel');
+
+const ClassService = require('./ClassService');
+
+const classService = new ClassService();
 
 router.post('/', async (req, res, next) => {
   try {
-    const {classname, classcolor} = req.body;
-    const newClass = new Class({
-      name: classname,
-      color: classcolor,
-    });
-    await User.findByIdAndUpdate(req.session.user, {
-      $push: {classes: newClass},
-    });
+    const newClass = await classService.addClassToUser(
+        req.body,
+        req.session.user,
+    );
+
     res.json(newClass);
   } catch (err) {
     next(err);

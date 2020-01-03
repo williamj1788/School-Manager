@@ -49,10 +49,8 @@ router.get('/', async (req, res, next) => {
     if (!req.session.user) {
       return res.sendStatus(401);
     }
-    const user = await accessService.getAuthUser(req.session.user);
-    if (!user) {
-      return res.sendStatus(401);
-    }
+    const user = await accessService.getUserById(req.session.user, '-_id');
+
     res.json(user);
   } catch (err) {
     next(err);
