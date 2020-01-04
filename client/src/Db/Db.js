@@ -22,8 +22,9 @@ class Db {
       };
 
       req.onupgradeneeded = event => {
+        const oldDatabase = event.currentTarget.result; // don't use this.db because it won't be set here
         if (event.oldVersion < 1) {
-          this.db.createObjectStore("classes", { keyPath: "id" });
+          oldDatabase.createObjectStore("classes", { keyPath: "_id" });
         }
       };
     });
@@ -32,7 +33,7 @@ class Db {
   createClass(form) {
     return new Promise((resolve, reject) => {
       const newClass = {
-        id: uuid(),
+        _id: uuid(),
         ...form
       };
 

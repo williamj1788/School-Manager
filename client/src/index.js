@@ -46,12 +46,12 @@ const Root = ({ store }) => (
 
 function SuspendTilUser({ children }) {
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+  const isFetchingUser = useSelector(state => state.isFetchingUser);
   useEffect(() => {
     dispatch(fetchUser());
   }, []);
 
-  if (!isAuthenticated) {
+  if (isFetchingUser) {
     return (
       <Backdrop style={{ zIndex: 99 }} open>
         <CircularProgress color="primary" />
@@ -65,7 +65,7 @@ function SuspendTilUser({ children }) {
 function AuthRoute(props) {
   const isAuthenticated = useSelector(state => state.user.isAuthenticated);
   if (!isAuthenticated) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/" />;
   }
   return <Route {...props} />;
 }

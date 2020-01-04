@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+import { useDispatch, useSelector } from "react-redux";
+import { createClass } from "../../redux/action";
+
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -32,29 +35,22 @@ function Classes() {
   const [open, setOpen] = useState(false);
   const [openForm, setOpenForm] = useState(false);
 
-  function onSubmit(form) {}
+  const dispatch = useDispatch();
+  const classesObj = useSelector(state => state.classes);
+
+  function onSubmit(form) {
+    dispatch(createClass(form));
+    setOpenForm(false);
+  }
 
   return (
     <React.Fragment>
       <NavBar title="Classes" onMenuClick={() => setOpen(!open)} />
       <AppDrawer open={open} onClose={() => setOpen(false)} />
       <Container>
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
-        <Class />
+        {classesObj.map(cla => (
+          <Class key={cla._id} {...cla} />
+        ))}
       </Container>
       <div className={classes.screen}>
         <Fab
@@ -65,7 +61,11 @@ function Classes() {
           <AddIcon />
         </Fab>
       </div>
-      <CreateClassForm open={openForm} onClose={() => setOpenForm(false)} />
+      <CreateClassForm
+        open={openForm}
+        onClose={() => setOpenForm(false)}
+        onSubmit={onSubmit}
+      />
     </React.Fragment>
   );
 }
@@ -78,7 +78,6 @@ const useStyles2 = makeStyles({
     display: "flex"
   },
   colorBar: {
-    backgroundColor: "#ff0000",
     width: 5,
     height: "100%",
     marginRight: "10px",
@@ -86,16 +85,16 @@ const useStyles2 = makeStyles({
   }
 });
 
-function Class() {
+function Class({ name, teacher, color }) {
   const classes = useStyles2();
   return (
     <Paper className={classes.paper}>
-      <div className={classes.colorBar} />
+      <div className={classes.colorBar} style={{ backgroundColor: color }} />
       <div style={{ flexGrow: 1 }}>
-        <Typography>English 101</Typography>
+        <Typography>{name}</Typography>
         <Typography>Mon - Tues - Weds</Typography>
       </div>
-      <Typography>Mrs.Teacher</Typography>
+      <Typography>{teacher}</Typography>
     </Paper>
   );
 }

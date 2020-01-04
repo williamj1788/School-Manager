@@ -12,10 +12,16 @@ export function fetchUser() {
       localStorage.setItem("user", JSON.stringify(data));
       dispatch({ type: "FETCH_USER", payload: data });
     } catch (err) {
-      // TODO: add path for 401 and 500
+      // TODO: add path for 500
       if (!err.response) {
-        const data = JSON.parse(localStorage.user);
-        return dispatch({ type: "FETCH_USER", payload: data });
+        // TODO: notify user that they are offline
+        return;
+      }
+
+      if(err.response.status === 401){
+        localStorage.removeItem("user");
+        dispatch({ type: "UNAUTH_USER"});
+        return;
       }
     }
   };
@@ -26,7 +32,12 @@ export function createClass(form) {
     await Db.init();
 
     const newClass = await Db.createClass(form);
-
-    dispatch({});
+    dispatch({type: "ADD_CLASS", payload: newClass});
+    try {
+      await axios.post("/api/class", newClass, {withCredentials: true});
+    } catch (err) {
+      // TODO: add error handling
+      console.error(err);
+    }
   };
 }

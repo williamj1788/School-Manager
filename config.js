@@ -1,5 +1,6 @@
 require('dotenv').config();
-const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV || 'development';
+
 module.exports = {
   dbUrl:
     env === 'production' ? process.env.PRODUCTION_DB_URL :
