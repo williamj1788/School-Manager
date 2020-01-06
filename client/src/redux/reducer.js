@@ -1,4 +1,3 @@
-const isGuess = sessionStorage.getItem("guest") === "true";
 
 const initialState = {
   isFetchingUser: true,  

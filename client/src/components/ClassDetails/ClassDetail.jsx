@@ -10,18 +10,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import CloseIcon from "@material-ui/icons/Close";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-import { makeStyles } from "@material-ui/core";
-
 import { useSelector, useDispatch } from "react-redux";
 
 import { deleteClass } from "../../redux/action";
-
-const useStyle = makeStyles(theme => ({
-  title: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.getContrastText(theme.palette.primary.main)
-  }
-}));
 
 function ClassDetail({ open, classID, onClose }) {
   const [isSettingOpen, setIsSettingOpen] = useState(false);
@@ -29,8 +20,6 @@ function ClassDetail({ open, classID, onClose }) {
     useSelector(state => state.classes.find(c => c._id === classID)) || {};
 
   const dispatch = useDispatch();
-
-  const classes = useStyle();
 
   const settingElement = useRef(null);
 
