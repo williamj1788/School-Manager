@@ -1,13 +1,13 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Classes from "./Classes";
+
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { createReducer } from "../../redux/reducer";
 
 import thunk from "redux-thunk";
 
-import { MemoryRouter, Route } from "react-router-dom";
+import ClassDetail from "./ClassDetail";
 
 const store = createStore(
   createReducer({
@@ -18,22 +18,14 @@ const store = createStore(
         teacher: "mockTeacher",
         color: "#ff0000"
       }
-    ],
-    user: {
-      email: "mockEmail"
-    }
+    ]
   }),
   applyMiddleware(thunk)
 );
 
-describe("Classes", () => {
+
+describe("ClassDetails", () => {
   test("should render without crashing", () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Route path="*" render={props => <Classes {...props} />} />
-        </MemoryRouter>
-      </Provider>
-    );
+    render(<Provider store={store}><ClassDetail open classID="mock" /></Provider>);
   });
 });

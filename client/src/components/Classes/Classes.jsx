@@ -15,16 +15,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import NavBar from "../NavBar/NavBar";
 import AppDrawer from "../AppDrawer/AppDrawer";
 import CreateClassForm from "../CreateClassForm/CreateClassForm";
+import ClassDetail from "../ClassDetails/ClassDetail";
 
 const useStyles1 = makeStyles({
-  screen: {
-    top: 0,
-    height: "100vh",
-    width: "100vw",
-    position: "fixed"
-  },
   fab: {
-    position: "absolute",
+    position: "fixed",
     bottom: 20,
     right: 20
   }
@@ -34,6 +29,8 @@ function Classes() {
   const classes = useStyles1();
   const [open, setOpen] = useState(false);
   const [openForm, setOpenForm] = useState(false);
+  const [classID, setClassID] = useState(null);
+  const [openDetails, setOpenDetails] = useState(false);
 
   const dispatch = useDispatch();
   const classesObj = useSelector(state => state.classes);
@@ -49,22 +46,32 @@ function Classes() {
       <AppDrawer open={open} onClose={() => setOpen(false)} />
       <Container>
         {classesObj.map(cla => (
-          <Class key={cla._id} {...cla} />
+          <Class
+            key={cla._id}
+            {...cla}
+            onClick={() => {
+              setClassID(cla._id);
+              setOpenDetails(true);
+            }}
+          />
         ))}
       </Container>
-      <div className={classes.screen}>
-        <Fab
-          color="primary"
-          className={classes.fab}
-          onClick={() => setOpenForm(true)}
-        >
-          <AddIcon />
-        </Fab>
-      </div>
+      <Fab
+        color="primary"
+        className={classes.fab}
+        onClick={() => setOpenForm(true)}
+      >
+        <AddIcon />
+      </Fab>
       <CreateClassForm
         open={openForm}
         onClose={() => setOpenForm(false)}
         onSubmit={onSubmit}
+      />
+      <ClassDetail
+        open={openDetails}
+        classID={classID}
+        onClose={() => setOpenDetails(false)}
       />
     </React.Fragment>
   );
@@ -85,10 +92,10 @@ const useStyles2 = makeStyles({
   }
 });
 
-function Class({ name, teacher, color }) {
+function Class({ name, teacher, color, onClick }) {
   const classes = useStyles2();
   return (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper} onClickCapture={onClick}>
       <div className={classes.colorBar} style={{ backgroundColor: color }} />
       <div style={{ flexGrow: 1 }}>
         <Typography>{name}</Typography>
