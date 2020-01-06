@@ -41,3 +41,10 @@ export function createClass(form) {
     }
   };
 }
+
+export function deleteClass(id) {
+  return dispatch => {
+    // TODO: send delete request to server
+    dispatch({type: "DELETE_CLASS", payload: id});
+  }
+}

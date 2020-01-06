@@ -39,6 +39,13 @@ export function createReducer(initState) {
           ...state,
           classes: [...state.classes, action.payload]
         }
+      case "DELETE_CLASS":
+        const index = state.classes.findIndex(c => c._id === action.payload);
+        state.classes.splice(index, 1);
+        return {
+          ...state,
+          classes: [...state.classes]
+        }
       default:
         return state;
     }

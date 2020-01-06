@@ -12,7 +12,9 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import { makeStyles } from "@material-ui/core";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { deleteClass } from "../../redux/action";
 
 const useStyle = makeStyles(theme => ({
   title: {
@@ -23,12 +25,20 @@ const useStyle = makeStyles(theme => ({
 
 function ClassDetail({ open, classID, onClose }) {
   const [isSettingOpen, setIsSettingOpen] = useState(false);
-
-  const classes = useStyle();
   const classObj =
     useSelector(state => state.classes.find(c => c._id === classID)) || {};
 
+  const dispatch = useDispatch();
+
+  const classes = useStyle();
+
   const settingElement = useRef(null);
+
+  function onDelete() {
+    dispatch(deleteClass(classID));
+    onClose();
+  }
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle style={{ backgroundColor: classObj.color, color: "white" }}>
@@ -46,7 +56,7 @@ function ClassDetail({ open, classID, onClose }) {
           open={isSettingOpen}
           onClose={() => setIsSettingOpen(false)}
         >
-          <MenuItem>Delete Class</MenuItem>
+          <MenuItem onClick={onDelete}>Delete Class</MenuItem>
           <MenuItem>Edit Class</MenuItem>
         </Menu>
       </DialogTitle>
