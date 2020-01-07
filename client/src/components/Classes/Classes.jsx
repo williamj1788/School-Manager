@@ -82,7 +82,8 @@ const useStyles2 = makeStyles({
     margin: "20px 0",
     padding: "5px 10px",
     height: 50,
-    display: "flex"
+    display: "flex",
+    cursor: "pointer"
   },
   colorBar: {
     width: 5,

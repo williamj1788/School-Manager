@@ -9,10 +9,14 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import CloseIcon from "@material-ui/icons/Close";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import DateRangeIcon from "@material-ui/icons/DateRange";
+import PersonIcon from "@material-ui/icons/Person";
 
 import { useSelector, useDispatch } from "react-redux";
 
 import { deleteClass } from "../../redux/action";
+
+import "./ClassDetails.scss";
 
 function ClassDetail({ open, classID, onClose }) {
   const [isSettingOpen, setIsSettingOpen] = useState(false);
@@ -25,33 +29,43 @@ function ClassDetail({ open, classID, onClose }) {
 
   function onDelete() {
     dispatch(deleteClass(classID));
+    setIsSettingOpen(false);
     onClose();
   }
 
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle style={{ backgroundColor: classObj.color, color: "white" }}>
-        {classObj.name}
-        <IconButton onClick={() => setIsSettingOpen(true)}>
-          <MoreVertIcon style={{ color: "white" }} />
-        </IconButton>
-        <IconButton onClick={onClose} ref={settingElement}>
-          <CloseIcon style={{ color: "white" }} />
-        </IconButton>
-        <Menu
-          id="simple-menu"
-          anchorEl={settingElement.current}
-          keepMounted
-          open={isSettingOpen}
-          onClose={() => setIsSettingOpen(false)}
-        >
-          <MenuItem onClick={onDelete}>Delete Class</MenuItem>
-          <MenuItem>Edit Class</MenuItem>
-        </Menu>
+        <div className="classDetail-title">
+          {classObj.name}
+          <div>
+            <IconButton onClick={() => setIsSettingOpen(true)}>
+              <MoreVertIcon style={{ color: "white" }} />
+            </IconButton>
+            <IconButton onClick={onClose} ref={settingElement}>
+              <CloseIcon style={{ color: "white" }} />
+            </IconButton>
+            <Menu
+              anchorEl={settingElement.current}
+              keepMounted
+              open={isSettingOpen}
+              onClose={() => setIsSettingOpen(false)}
+            >
+              <MenuItem onClick={onDelete}>Delete Class</MenuItem>
+              <MenuItem>Edit Class</MenuItem>
+            </Menu>
+          </div>
+        </div>
       </DialogTitle>
       <DialogContent>
-        <p>Teacher: {classObj.teacher}</p>
-        <p>Mon - Tues - Weds</p>
+        <div className="classDetail-heading">
+          <DateRangeIcon />
+          <p>Mon - Tues - Weds</p>
+        </div>
+        <div className="classDetail-heading">
+          <PersonIcon />
+          <p>{classObj.teacher}</p>
+        </div>
       </DialogContent>
     </Dialog>
   );

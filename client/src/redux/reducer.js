@@ -8,6 +8,8 @@ const initialState = {
   classes: []
 };
 
+// TODO: Break up into multiple reducers
+
 // currying here so we can pass different initialStates for testing purposes
 export function createReducer(initState) {
   return (state, action) => {
@@ -32,6 +34,11 @@ export function createReducer(initState) {
             isAuthenticated: false,
             email: null
           }
+        };
+      case "SIGNOUT": 
+        return {
+          ...initialState,
+          isFetchingUser: false
         };
       case "ADD_CLASS":
         return {

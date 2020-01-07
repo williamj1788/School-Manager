@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AuthForm from "../AuthForm/AuthForm";
 import axios from "axios";
 import { useHistory, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 export default function AuthPage() {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -10,12 +11,15 @@ export default function AuthPage() {
   const history = useHistory();
   const location = useLocation();
 
+  const dispatch = useDispatch();
+
   const type = location.pathname === "/signup" ? "signup" : "login";
 
   async function onSubmit(form) {
     setPending(true);
     try {
-      await axios.post("/api/user/" + type, form);
+      const user = await axios.post("/api/user/" + type, form);
+      dispatch({ type: "FETCH_USER", payload: user });
       history.push("dashboard");
     } catch (err) {
       if (!err.response) {

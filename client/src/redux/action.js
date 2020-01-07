@@ -43,8 +43,29 @@ export function createClass(form) {
 }
 
 export function deleteClass(id) {
-  return dispatch => {
+  return async dispatch => {
     // TODO: send delete request to server
     dispatch({type: "DELETE_CLASS", payload: id});
+    try {
+      await axios.delete(`/api/class/${id}`);
+    } catch (err) {
+      // TODO: add error handling
+      console.error(err);
+    }
+    
+  }
+}
+
+export function signOut() {
+  return async dispatch => {
+    try {
+      await axios.post("/api/user/signout");
+      localStorage.removeItem("user");
+      dispatch({type: "SIGNOUT"});
+    } catch (err) {
+      // TODO: add error handling
+      console.error(err);
+    }
+    
   }
 }
