@@ -83,11 +83,9 @@ router.delete('/test', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
   try {
-    await User.findByIdAndUpdate(req.session.user, {
-      $pull: {classes: {_id: req.params.id}},
-    });
+    await classService.deleteClassById(req.params.id, req.session.user);
     res.send();
   } catch (err) {
     next(err);
@@ -95,8 +93,8 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.use((err, req, res, next) => {
-  console.log(err);
-  res.sendStatus(500);
+  console.error(err);
+  res.status(err.code || 500).json({error: err.message});
 });
 
 module.exports = router;

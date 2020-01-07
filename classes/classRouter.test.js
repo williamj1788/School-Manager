@@ -41,7 +41,7 @@ describe('classRouter', () => {
         teacher: 'mr.mockTeacher',
         color: '#fff',
       });
-      assert.strictEqual(200, res.status);
+      assert.strictEqual(res.status, 200);
 
       const user = await mongoose.connection.model('user').findById(userID);
 
@@ -58,6 +58,25 @@ describe('classRouter', () => {
         tests: [],
       }, `can\'t find class in user object or object
           does not have a correct shape`);
+    });
+  });
+
+  describe('DELETE /{id}', () => {
+    it('should remove classes from user', async () => {
+      await mongoose.connection
+          .collection('users').findOneAndUpdate({_id: userID}, {
+            $push: {classes: {_id: 'mockID', name: 'mockName'}},
+          });
+      const res = await agent.delete('/api/class/mockID');
+      const user = await mongoose.connection.model('user').findById(userID);
+
+      assert.strictEqual(res.status, 200);
+      assert.isEmpty(user.classes);
+    });
+
+    it('should return 404 if user doesn\'t have class', async () => {
+      const res = await agent.delete('/api/class/mockID');
+      assert.strictEqual(res.status, 404);
     });
   });
 });

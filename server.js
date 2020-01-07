@@ -13,7 +13,11 @@ const {dbUrl, sessionSecret, env, port} = require('./config');
 const app = express();
 
 mongoose
-    .connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true})
+    .connect(dbUrl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+    })
     .then(() => console.log('connected to database'))
     .catch(console.log);
 
