@@ -39,15 +39,22 @@ function ClassDetail({ open, classID, onClose }) {
         <div className="classDetail-title">
           {classObj.name}
           <div>
-            <IconButton onClick={() => setIsSettingOpen(true)}>
+            <IconButton
+              onClick={() => setIsSettingOpen(true)}
+              data-testid="setting button"
+            >
               <MoreVertIcon style={{ color: "white" }} />
             </IconButton>
-            <IconButton onClick={onClose} ref={settingElement}>
+            <IconButton
+              onClick={onClose}
+              ref={settingElement}
+              data-testid="close button"
+            >
               <CloseIcon style={{ color: "white" }} />
             </IconButton>
             <Menu
               anchorEl={settingElement.current}
-              keepMounted
+              data-testid="menu"
               open={isSettingOpen}
               onClose={() => setIsSettingOpen(false)}
             >

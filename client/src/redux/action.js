@@ -18,9 +18,9 @@ export function fetchUser() {
         return;
       }
 
-      if(err.response.status === 401){
+      if (err.response.status === 401) {
         localStorage.removeItem("user");
-        dispatch({ type: "UNAUTH_USER"});
+        dispatch({ type: "UNAUTH_USER" });
         return;
       }
     }
@@ -32,9 +32,9 @@ export function createClass(form) {
     await Db.init();
 
     const newClass = await Db.createClass(form);
-    dispatch({type: "ADD_CLASS", payload: newClass});
+    dispatch({ type: "ADD_CLASS", payload: newClass });
     try {
-      await axios.post("/api/class", newClass, {withCredentials: true});
+      await axios.post("/api/class", newClass, { withCredentials: true });
     } catch (err) {
       // TODO: add error handling
       console.error(err);
@@ -44,16 +44,14 @@ export function createClass(form) {
 
 export function deleteClass(id) {
   return async dispatch => {
-    // TODO: send delete request to server
-    dispatch({type: "DELETE_CLASS", payload: id});
+    dispatch({ type: "DELETE_CLASS", payload: id });
     try {
       await axios.delete(`/api/class/${id}`);
     } catch (err) {
       // TODO: add error handling
       console.error(err);
     }
-    
-  }
+  };
 }
 
 export function signOut() {
@@ -61,11 +59,10 @@ export function signOut() {
     try {
       await axios.post("/api/user/signout");
       localStorage.removeItem("user");
-      dispatch({type: "SIGNOUT"});
+      dispatch({ type: "SIGNOUT" });
     } catch (err) {
       // TODO: add error handling
       console.error(err);
     }
-    
-  }
+  };
 }
