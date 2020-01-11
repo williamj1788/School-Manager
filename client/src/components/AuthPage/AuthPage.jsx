@@ -18,8 +18,8 @@ export default function AuthPage() {
   async function onSubmit(form) {
     setPending(true);
     try {
-      const user = await axios.post("/api/user/" + type, form);
-      dispatch({ type: "FETCH_USER", payload: user });
+      const { data } = await axios.post("/api/user/" + type, form);
+      dispatch({ type: "FETCH_USER", payload: data });
       history.push("dashboard");
     } catch (err) {
       if (!err.response) {

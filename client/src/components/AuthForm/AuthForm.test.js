@@ -110,6 +110,22 @@ describe("AuthForm", () => {
     });
   });
 
+  test("hide password iconButton should toggle password input type", () => {
+    const { getByLabelText, getByTestId } = render(<AuthForm type="signup" />);
+    const iconButton = getByTestId("visible button");
+
+    const passwordElement = getByLabelText(/^Password/i);
+    const confirmPasswordElement = getByLabelText(/Confirm Password/i);
+
+    expect(passwordElement.type).toBe("password");
+    expect(confirmPasswordElement.type).toBe("password");
+
+    fireEvent.click(iconButton);
+
+    expect(passwordElement.type).toBe("text");
+    expect(confirmPasswordElement.type).toBe("text");
+  });
+
   describe("email input", () => {
     test("should show error when email is invalid", () => {
       const { getByText, getByLabelText } = render(<AuthForm />);

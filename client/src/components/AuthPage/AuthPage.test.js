@@ -3,6 +3,8 @@ import AuthPage from "./AuthPage";
 import { render, fireEvent, wait } from "@testing-library/react";
 import { MemoryRouter, Route } from "react-router-dom";
 import axiosMock from "axios";
+import { Provider } from "react-redux";
+import store from "../../redux/store";
 
 jest.mock("axios");
 
@@ -13,30 +15,39 @@ beforeEach(() => {
 describe("AuthPage", () => {
   test("renders without cashing", () => {
     render(
-      <MemoryRouter>
-        <AuthPage />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <AuthPage />
+        </MemoryRouter>
+      </Provider>
     );
   });
 
   test.each(["login", "signup"])(
-    "%s: should send send correct request to server",
+    "%s: should send send correct request to server and route page",
     async type => {
-      axiosMock.post.mockResolvedValueOnce();
+      axiosMock.post.mockResolvedValueOnce({
+        data: {
+          email: "email@gmail.com",
+          classes: []
+        }
+      });
 
       let locationTest;
       let historyTest;
       const { getByLabelText, getByTestId } = render(
-        <MemoryRouter>
-          <Route
-            path="*"
-            render={props => {
-              locationTest = props.location;
-              historyTest = props.history;
-              return <AuthPage {...props} />;
-            }}
-          />
-        </MemoryRouter>
+        <Provider store={store}>
+          <MemoryRouter>
+            <Route
+              path="*"
+              render={props => {
+                locationTest = props.location;
+                historyTest = props.history;
+                return <AuthPage {...props} />;
+              }}
+            />
+          </MemoryRouter>
+        </Provider>
       );
 
       if (type === "signup") historyTest.push("/signup");
@@ -90,9 +101,11 @@ describe("AuthPage", () => {
       .mockRejectedValueOnce({});
 
     const { getByLabelText, getByTestId, getByText } = render(
-      <MemoryRouter>
-        <AuthPage />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <AuthPage />
+        </MemoryRouter>
+      </Provider>
     );
 
     fireEvent.change(getByLabelText(/Email/i), {
