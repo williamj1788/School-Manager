@@ -1,25 +1,19 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import NavBar from "./NavBar";
-import { Provider } from "react-redux";
-import store from "../../redux/store";
+
+import { renderWithRedux } from "../../testHelpers";
 
 describe("AppDrawer", () => {
   test("renders without crashing", () => {
-    render(
-      <Provider store={store}>
-        <NavBar />
-      </Provider>
-    );
+    renderWithRedux(<NavBar />);
   });
 
   test("should call onMenuClick when menu button is clicked", () => {
     const onMenuClick = jest.fn();
 
-    const { getByTestId } = render(
-      <Provider store={store}>
-        <NavBar onMenuClick={onMenuClick} />
-      </Provider>
+    const { getByTestId } = renderWithRedux(
+      <NavBar onMenuClick={onMenuClick} />
     );
 
     fireEvent.click(getByTestId("menu"));
@@ -27,23 +21,17 @@ describe("AppDrawer", () => {
     expect(onMenuClick).toBeCalledTimes(1);
   });
   test("should add children", () => {
-    const { getByTestId } = render(
-      <Provider store={store}>
-        <NavBar>
-          <div data-testid="test">test</div>
-        </NavBar>
-      </Provider>
+    const { getByTestId } = renderWithRedux(
+      <NavBar>
+        <div data-testid="test">test</div>
+      </NavBar>
     );
 
     expect(() => getByTestId("test")).not.toThrow();
   });
 
   test("should set title", () => {
-    const { getByText } = render(
-      <Provider store={store}>
-        <NavBar title="someTitle" />
-      </Provider>
-    );
+    const { getByText } = renderWithRedux(<NavBar title="someTitle" />);
 
     expect(() => getByText("someTitle")).not.toThrow();
   });

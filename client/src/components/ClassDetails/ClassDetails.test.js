@@ -1,27 +1,20 @@
 import React from "react";
-import { render, fireEvent, wait } from "@testing-library/react";
-
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware } from "redux";
-import { createReducer } from "../../redux/reducer";
-
-import thunk from "redux-thunk";
+import { fireEvent, wait } from "@testing-library/react";
 
 import ClassDetail from "./ClassDetail";
 
-const store = createStore(
-  createReducer({
-    classes: [
-      {
-        _id: "mock",
-        name: "mockName",
-        teacher: "mockTeacher",
-        color: "#ff0000"
-      }
-    ]
-  }),
-  applyMiddleware(thunk)
-);
+import { renderWithRedux } from "../../testHelpers";
+
+const defaultInitialState = {
+  classes: [
+    {
+      _id: "mock",
+      name: "mockName",
+      teacher: "mockTeacher",
+      color: "#ff0000"
+    }
+  ]
+};
 
 describe("ClassDetails", () => {
   const defaultProps = {
@@ -35,19 +28,15 @@ describe("ClassDetails", () => {
   });
 
   test("should render without crashing", () => {
-    render(
-      <Provider store={store}>
-        <ClassDetail {...defaultProps} />
-      </Provider>
-    );
+    renderWithRedux(<ClassDetail {...defaultProps} />, {
+      initialState: defaultInitialState
+    });
   });
 
   test("should call onClose prop when close button is pressed", () => {
-    const { getByTestId } = render(
-      <Provider store={store}>
-        <ClassDetail {...defaultProps} />
-      </Provider>
-    );
+    const { getByTestId } = renderWithRedux(<ClassDetail {...defaultProps} />, {
+      initialState: defaultInitialState
+    });
 
     const closeButton = getByTestId("close button");
 
@@ -57,11 +46,9 @@ describe("ClassDetails", () => {
   });
 
   test("should show settings menu when settings button is clicked", () => {
-    const { getByTestId } = render(
-      <Provider store={store}>
-        <ClassDetail {...defaultProps} />
-      </Provider>
-    );
+    const { getByTestId } = renderWithRedux(<ClassDetail {...defaultProps} />, {
+      initialState: defaultInitialState
+    });
 
     expect(() => getByTestId("menu")).toThrow();
 
@@ -73,10 +60,9 @@ describe("ClassDetails", () => {
   });
 
   test("should call onClose and demount menu when 'delete class' item is clicked", async () => {
-    const { getByTestId, getByText } = render(
-      <Provider store={store}>
-        <ClassDetail {...defaultProps} />
-      </Provider>
+    const { getByTestId, getByText } = renderWithRedux(
+      <ClassDetail {...defaultProps} />,
+      { initialState: defaultInitialState }
     );
 
     fireEvent.click(getByTestId("setting button"));

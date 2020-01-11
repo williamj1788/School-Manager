@@ -1,10 +1,10 @@
 import React from "react";
 import AuthPage from "./AuthPage";
-import { render, fireEvent, wait } from "@testing-library/react";
+import { fireEvent, wait } from "@testing-library/react";
 import { MemoryRouter, Route } from "react-router-dom";
 import axiosMock from "axios";
-import { Provider } from "react-redux";
-import store from "../../redux/store";
+
+import { renderWithRedux } from "../../testHelpers";
 
 jest.mock("axios");
 
@@ -14,12 +14,10 @@ beforeEach(() => {
 
 describe("AuthPage", () => {
   test("renders without cashing", () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <AuthPage />
-        </MemoryRouter>
-      </Provider>
+    renderWithRedux(
+      <MemoryRouter>
+        <AuthPage />
+      </MemoryRouter>
     );
   });
 
@@ -35,19 +33,17 @@ describe("AuthPage", () => {
 
       let locationTest;
       let historyTest;
-      const { getByLabelText, getByTestId } = render(
-        <Provider store={store}>
-          <MemoryRouter>
-            <Route
-              path="*"
-              render={props => {
-                locationTest = props.location;
-                historyTest = props.history;
-                return <AuthPage {...props} />;
-              }}
-            />
-          </MemoryRouter>
-        </Provider>
+      const { getByLabelText, getByTestId } = renderWithRedux(
+        <MemoryRouter>
+          <Route
+            path="*"
+            render={props => {
+              locationTest = props.location;
+              historyTest = props.history;
+              return <AuthPage {...props} />;
+            }}
+          />
+        </MemoryRouter>
       );
 
       if (type === "signup") historyTest.push("/signup");
@@ -100,12 +96,10 @@ describe("AuthPage", () => {
       })
       .mockRejectedValueOnce({});
 
-    const { getByLabelText, getByTestId, getByText } = render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <AuthPage />
-        </MemoryRouter>
-      </Provider>
+    const { getByLabelText, getByTestId, getByText } = renderWithRedux(
+      <MemoryRouter>
+        <AuthPage />
+      </MemoryRouter>
     );
 
     fireEvent.change(getByLabelText(/Email/i), {
